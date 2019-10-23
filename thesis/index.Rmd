@@ -5,6 +5,7 @@ date: "Last edited: `r format(Sys.time(), '%B %d %Y')`"
 site: bookdown::bookdown_site
 output: bookdown::gitbook
 documentclass: book
+classoption: openany, 12pt, draft
 bibliography: [book.bib, packages.bib]
 # this only works in the pdf
 biblio-style: BES.bst 
