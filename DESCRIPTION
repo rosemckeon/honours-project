@@ -1,0 +1,16 @@
+Package: sploidy
+Title: An Individual-Based Model
+Version: 0.0.000
+Authors@R: person("Rose", "McKeon", email = "rosemckeon@gmail.com", role = c("aut", "cre"))
+Description:
+Depends: R (>= 3.4.4)
+License: GPL-3
+Encoding: UTF-8
+LazyData: false
+Imports:
+    devtools,
+    tidyverse,
+    tictoc,
+    disturploidy
+Remotes: rosemckeon/ploidy
+RoxygenNote: 6.1.1
