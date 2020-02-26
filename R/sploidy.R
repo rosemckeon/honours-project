@@ -1,4 +1,4 @@
-#' @name sploidy
+  #' @name sploidy
 #' @title What are the relative densities of polyploids vs diploids?
 #' @description A spatially explicit individual-based model which runs a simulation, or repeated simulations, of a plant population over time.
 #' @usage sploidy()
@@ -54,13 +54,13 @@ sploidy <- function(
   generations = 10,
   simulations = 1,
   return = FALSE,
-  filepath = "data/",
+  filepath = "data",
   filename = NULL,
   logfilepath = "data/logs/",
   logfilename = NULL
 ){
-  tic.clearlog()
-  tic("Entire run time")
+  # tic.clearlog()
+  # tic("Entire run time")
   # parameter checking
   stopifnot(
     is.numeric(
@@ -80,7 +80,7 @@ sploidy <- function(
         simulations
       )
     ),
-    is.logical(c(clonal_growth, return)),
+    is.logical(c(return)),
     is.character(c(filepath, logfilepath)),
     c(
       pop_size,
@@ -103,26 +103,49 @@ sploidy <- function(
       0, 1
     ),
     between(pollen_range, 0, grid_size - 1),
-    between(seed_dispersal_range, 0, grid_size - 1),
+    between(seed_dispersal_range, 0, grid_size - 1)
   )
+  message("parameters are all appropriate.")
+  message("setting up files...")
   # prep temp files (numbered with leading zeros)
   file_numbers <- sprintf("%03d", 0:generations)
-
-  tmp_files <- file.path(
-    tempdir(),
-    paste0("sploidy-", file_numbers, ".rds")
-  )
-
-  tmp_files %>% file.create()
-
+  # function and life-stage prefix with rds format
+  # (splitting the lifestages reduces mem usage)
+  tmp_files_seedbank <- file.path(tempdir(), paste0("sploidy-seedbank-", file_numbers, ".rds"))
+  tmp_files_juveniles <- file.path(tempdir(), paste0("sploidy-juveniles-", file_numbers, ".rds"))
+  tmp_files_adults <- file.path(tempdir(), paste0("sploidy-adults-", file_numbers, ".rds"))
+  tmp_files_seedoutput <- file.path(tempdir(), paste0("sploidy-seedoutput-", file_numbers, ".rds"))
+  # create tmp files
+  tmp_files <- c(tmp_files_seedbank, tmp_files_juveniles, tmp_files_adults, tmp_files_seedoutput)
+  tmp_files %>% file.create(showWarnings = F)
+  
   # Check that these files exist
-  dir(tempdir(), full.names = TRUE)
+  # dir(tempdir(), full.names = T)
 
-  # Remove them
+  # fill these files with data! (run simulations)
+  
+  # setup folders to store final data
+  # make sure filepath exists
+  if(!dir.exists(filepath)){
+    dir.create(filepath)
+  }
+  # make sure there is a filename
+  if(is_null(filename)){
+    filename <- random_id(1, 10)
+  }
+  # create subfolders for simulations
+  dir.create(file.path(filepath, filename))
+  dir_numbers <- sprintf("%03d", 0:simulations)
+  sim_dirs <- file.path(filepath, filename, paste0("sim-", dir_numbers))
+  for(dir in 1:length(sim_dirs)){
+    dir.create(sim_dirs[[dir]])
+  }
+  # copy tmp files to folders
+  file.copy(tmp_files, sim_dirs[1])
+  # Remove tmp files
   unlink(tmp_files)
 
-
-  # prepare an object for output
+  # prepare an object for final output
   sploidy <- list(
     call = match.call(),
     time = list(
@@ -137,11 +160,11 @@ sploidy <- function(
       seedbank = NULL,
       juveniles = NULL,
       adults = NULL,
-      seedoutput = NULL,
-      disturbance = NULL
+      seedoutput = NULL
     )
   )
   if(!is.null(logfilename)){
     sploidy$log = list()
   }
+  toc()
 }
