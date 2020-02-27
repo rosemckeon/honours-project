@@ -108,7 +108,7 @@ sploidy <- function(
   if(is_null(name)){
     name <- random_id(1, 10)
   }
-  message("parameters are all appropriate.")
+  message("Parameters are all appropriate. Simulations can begin...")
   # store the function call for session info
   sploidy_call <- match.call()
   # setup objects for data storage
@@ -119,7 +119,7 @@ sploidy <- function(
 
   # Run the replicate simulations
   for(this_sim in 1:simulations){
-    tic("Simulation")
+    tic(paste0("Simulation ", this_sim, " complete"))
     # Start logging
     if(log){ log_info <- setup_log() }
     message("SIMULATION ", this_sim, ":")
@@ -141,6 +141,7 @@ sploidy <- function(
       store_data(log_info$path, name, this_sim, filepath)
       stop_log(log_info)
     }
+    toc()
   }
   
   #get_session(sploidy_call, start_time, Sys.time(), filepath, name)
