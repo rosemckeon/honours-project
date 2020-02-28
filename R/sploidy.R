@@ -121,7 +121,6 @@ sploidy <- function(
     # Start logging
     if(log){ log_info <- setup_log() }
     message("SIMULATION ", this_sim, ":")
-    message("*************")
     message("Starting population of ", pop_size, " random diploid seeds.")
     # advance time
     for(generation in 1:generations){
