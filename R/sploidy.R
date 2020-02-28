@@ -126,11 +126,7 @@ sploidy <- function(
     # advance time
     for(generation in 1:generations){
       # initialise temp life stage files
-      seedbank_tmp_file <- store_tmp_data(seedbank, paste0("sploidy-seedbank-", sprintf("%04d", generation)))
-      juvenile_tmp_file <- store_tmp_data(juveniles, paste0("sploidy-juveniles-", sprintf("%04d", generation)))
-      adult_tmp_file <- store_tmp_data(adults, paste0("sploidy-adults-", sprintf("%04d", generation)))
-      seedoutput_tmp_file <- store_tmp_data(seedoutput, paste0("sploidy-seedoutput-", sprintf("%04d", generation)))
-      tmp_files <- c(seedbank_tmp_file, juvenile_tmp_file, adult_tmp_file, seedoutput_tmp_file)
+      tmp_files <- setup_tmp_files(seedbank, juveniles, adults, seedoutput, generation)
       # save data at the end of every gen and clear tmp file cache
       store_data(tmp_files, name, this_sim)
     }
