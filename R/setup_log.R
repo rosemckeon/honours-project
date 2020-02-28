@@ -9,7 +9,7 @@
 #' @export
 setup_log <- function(){
   log_path <- file.path(tempdir(), "_sploidy-log.txt")
-  message("Output now being logged to: ", log_path)
+  # message("Output now being logged to: ", log_path)
   tmp_log_file <- file(log_path, open = "wt")
   sink(tmp_log_file, append = T, type = "message")
   return(list(path = log_path, connection = tmp_log_file))

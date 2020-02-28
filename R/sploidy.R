@@ -57,7 +57,6 @@ sploidy <- function(
   name = NULL,
   log = T
 ){
-  start_time <- Sys.time()
   tic.clearlog()
   tic("Entire run time")
   # parameter checking
@@ -108,17 +107,16 @@ sploidy <- function(
   if(is_null(name)){
     name <- random_id(1, 10)
   }
-  message("Parameters are all appropriate. Simulations can begin...")
-  # store the function call for session info
-  sploidy_call <- match.call()
+  message("Parameters are all appropriate.")
+  message("Simulation set ", name, " can begin...")
+  # store the session info
+  store_session(match.call(), name)
   # setup objects for data storage
-  seedbank <- NULL
-  juveniles <- NULL
-  adults <- NULL
-  seedoutput <- NULL
+  seedbank <- NULL; juveniles <- NULL; adults <- NULL; seedoutput <- NULL
 
   # Run the replicate simulations
   for(this_sim in 1:simulations){
+    start_time <- Sys.time()
     tic(paste0("Simulation ", this_sim, " complete"))
     # Start logging
     if(log){ log_info <- setup_log() }
@@ -128,14 +126,15 @@ sploidy <- function(
     # advance time
     for(generation in 1:generations){
       # initialise temp life stage files
-      seedbank_tmp_file <- store_tmp_data(seedbank, "seedbank", generation)
-      juvenile_tmp_file <- store_tmp_data(juveniles, "juveniles", generation)
-      adult_tmp_file <- store_tmp_data(adults, "adults", generation)
-      seedoutput_tmp_file <- store_tmp_data(seedoutput, "seedoutput", generation)
+      seedbank_tmp_file <- store_tmp_data(seedbank, paste0("sploidy-seedbank-", sprintf("%04d", generation)))
+      juvenile_tmp_file <- store_tmp_data(juveniles, paste0("sploidy-juveniles-", sprintf("%04d", generation)))
+      adult_tmp_file <- store_tmp_data(adults, paste0("sploidy-adults-", sprintf("%04d", generation)))
+      seedoutput_tmp_file <- store_tmp_data(seedoutput, paste0("sploidy-seedoutput-", sprintf("%04d", generation)))
       tmp_files <- c(seedbank_tmp_file, juvenile_tmp_file, adult_tmp_file, seedoutput_tmp_file)
       # save data at the end of every gen and clear tmp file cache
-      store_data(tmp_files, name, this_sim, filepath)
+      store_data(tmp_files, name, this_sim)
     }
+    message("Simulation duration: ", start_time - Sys.time())
     # stop logging
     if(log){ 
       store_data(log_info$path, name, this_sim, filepath)
@@ -143,7 +142,5 @@ sploidy <- function(
     }
     toc()
   }
-  
-  #get_session(sploidy_call, start_time, Sys.time(), filepath, name)
   toc()
 }
