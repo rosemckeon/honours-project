@@ -48,7 +48,7 @@ sploidy <- function(
   seed_dispersal_range = 9,
   adult_survival_prob = .5,
   juvenile_survival_prob = .1,
-  seed_survival_prob = 0,
+  seed_survival_prob = .9,
   ploidy_rate = 0,
   generations = 10,
   simulations = 2,
@@ -59,7 +59,7 @@ sploidy <- function(
 ){
   tictoc::tic.clearlog()
   tictoc::tic("Entire run time")
-  # parameter checking
+  # parameter checking ----------
   stopifnot(
     is.numeric(
       c(
@@ -103,6 +103,7 @@ sploidy <- function(
     dplyr::between(pollen_range, 0, grid_size - 1),
     dplyr::between(seed_dispersal_range, 0, grid_size - 1)
   )
+  # BEGIN --------------
   # make sure there is a subfolder name for the set of simulations
   if(is_null(name)){
     name <- ids::random_id(1, 10)
@@ -127,7 +128,7 @@ sploidy <- function(
       file_gen <- sprintf("%04d", generation)
       # initialise temp life stage files
       tmp_files <- setup_tmp_files(juveniles, adults, seeds, generation)
-      # get the right starting data for this generation
+      # LOAD GEN DATA -----------
       if(generation == 0){
         # start with a cohort of diploids
         message("Populating ", grid_size, " by ", grid_size, " landscape with ", pop_size, " diploid juveniles.")
@@ -154,18 +155,90 @@ sploidy <- function(
       store_tmp_data(adults, paste0("sploidy-adults-", file_gen))
       store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
       
+      # SURVIVAL -----------------
+      # only happens after initial generation of growth and competition
+      if(generation > 0){
+        message("Survival:")
+        tictoc::tic("Survival")
+        if(!is.null(juveniles)){
+          n_juveniles <- nrow(juveniles)
+          if(n_juveniles > 0){
+            # keep only random survivors
+            juveniles <- juveniles %>% disturploidy::survive(juvenile_survival_prob)
+            message("  Surviving juveniles: ", nrow(juveniles), "/", n_juveniles)
+          }
+        }
+        if(!is.null(adults)){
+          n_adults <- nrow(adults)
+          if(n_adults > 0){
+            # keep only random survivors
+            adults <- adults %>% disturploidy::survive(adult_survival_prob)
+            message("  Surviving adults: ", nrow(adults), "/", n_adults)
+          }
+        }
+        if(!is.null(seeds)){
+          n_seeds <- nrow(seeds)
+          if(n_seeds > 0){
+            # keep only random survivors
+            seeds <- seeds %>% disturploidy::survive(seed_survival_prob)
+            message("  Surviving seeds: ", nrow(seeds), "/", n_seeds)
+          }
+        }
+        # check for extinction
+        if(sum(nrow(juveniles), nrow(adults), nrow(seeds)) == 0){
+          message("  *** EXTINCTION ***")
+          message("  Ending simulation.")
+          break
+        }
+        tictoc::toc() # survival
+      }
+      # update tmp files
+      store_tmp_data(juveniles, paste0("sploidy-juveniles-", file_gen))
+      store_tmp_data(adults, paste0("sploidy-adults-", file_gen))
+      store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
+      
+      # GERMINATION ------------
+      
+      
+      # save data to tmp files
+      store_tmp_data(juveniles, paste0("sploidy-juveniles-", file_gen))
+      store_tmp_data(adults, paste0("sploidy-adults-", file_gen))
+      store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
+      
+      # GROWTH -----------------
     
       
-      # save data at the end of every gen and clear tmp file cache
+      # save data to tmp files
+      store_tmp_data(juveniles, paste0("sploidy-juveniles-", file_gen))
+      store_tmp_data(adults, paste0("sploidy-adults-", file_gen))
+      store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
+      
+      # COMPETITION -------------
+      
+      
+      # save data to tmp files
+      store_tmp_data(juveniles, paste0("sploidy-juveniles-", file_gen))
+      store_tmp_data(adults, paste0("sploidy-adults-", file_gen))
+      store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
+      
+      # REPRODUCTION --------------
+      
+      
+      # save data to tmp files
+      store_tmp_data(juveniles, paste0("sploidy-juveniles-", file_gen))
+      store_tmp_data(adults, paste0("sploidy-adults-", file_gen))
+      store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
+      
+      # PROPER SAVE AND CLEAR CACHE --------------
       store_data(tmp_files, name, this_sim)
     }
     message("Simulation duration: ", start_time - Sys.time())
     # stop logging
+    tictoc::toc() # sim time
     if(log){ 
       store_data(log_info$path, name, this_sim, filepath)
       stop_log(log_info)
     }
-    tictoc::toc()
   }
-  tictoc::toc()
+  tictoc::toc() # run time
 }
