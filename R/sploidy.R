@@ -244,6 +244,13 @@ sploidy <- function(
           )
           juveniles <- juveniles[-which(growth), ]
           message("  New adults: ", length(which(growth)))
+          # all those that have made it to adult are competative enough to clone
+          if(sum(nrow(adults)) > 0){
+            # clones can appear in any adjacent square
+            # SHALL WE BOTHER CLONING?
+          } else {
+            message("  No adults to clone.")
+          }
         }
       } else {
         message("  No juveniles to grow.")
