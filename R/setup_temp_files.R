@@ -7,17 +7,16 @@
 #' @examples 
 #' setup_tmp_files(seedbank, juveniles, adults, seedoutput, 1)
 #' @export
-setup_tmp_files <- function(seedbank, juveniles, adults, seedoutput, generation){
+setup_tmp_files <- function(juveniles, adults, seeds, generation){
   stopifnot(
     # needs some checks for dataframe objects (colnames or whatever)
     is.numeric(generation),
     generation%%1==0,
-    generation > 0
+    generation >= 0
   )
   generation <- sprintf("%04d", generation)
-  seedbank_tmp_file <- store_tmp_data(seedbank, paste0("sploidy-seedbank-", generation))
   juvenile_tmp_file <- store_tmp_data(juveniles, paste0("sploidy-juveniles-", generation))
   adult_tmp_file <- store_tmp_data(adults, paste0("sploidy-adults-", generation))
-  seedoutput_tmp_file <- store_tmp_data(seedoutput, paste0("sploidy-seedoutput-", generation))
-  return(c(seedbank_tmp_file, juvenile_tmp_file, adult_tmp_file, seedoutput_tmp_file))
+  seed_tmp_file <- store_tmp_data(seeds, paste0("sploidy-seeds-", generation))
+  return(c(juvenile_tmp_file, adult_tmp_file, seed_tmp_file))
 }

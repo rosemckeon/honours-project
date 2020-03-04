@@ -57,8 +57,8 @@ sploidy <- function(
   name = NULL,
   log = T
 ){
-  tic.clearlog()
-  tic("Entire run time")
+  tictoc::tic.clearlog()
+  tictoc::tic("Entire run time")
   # parameter checking
   stopifnot(
     is.numeric(
@@ -90,7 +90,7 @@ sploidy <- function(
       generations,
       simulations
     )%%1==0,
-    between(
+    dplyr::between(
       c(
         germination_prob,
         adult_survival_prob,
@@ -100,32 +100,62 @@ sploidy <- function(
       ),
       0, 1
     ),
-    between(pollen_range, 0, grid_size - 1),
-    between(seed_dispersal_range, 0, grid_size - 1)
+    dplyr::between(pollen_range, 0, grid_size - 1),
+    dplyr::between(seed_dispersal_range, 0, grid_size - 1)
   )
   # make sure there is a subfolder name for the set of simulations
   if(is_null(name)){
-    name <- random_id(1, 10)
+    name <- ids::random_id(1, 10)
   }
   message("Parameters are all appropriate.")
   message("Simulation set ", name, " can begin...")
   # store the session info
   store_session(match.call(), name)
   # setup objects for data storage
-  seedbank <- NULL; juveniles <- NULL; adults <- NULL; seedoutput <- NULL
+  juveniles <- NULL; adults <- NULL; seeds <- NULL
 
   # Run the replicate simulations
   for(this_sim in 1:simulations){
     start_time <- Sys.time()
-    tic(paste0("Simulation ", this_sim, " complete"))
+    tictoc::tic(paste0("Simulation ", this_sim, " complete"))
+    folder_sim <- paste0("sim-", sprintf("%03d", this_sim))
     # Start logging
     if(log){ log_info <- setup_log() }
     message("SIMULATION ", this_sim, ":")
-    message("Starting population of ", pop_size, " random diploid seeds.")
     # advance time
-    for(generation in 1:generations){
+    for(generation in 0:generations){
+      file_gen <- sprintf("%04d", generation)
       # initialise temp life stage files
-      tmp_files <- setup_tmp_files(seedbank, juveniles, adults, seedoutput, generation)
+      tmp_files <- setup_tmp_files(juveniles, adults, seeds, generation)
+      # get the right starting data for this generation
+      if(generation == 0){
+        # start with a cohort of diploids
+        message("Populating ", grid_size, " by ", grid_size, " landscape with ", pop_size, " diploid juveniles.")
+        juveniles <- disturploidy::create_pop(pop_size, grid_size, this_sim) %>%
+          dplyr::mutate(
+            ploidy_lvl = "diploid", # no need for genomes
+            growth_rate = runif(pop_size, 1, 2), # size multiplier
+            gen = 0, 
+            # manual germination
+            size = 1, 
+            life_stage = 1 
+          )
+      } else {
+        message("")
+        # or load data from the last generation
+        last_gen <- generation - 1
+        last_file_gen <- sprintf("%04d", last_gen)
+        juveniles <- readRDS(file.path(filepath, name, folder_sim, paste0("sploidy-juveniles-", last_file_gen, ".rds")))
+        adults <- readRDS(file.path(filepath, name, folder_sim, paste0("sploidy-adults-", last_file_gen, ".rds")))
+        seeds <- readRDS(file.path(filepath, name, folder_sim, paste0("sploidy-seeds-", last_file_gen, ".rds")))
+      }
+      # save data to tmp files
+      store_tmp_data(juveniles, paste0("sploidy-juveniles-", file_gen))
+      store_tmp_data(adults, paste0("sploidy-adults-", file_gen))
+      store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
+      
+    
+      
       # save data at the end of every gen and clear tmp file cache
       store_data(tmp_files, name, this_sim)
     }
@@ -135,7 +165,7 @@ sploidy <- function(
       store_data(log_info$path, name, this_sim, filepath)
       stop_log(log_info)
     }
-    toc()
+    tictoc::toc()
   }
-  toc()
+  tictoc::toc()
 }
