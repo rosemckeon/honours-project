@@ -226,13 +226,12 @@ sploidy <- function(
       }
       # update tmp files
       store_tmp_data(juveniles, paste0("sploidy-juveniles-", file_gen))
-      store_tmp_data(adults, paste0("sploidy-adults-", file_gen))
       store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
       tictoc::toc() # germination
       
       # GROWTH -----------------
       message("Growth:")
-      tic("Growth")
+      tictoc::tic("Growth")
       # growth is just transition between life stages so only juveniles grow
       if(sum(nrow(juveniles)) > 0){
         # decide which ones will grow
@@ -258,23 +257,21 @@ sploidy <- function(
       # update tmp files
       store_tmp_data(juveniles, paste0("sploidy-juveniles-", file_gen))
       store_tmp_data(adults, paste0("sploidy-adults-", file_gen))
-      store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
       tictoc::toc() # growth
       
       # COMPETITION -------------
+      message("Competition:")
+      tictoc::tic("Competition")
       
       
-      # save data to tmp files
-      store_tmp_data(juveniles, paste0("sploidy-juveniles-", file_gen))
+      # update tmp files
       store_tmp_data(adults, paste0("sploidy-adults-", file_gen))
-      store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
+      tictoc::toc() # Competition
       
       # REPRODUCTION --------------
       
       
       # save data to tmp files
-      store_tmp_data(juveniles, paste0("sploidy-juveniles-", file_gen))
-      store_tmp_data(adults, paste0("sploidy-adults-", file_gen))
       store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
       
       # PROPER SAVE AND CLEAR CACHE --------------
