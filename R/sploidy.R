@@ -198,9 +198,16 @@ sploidy <- function(
       store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
       
       # GERMINATION ------------
-      
-      
-      # save data to tmp files
+      if(sum(nrow(seeds)) > 0){
+        message("Germination:")
+        tictoc::tic("Germination")
+        juveniles <- disturploidy::germinate(seeds, adults, germination_prob) %>% filter(life_stage == 1)
+        seeds <- NULL
+        tictoc::toc()
+      } else {
+        message("No seeds survived to germinate.")
+      }
+      # update tmp files
       store_tmp_data(juveniles, paste0("sploidy-juveniles-", file_gen))
       store_tmp_data(adults, paste0("sploidy-adults-", file_gen))
       store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
