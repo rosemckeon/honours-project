@@ -142,8 +142,8 @@ sploidy <- function(
             life_stage = 1 
           )
       } else {
-        message("")
-        # or load data from the last generation
+        message("Loading data from last generation...")
+        # or load data from the last generation into this one
         last_gen <- generation - 1
         last_file_gen <- sprintf("%04d", last_gen)
         juveniles <- readRDS(file.path(filepath, name, folder_sim, paste0("sploidy-juveniles-", last_file_gen, ".rds")))
@@ -164,7 +164,10 @@ sploidy <- function(
           n_juveniles <- nrow(juveniles)
           if(n_juveniles > 0){
             # keep only random survivors
-            juveniles <- juveniles %>% disturploidy::survive(juvenile_survival_prob)
+            juveniles <- juveniles %>% 
+              # make sure generation updated to this one
+              mutate(gen = generation) %>% 
+              disturploidy::survive(juvenile_survival_prob)
             message("  Surviving juveniles: ", nrow(juveniles), "/", n_juveniles)
           }
         }
@@ -172,7 +175,10 @@ sploidy <- function(
           n_adults <- nrow(adults)
           if(n_adults > 0){
             # keep only random survivors
-            adults <- adults %>% disturploidy::survive(adult_survival_prob)
+            adults <- adults %>% 
+              # make sure generation updated to this one
+              mutate(gen = generation) %>% 
+              disturploidy::survive(adult_survival_prob)
             message("  Surviving adults: ", nrow(adults), "/", n_adults)
           }
         }
@@ -180,7 +186,10 @@ sploidy <- function(
           n_seeds <- nrow(seeds)
           if(n_seeds > 0){
             # keep only random survivors
-            seeds <- seeds %>% disturploidy::survive(seed_survival_prob)
+            seeds <- seeds %>% 
+              # make sure generation updated to this one
+              mutate(gen = generation) %>% 
+              disturploidy::survive(seed_survival_prob)
             message("  Surviving seeds: ", nrow(seeds), "/", n_seeds)
           }
         }
@@ -201,7 +210,10 @@ sploidy <- function(
       if(sum(nrow(seeds)) > 0){
         message("Germination:")
         tictoc::tic("Germination")
-        juveniles <- disturploidy::germinate(seeds, adults, germination_prob) %>% filter(life_stage == 1)
+        juveniles <- bind_rows(
+          juveniles, 
+          disturploidy::germinate(seeds, adults, germination_prob) %>% filter(life_stage == 1)
+        )
         seeds <- NULL
         tictoc::toc()
       } else {
@@ -213,7 +225,7 @@ sploidy <- function(
       store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
       
       # GROWTH -----------------
-    
+      
       
       # save data to tmp files
       store_tmp_data(juveniles, paste0("sploidy-juveniles-", file_gen))
