@@ -7,6 +7,7 @@
 #' @param grid_size integer representing the size of the landscape grid. Cells are numbered 0 to grid_size -1 along an X and Y axis (default = 10, so the grid is 10 x 10).
 #' @param K integer representing K, the carrying capacity (max population size) of any given cell. Seeds and juveniles are not taken into account for K, only adults who compete for resouces after growth (which creates adults) but before reproduction (default = 1, so only 1 new adult per square can survive to reproduce).
 #' @param germination_prob number between 0 and 1 representing the probability that any seed will germinate on cells which are not yet populated by adults (default = 0.3).
+#' @param growth_prob number between 0 and 1 representing the probability that juveniles will become adults (default = 0.5).
 #' @param N_ovules integer representing the number of ovules any individual plant can create (default = 25).
 #' @param pollen_range integer between 0 and grid_size - 1 representing the dispersal range of pollen (default = 9).
 #' @param seed_dispersal_range whole number between 0 and grid_size - 1 representing the maximum distance a seed can travel (default = 9).
@@ -43,6 +44,7 @@ sploidy <- function(
   grid_size = 10,
   K = 1,
   germination_prob = .3,
+  growth_prob = .5,
   N_ovules = 25,
   pollen_range = 9,
   seed_dispersal_range = 9,
@@ -67,6 +69,7 @@ sploidy <- function(
         grid_size,
         K,
         germination_prob,
+        growth_prob,
         N_ovules,
         pollen_range,
         seed_dispersal_range,
@@ -93,6 +96,7 @@ sploidy <- function(
     dplyr::between(
       c(
         germination_prob,
+        growth_prob,
         adult_survival_prob,
         juvenile_survival_prob,
         seed_survival_prob,
@@ -125,6 +129,7 @@ sploidy <- function(
     message("SIMULATION ", this_sim, ":")
     # advance time
     for(generation in 0:generations){
+      message("Generation: ", generation, " ----------")
       file_gen <- sprintf("%04d", generation)
       # initialise temp life stage files
       tmp_files <- setup_tmp_files(juveniles, adults, seeds, generation)
@@ -135,7 +140,6 @@ sploidy <- function(
         juveniles <- disturploidy::create_pop(pop_size, grid_size, this_sim) %>%
           dplyr::mutate(
             ploidy_lvl = "diploid", # no need for genomes
-            growth_rate = runif(pop_size, 1, 2), # size multiplier
             gen = 0, 
             # manual germination
             size = 1, 
@@ -207,30 +211,48 @@ sploidy <- function(
       store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
       
       # GERMINATION ------------
+      message("Germination:")
+      tictoc::tic("Germination")
+      # only germinate if there are seeds to transition
       if(sum(nrow(seeds)) > 0){
-        message("Germination:")
-        tictoc::tic("Germination")
         juveniles <- bind_rows(
           juveniles, 
           disturploidy::germinate(seeds, adults, germination_prob) %>% filter(life_stage == 1)
         )
-        seeds <- NULL
-        tictoc::toc()
+        seeds <- NULL # no seedbank
+        message("  Seeds germinated at a rate of ", germination_prob)
       } else {
-        message("No seeds survived to germinate.")
+        message("  No seeds to germinate.")
       }
       # update tmp files
       store_tmp_data(juveniles, paste0("sploidy-juveniles-", file_gen))
       store_tmp_data(adults, paste0("sploidy-adults-", file_gen))
       store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
+      tictoc::toc() # germination
       
       # GROWTH -----------------
-      
-      
-      # save data to tmp files
+      message("Growth:")
+      tic("Growth")
+      # growth is just transition between life stages so only juveniles grow
+      if(sum(nrow(juveniles)) > 0){
+        # decide which ones will grow
+        growth <- rbinom(nrow(juveniles), 1, growth_prob) == 0
+        if(any(growth)){
+          adults <- bind_rows(
+            adults,
+            juveniles[which(growth), ] %>% mutate(life_stage = 2)
+          )
+          juveniles <- juveniles[-which(growth), ]
+          message("  New adults: ", length(which(growth)))
+        }
+      } else {
+        message("  No juveniles to grow.")
+      }
+      # update tmp files
       store_tmp_data(juveniles, paste0("sploidy-juveniles-", file_gen))
       store_tmp_data(adults, paste0("sploidy-adults-", file_gen))
       store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
+      tictoc::toc() # growth
       
       # COMPETITION -------------
       
