@@ -295,7 +295,23 @@ sploidy <- function(
       tictoc::tic("Reproduction")
       # only happens when there are adults
       if(sum(nrow(adults)) > 0){
-        seeds <- reproduce(adults, N_ovules, pollen_range, ploidy_rate, grid_size, generation)
+        # replicate adult data to create ovules
+        ovules <- adults[rep(row.names(adults), N_ovules), ] %>% 
+          mutate(
+            ploidy_lvl = replace(ploidy_lvl, which(ploidy_lvl == "diploid"), "haploid"),
+            ploidy_lvl = replace(ploidy_lvl, which(ploidy_lvl == "polyploid"), "diploid")
+          )
+        # make whole genome duplication occurs at ploidy_rate specified
+        haploid <- ovules %>% filter(ploidy_lvl == "haploid")
+        duplication <- rbinom(nrow(haploid), 1, ploidy_rate) == 0
+        if(any(duplication)){
+          ovules <- bind_rows(
+            haploid[which(!duplication), ],
+            haploid[which(duplication), ] %>% mutate(ploidy_lvl = "diploid"),
+            ovules %>% filter(ploidy_lvl == "diploid")
+          )
+          message(" Ovules")
+          rm(haploid)
       }
       # save data to tmp files
       store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
