@@ -247,6 +247,7 @@ sploidy <- function(
           if(sum(nrow(adults)) > 0){
             # clones can appear in any adjacent square
             # SHALL WE BOTHER CLONING?
+            # SHALL WE REMOVE OTHER JUVENILES WHERE ADULTS HAVE EMERGED?
           } else {
             message("  No adults to clone.")
           }
@@ -262,17 +263,43 @@ sploidy <- function(
       # COMPETITION -------------
       message("Competition:")
       tictoc::tic("Competition")
-      
-      
+      # Only K adults can survive on any one space
+      if(sum(nrow(adults)) > 0){
+        # get cell density counts
+        N <- adults %>% dplyr::group_by(X,Y) %>% dplyr::arrange(X,Y) %>% dplyr::tally() %>% dplyr::pull(n)
+        # nest and arrange adults by coordinates so rows match the vector above
+        adults <- adults %>% disturploidy::nest_by_location()
+        # subset those that need to compete 
+        temp <- adults[which(N > K), ]
+        # and keep those that didn't
+        adults <- adults[which(N <= K), ] %>% tidyr::unnest(plants)
+        message("  Adults that survive without competing: ", nrow(adults))
+        # Does competition occur?
+        if(sum(nrow(temp)) > 0){
+          message("  Locations with competition between adults: ", nrow(temp))
+          # decide who wins
+          temp$plants <- apply(temp, 1, disturploidy::compete, K)
+          adults <- bind_rows(adults, temp %>% tidyr::unnest(plants))
+          message("  Adults after competition: ", nrow(adults))
+          rm(temp)
+        }
+      } else {
+        message("  No adults to compete.")
+      }
       # update tmp files
       store_tmp_data(adults, paste0("sploidy-adults-", file_gen))
       tictoc::toc() # Competition
       
       # REPRODUCTION --------------
-      
-      
+      message("Reproduction:")
+      tictoc::tic("Reproduction")
+      # only happens when there are adults
+      if(sum(nrow(adults)) > 0){
+        seeds <- reproduce(adults, N_ovules, pollen_range, ploidy_rate, grid_size, generation)
+      }
       # save data to tmp files
       store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
+      tictoc::toc()
       
       # PROPER SAVE AND CLEAR CACHE --------------
       store_data(tmp_files, name, this_sim)
@@ -280,10 +307,12 @@ sploidy <- function(
     message("Simulation duration: ", start_time - Sys.time())
     # stop logging
     tictoc::toc() # sim time
+    tictoc::toc() # sim time (not sure why there's an extra toc needed? do we have an erroneous tic?)
     if(log){ 
       store_data(log_info$path, name, this_sim, filepath)
       stop_log(log_info)
     }
   }
+  message("Simulation set ", name, " with ", simulations, " replicate simulations complete.")
   tictoc::toc() # run time
 }
