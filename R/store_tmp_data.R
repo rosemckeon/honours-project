@@ -24,5 +24,6 @@ store_tmp_data <- function(object, tmp_filename){
   
   # save data in tmp file
   saveRDS(object, tmp_file)
-  #return(tmp_file)
+  return(tmp_file)
+}
 }
