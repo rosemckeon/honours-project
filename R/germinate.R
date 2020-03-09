@@ -34,9 +34,18 @@ germinate <- function(
       "Y" %in% colnames(adults)
     )
     # stop redundant germinations on cells with adults
-    seeds <- disturploidy::get_those_not_outcompeted(
-      adults, seeds, "Seeds unable to germinate because of established adults: "
-    ) 
+    removals <- apply(
+      adults, 1, # by row
+      FUN = function(adult, seeds){
+        # find the indices for those in the same location as each adult
+        return(which(seeds$X == adult$X & seeds$Y == adult$Y))
+      },
+      seeds
+    )
+    removals <- unique(combine(removals))
+    message("  Seeds unable to germinate because of established adults: ", length(removals))
+    # then remove those juveniles
+    seeds <- seeds[-removals, ]
   }
   message("  checking for adults completed.")
   juveniles <- seeds %>% 
