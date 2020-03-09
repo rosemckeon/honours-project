@@ -8,9 +8,8 @@
 #' @param K integer representing K, the carrying capacity (max population size) of any given cell. Seeds and juveniles are not taken into account for K, only adults who compete for resouces after growth (which creates adults) but before reproduction (default = 1, so only 1 new adult per square can survive to reproduce).
 #' @param germination_prob number between 0 and 1 representing the probability that any seed will germinate on cells which are not yet populated by adults (default = 0.3).
 #' @param growth_prob number between 0 and 1 representing the probability that juveniles will become adults (default = 0.5).
-#' @param N_ovules integer representing the number of ovules any individual plant can create (default = 25).
-#' @param pollen_range integer between 0 and grid_size - 1 representing the dispersal range of pollen (default = 9).
-#' @param seed_dispersal_range whole number between 0 and grid_size - 1 representing the maximum distance a seed can travel (default = 9).
+#' @param fecundity integer representing the mean number of seeds output by any individual adult plant (default = 25).
+#' @param fecundity_sd integer representing the standard deviation around the fecundity mean (default = fecundity/5).
 #' @param adult_survival_prob number between 0 and 1 representing survival probability of adults between generations (default = 0.5).
 #' @param juvenile_survival_prob number representing the constant which converts trait values into probabilities. Used to select for plants wth higher growth rates by weighting survival chances of larger juveniles between generations (default = 0.1).
 #' @param seed_survival_prob number between 0 and 1 representing survival probability of seeds between generations (default = 0, so there is no seedbank). New seeds are pooled with surviving seeds from previous generations after reproduction. Survival takes place before germination.
@@ -45,9 +44,8 @@ sploidy <- function(
   K = 1,
   germination_prob = .3,
   growth_prob = .5,
-  N_ovules = 25,
-  pollen_range = 9,
-  seed_dispersal_range = 9,
+  fecundity = 25,
+  fecundity_sd = NULL,
   adult_survival_prob = .5,
   juvenile_survival_prob = .1,
   seed_survival_prob = .9,
@@ -70,9 +68,7 @@ sploidy <- function(
         K,
         germination_prob,
         growth_prob,
-        N_ovules,
-        pollen_range,
-        seed_dispersal_range,
+        fecundity,
         adult_survival_prob,
         juvenile_survival_prob,
         seed_survival_prob,
@@ -87,9 +83,7 @@ sploidy <- function(
       pop_size,
       grid_size,
       K,
-      N_ovules,
-      pollen_range,
-      seed_dispersal_range,
+      fecundity,
       generations,
       simulations
     )%%1==0,
@@ -103,14 +97,15 @@ sploidy <- function(
         ploidy_rate
       ),
       0, 1
-    ),
-    dplyr::between(pollen_range, 0, grid_size - 1),
-    dplyr::between(seed_dispersal_range, 0, grid_size - 1)
+    )
   )
   # BEGIN --------------
   # make sure there is a subfolder name for the set of simulations
   if(is_null(name)){
     name <- ids::random_id(1, 10)
+  }
+  if(is_null(fecundity_sd)){
+    fecundity_sd <- fecundity / 5
   }
   message("Parameters are all appropriate.")
   message("Simulation set ", name, " can begin...")
@@ -139,12 +134,12 @@ sploidy <- function(
         message("Populating ", grid_size, " by ", grid_size, " landscape with ", pop_size, " diploid juveniles.")
         juveniles <- disturploidy::create_pop(pop_size, grid_size, this_sim) %>%
           dplyr::mutate(
-            ploidy_lvl = "diploid", # no need for genomes
+            ploidy = 2, # no need for genomes
             gen = 0, 
             # manual germination
-            size = 1, 
             life_stage = 1 
-          )
+          ) %>%
+          select(-size)
       } else {
         message("Loading data from last generation...")
         # or load data from the last generation into this one
@@ -217,7 +212,7 @@ sploidy <- function(
       if(sum(nrow(seeds)) > 0){
         juveniles <- bind_rows(
           juveniles, 
-          disturploidy::germinate(seeds, adults, germination_prob) %>% filter(life_stage == 1)
+          sploidy::germinate(seeds, adults, germination_prob)
         )
         seeds <- NULL # no seedbank
         message("  Seeds germinated at a rate of ", germination_prob)
@@ -295,23 +290,37 @@ sploidy <- function(
       tictoc::tic("Reproduction")
       # only happens when there are adults
       if(sum(nrow(adults)) > 0){
-        # replicate adult data to create ovules
-        ovules <- adults[rep(row.names(adults), N_ovules), ] %>% 
+        # replicate adult data to create seeds with some stochasticity around seed output
+        message(sum(nrow(adults)))
+        message(fecundity)
+        message(fecundity_sd)
+        seeds <- adults[rep(row.names(adults), rnorm(sum(nrow(adults)), fecundity, fecundity_sd)), ]
+        # correct data for the new gen
+        seeds <- seeds %>%
+          # these are maternal IDS
+          select(-ID) %>%
           mutate(
-            ploidy_lvl = replace(ploidy_lvl, which(ploidy_lvl == "diploid"), "haploid"),
-            ploidy_lvl = replace(ploidy_lvl, which(ploidy_lvl == "polyploid"), "diploid")
-          )
-        # make whole genome duplication occurs at ploidy_rate specified
-        haploid <- ovules %>% filter(ploidy_lvl == "haploid")
-        duplication <- rbinom(nrow(haploid), 1, ploidy_rate) == 0
+            # make new IDS
+            ID = paste(generation, 1:nrow(seeds), sep = "_"),
+            ploidy_mum = ploidy,
+            ploidy_dad = sample(adults$ploidy, nrow(seeds), replace = T),
+            ploidy = (ploidy_mum/2) + (ploidy_dad/2), # very basic
+            gen = generation,
+            life_stage = 0
+          ) 
+        # make whole genome duplication occurs at ploidy_rate specified 
+        # can occur in any ploidy level
+        duplication <- rbinom(nrow(seeds), 1, ploidy_rate) == 0
         if(any(duplication)){
-          ovules <- bind_rows(
-            haploid[which(!duplication), ],
-            haploid[which(duplication), ] %>% mutate(ploidy_lvl = "diploid"),
-            ovules %>% filter(ploidy_lvl == "diploid")
+          seeds <- seeds %>% mutate(
+            ploidy = replace(
+              # double ploidy where duplication occurs
+              ploidy, which(duplication), seeds[which(duplication), ]$ploidy * 2
+            )
           )
-          message(" Ovules")
-          rm(haploid)
+        }
+        # disperse!
+        seeds <- disturploidy::move(seeds, grid_size, FALSE, grid_size - 1)
       }
       # save data to tmp files
       store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
