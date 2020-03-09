@@ -1,5 +1,5 @@
 #' @name store_tmp_data
-#' @title Store object in `tempdir()`
+#' @title Store object as RDS file in temp directory.
 #' @description Creates temporary rds file from object.
 #' @usage store_tmp_data()
 #' @author Rose McKeon
