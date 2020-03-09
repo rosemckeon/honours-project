@@ -22,6 +22,6 @@ store_tmp_data <- function(object, tmp_filename){
   }
   # save data in tmp file
   saveRDS(object, tmp_file)
-  # message(tmp_filename, " cached: ", tmp_file)
   return(tmp_file)
 }
+
