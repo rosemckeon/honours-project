@@ -24,6 +24,7 @@ germinate <- function(
   # do extra steps if there are adults
   if(sum(nrow(adults)) > 0){
     message("  adults detected.")
+    message(str(adults))
     stopifnot(
       is.data.frame(adults),
       "life_stage" %in% colnames(adults),
@@ -47,11 +48,9 @@ germinate <- function(
     # then remove those juveniles
     seeds <- seeds[-removals, ]
   }
-  message("  checking for adults completed.")
+  # turn seeds that do germinate into juveniles
   juveniles <- seeds %>% 
-    # do germination by updating life stages
     mutate(life_stage = rbinom(nrow(seeds), 1, prob)) %>% 
-    # then just keep those that germinated
     filter(life_stage == 1)
   return(juveniles)
 }
