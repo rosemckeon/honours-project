@@ -23,7 +23,7 @@ store_data <- function(tmp_files, name = NULL, this_sim = NULL, filepath = "data
     dir.create(filepath)
   }
   # make sure there is a filename
-  if(is_null(name)){
+  if(is.null(name)){
     name <- random_id(1, 10)
   }
   # make sure named subfolder exists
