@@ -4,7 +4,7 @@
 #' @author Rose McKeon
 #' @param seeds a population dataframe that contains only seeds (life_stage = 0). These are the seeds that will germinate according to prob.
 #' @param adults optional population dataframe that contains only adults (required life_stage 2 as well X and Y coordinates for both seeds and adults). If an adult is already established in a landscape cell, seeds in that cell will not germinate (default = NULL).
-#' @param prob a number between 0 and 1 representing probability of germination.
+#' @param prob a number between 0 and 1 representing the probability of germination.
 #' @return juveniles 
 #' @export
 germinate <- function(
