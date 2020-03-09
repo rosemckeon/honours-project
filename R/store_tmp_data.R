@@ -26,4 +26,4 @@ store_tmp_data <- function(object, tmp_filename){
   saveRDS(object, tmp_file)
   return(tmp_file)
 }
-}
+} # for some reason this weid extra bracket is needed to get rid of an installation error.
