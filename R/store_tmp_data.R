@@ -16,12 +16,13 @@ store_tmp_data <- function(object, tmp_filename){
   )
   # generate tmp file path
   tmp_file <- file.path(tempdir(), paste0(tmp_filename, ".rds"))
+  
   # make sure tmp_file exists
   if(!file.exists(tmp_file)){
-    tmp_file %>% file.create(showWarnings = F)
+    file.create(tmp_file, showWarnings = F)
   }
+  
   # save data in tmp file
   saveRDS(object, tmp_file)
   return(tmp_file)
 }
-
