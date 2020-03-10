@@ -15,8 +15,8 @@ setup_tmp_files <- function(juveniles, adults, seeds, generation){
     generation >= 0
   )
   generation <- sprintf("%04d", generation)
-  juvenile_tmp_file <- store_tmp_data(juveniles, paste0("sploidy-juveniles-", generation))
-  adult_tmp_file <- store_tmp_data(adults, paste0("sploidy-adults-", generation))
-  seed_tmp_file <- store_tmp_data(seeds, paste0("sploidy-seeds-", generation))
+  juvenile_tmp_file <- store_tmp_data(juveniles, paste0("juveniles_", generation))
+  adult_tmp_file <- store_tmp_data(adults, paste0("adults_", generation))
+  seed_tmp_file <- store_tmp_data(seeds, paste0("seeds_", generation))
   return(c(juvenile_tmp_file, adult_tmp_file, seed_tmp_file))
 }

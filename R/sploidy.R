@@ -145,14 +145,14 @@ sploidy <- function(
         # or load data from the last generation into this one
         last_gen <- generation - 1
         last_file_gen <- sprintf("%04d", last_gen)
-        juveniles <- readRDS(file.path(filepath, name, folder_sim, paste0("sploidy-juveniles-", last_file_gen, ".rds")))
-        adults <- readRDS(file.path(filepath, name, folder_sim, paste0("sploidy-adults-", last_file_gen, ".rds")))
-        seeds <- readRDS(file.path(filepath, name, folder_sim, paste0("sploidy-seeds-", last_file_gen, ".rds")))
+        juveniles <- readRDS(file.path(filepath, name, folder_sim, paste0("juveniles_", last_file_gen, ".rds")))
+        adults <- readRDS(file.path(filepath, name, folder_sim, paste0("adults_", last_file_gen, ".rds")))
+        seeds <- readRDS(file.path(filepath, name, folder_sim, paste0("seeds_", last_file_gen, ".rds")))
       }
       # save data to tmp files
-      store_tmp_data(juveniles, paste0("sploidy-juveniles-", file_gen))
-      store_tmp_data(adults, paste0("sploidy-adults-", file_gen))
-      store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
+      store_tmp_data(juveniles, paste0("juveniles_", file_gen))
+      store_tmp_data(adults, paste0("adults_", file_gen))
+      store_tmp_data(seeds, paste0("seeds_", file_gen))
       
       # SURVIVAL -----------------
       # only happens after initial generation of growth and competition
@@ -201,9 +201,9 @@ sploidy <- function(
         tictoc::toc() # survival
       }
       # update tmp files
-      store_tmp_data(juveniles, paste0("sploidy-juveniles-", file_gen))
-      store_tmp_data(adults, paste0("sploidy-adults-", file_gen))
-      store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
+      store_tmp_data(juveniles, paste0("juveniles_", file_gen))
+      store_tmp_data(adults, paste0("adults_", file_gen))
+      store_tmp_data(seeds, paste0("seeds_", file_gen))
       
       # GERMINATION ------------
       message("Germination:")
@@ -223,8 +223,8 @@ sploidy <- function(
         message("  No seeds to germinate.")
       }
       # update tmp files
-      store_tmp_data(juveniles, paste0("sploidy-juveniles-", file_gen))
-      store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
+      store_tmp_data(juveniles, paste0("juveniles_", file_gen))
+      store_tmp_data(seeds, paste0("seeds_", file_gen))
       tictoc::toc() # germination
       
       # GROWTH -----------------
@@ -254,8 +254,8 @@ sploidy <- function(
         message("  No juveniles to grow.")
       }
       # update tmp files
-      store_tmp_data(juveniles, paste0("sploidy-juveniles-", file_gen))
-      store_tmp_data(adults, paste0("sploidy-adults-", file_gen))
+      store_tmp_data(juveniles, paste0("juveniles_", file_gen))
+      store_tmp_data(adults, paste0("adults_", file_gen))
       tictoc::toc() # growth
       
       # COMPETITION -------------
@@ -285,7 +285,7 @@ sploidy <- function(
         message("  No adults to compete.")
       }
       # update tmp files
-      store_tmp_data(adults, paste0("sploidy-adults-", file_gen))
+      store_tmp_data(adults, paste0("adults_", file_gen))
       tictoc::toc() # Competition
       
       # REPRODUCTION --------------
@@ -328,7 +328,7 @@ sploidy <- function(
         seeds <- disturploidy::move(seeds, grid_size, FALSE, grid_size - 1)
       }
       # save data to tmp files
-      store_tmp_data(seeds, paste0("sploidy-seeds-", file_gen))
+      store_tmp_data(seeds, paste0("seeds_", file_gen))
       tictoc::toc()
       
       # PROPER SAVE AND CLEAR CACHE --------------
