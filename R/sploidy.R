@@ -329,6 +329,7 @@ sploidy <- function(
       
       # PROPER SAVE AND CLEAR CACHE --------------
       store_data(tmp_files, name, this_sim)
+      seeds <- NULL; juveniles <- NULL; adults <- NULL;
     }
     message("Simulation duration: ", start_time - Sys.time())
     # stop logging
