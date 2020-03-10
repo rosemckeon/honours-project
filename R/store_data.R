@@ -9,10 +9,11 @@
 #' @param sploidy_call object containing the results from match.call().
 #' @param start_time object containing the results from Sys.time().
 #' @param filepath character string defining the file path where output files should be stored (relative to working directory). If this folder does not exist it will be created (default = "data").
+#' @param keep_tmp logical value that defines whether temp files should be kept or removed (default = FALSE, cleans up tmp files that have been stored).
 #' @examples 
 #' store_data()
 #' @export
-store_data <- function(tmp_files, name = NULL, this_sim = NULL, filepath = "data"){
+store_data <- function(tmp_files, name = NULL, this_sim = NULL, filepath = "data", keep_tmp = FALSE){
   stopifnot(
     file.exists(tmp_files),
     is.character(filepath)
@@ -45,11 +46,13 @@ store_data <- function(tmp_files, name = NULL, this_sim = NULL, filepath = "data
       dir.create(sim_dir)
     }
     # copy tmp_file to sim_dir
-    file.copy(tmp_files, sim_dir)
+    file.copy(tmp_files, sim_dir, overwrite = T)
   } else {
     # or to the main run directory
-    file.copy(tmp_files, file.path(filepath, name))
+    file.copy(tmp_files, file.path(filepath, name), overwrite = T)
   }
-  # Remove tmp_file
-  unlink(tmp_files)
+  if(!keep_tmp){
+    # Remove tmp_file
+    unlink(tmp_files)
+  }
 }

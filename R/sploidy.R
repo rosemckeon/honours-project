@@ -153,6 +153,7 @@ sploidy <- function(
       store_tmp_data(juveniles, paste0("juveniles_", file_gen))
       store_tmp_data(adults, paste0("adults_", file_gen))
       store_tmp_data(seeds, paste0("seeds_", file_gen))
+      if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
       
       # SURVIVAL -----------------
       # only happens after initial generation of growth and competition
@@ -204,6 +205,7 @@ sploidy <- function(
       store_tmp_data(juveniles, paste0("juveniles_", file_gen))
       store_tmp_data(adults, paste0("adults_", file_gen))
       store_tmp_data(seeds, paste0("seeds_", file_gen))
+      if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
       
       # GERMINATION ------------
       message("Germination:")
@@ -212,19 +214,17 @@ sploidy <- function(
       if(sum(nrow(seeds)) > 0){
         juveniles <- bind_rows(
           juveniles, 
-          #sploidy::germinate(seeds, adults, germination_prob)
-          seeds %>% 
-            mutate(life_stage = rbinom(nrow(seeds), 1, germination_prob)) %>% 
-            filter(life_stage == 1)
+          seeds 
         )
         seeds <- NULL # no seedbank
-        message("  Seeds germinated at a rate of ", germination_prob)
+        message("  Juveniles after germination ", nrow(juveniles))
       } else {
-        message("  No seeds to germinate.")
+        message("  No seeds germinated.")
       }
       # update tmp files
       store_tmp_data(juveniles, paste0("juveniles_", file_gen))
       store_tmp_data(seeds, paste0("seeds_", file_gen))
+      if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
       tictoc::toc() # germination
       
       # GROWTH -----------------
@@ -241,14 +241,6 @@ sploidy <- function(
           )
           juveniles <- juveniles[-which(growth), ]
           message("  New adults: ", length(which(growth)))
-          # all those that have made it to adult are competative enough to clone
-          if(sum(nrow(adults)) > 0){
-            # clones can appear in any adjacent square
-            # SHALL WE BOTHER CLONING?
-            # SHALL WE REMOVE OTHER JUVENILES WHERE ADULTS HAVE EMERGED?
-          } else {
-            message("  No adults to clone.")
-          }
         }
       } else {
         message("  No juveniles to grow.")
@@ -256,6 +248,7 @@ sploidy <- function(
       # update tmp files
       store_tmp_data(juveniles, paste0("juveniles_", file_gen))
       store_tmp_data(adults, paste0("adults_", file_gen))
+      if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
       tictoc::toc() # growth
       
       # COMPETITION -------------
@@ -286,6 +279,7 @@ sploidy <- function(
       }
       # update tmp files
       store_tmp_data(adults, paste0("adults_", file_gen))
+      if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
       tictoc::toc() # Competition
       
       # REPRODUCTION --------------
@@ -294,10 +288,11 @@ sploidy <- function(
       # only happens when there are adults
       if(sum(nrow(adults)) > 0){
         # replicate adult data to create seeds with some stochasticity around seed output
-        seeds <- adults[rep(row.names(adults), rnorm(sum(nrow(adults)), fecundity, fecundity_sd)), ]
-        # correct data for the new gen
+        seeds <- adults[rep(row.names(adults), rnorm(sum(nrow(adults)), fecundity, fecundity_sd)), ] %>% ungroup(ID)
+        message("  Fertilisation attempts: ", nrow(seeds))
+        # exclude polyploid outcrossing with diploids
+        # infact make ploidy levels only be able to mate with the exact same ploidy level.
         seeds <- seeds %>%
-          ungroup(ID) %>%
           mutate(
             ploidy_mum = ploidy,
             ploidy_dad = sample(adults$ploidy, nrow(seeds), replace = T),
@@ -305,30 +300,31 @@ sploidy <- function(
             gen = generation,
             life_stage = 0
           ) 
-        message("  Fertilisation attempts: ", nrow(seeds))
-        # exclude polyploid outcrossing with diploids
-        # infact make ploidy levels only be able to mate with the exact same ploidy level.
         seeds <- seeds[which(seeds$ploidy_mum == seeds$ploidy_dad), ]
         message("  Viable seeds: ", nrow(seeds))
+        # decide which ones are fated to germinate so we store less data
+        seeds <- seeds %>% 
+          mutate(life_stage = rbinom(nrow(seeds), 1, germination_prob)) %>% 
+          filter(life_stage == 1)
         # now give new IDS to those that make it
         seeds <- seeds %>% mutate(ID = paste(generation + 1, 1:nrow(seeds), sep = "_"))
-        # make whole genome duplication occurs at ploidy_rate specified 
-        # can occur in any ploidy level
+        # and make whole genome duplication occur at ploidy_rate specified 
         duplication <- rbinom(nrow(seeds), 1, ploidy_rate) == 1
         if(any(duplication)){
-          message("  Duplication events: ", which(duplication == T) %>% length())
           seeds <- seeds %>% mutate(
             ploidy = replace(
               # double ploidy where duplication occurs
               ploidy, which(duplication), seeds[which(duplication), ]$ploidy * 2
             )
           )
+          message("  Duplication events: ", which(duplication == T) %>% length())
         }
         # disperse!
         seeds <- disturploidy::move(seeds, grid_size, FALSE, grid_size - 1)
       }
       # save data to tmp files
       store_tmp_data(seeds, paste0("seeds_", file_gen))
+      if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
       tictoc::toc()
       
       # PROPER SAVE AND CLEAR CACHE --------------
