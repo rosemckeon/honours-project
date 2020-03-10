@@ -139,7 +139,7 @@ sploidy <- function(
             # manual germination
             life_stage = 1 
           ) %>%
-          select(-size)
+          select(-size, -sim)
       } else {
         message("Loading data from last generation...")
         # or load data from the last generation into this one
