@@ -49,7 +49,7 @@ sploidy <- function(
   adult_survival_prob = .5,
   juvenile_survival_prob = .1,
   seed_survival_prob = .9,
-  ploidy_rate = 0,
+  ploidy_rate = 0.01,
   generations = 10,
   simulations = 2,
   return = FALSE,
@@ -299,21 +299,24 @@ sploidy <- function(
         seeds <- seeds %>%
           ungroup(ID) %>%
           mutate(
-            # make new IDS
-            ID = paste(generation + 1, 1:nrow(seeds), sep = "_"),
             ploidy_mum = ploidy,
             ploidy_dad = sample(adults$ploidy, nrow(seeds), replace = T),
             ploidy = (ploidy_mum/2) + (ploidy_dad/2), # very basic
             gen = generation,
             life_stage = 0
           ) 
+        message("  Fertilisation attempts: ", nrow(seeds))
         # exclude polyploid outcrossing with diploids
-        
-          
+        # infact make ploidy levels only be able to mate with the exact same ploidy level.
+        seeds <- seeds[which(seeds$ploidy_mum == seeds$ploidy_dad), ]
+        message("  Viable seeds: ", nrow(seeds))
+        # now give new IDS to those that make it
+        seeds <- seeds %>% mutate(ID = paste(generation + 1, 1:nrow(seeds), sep = "_"))
         # make whole genome duplication occurs at ploidy_rate specified 
         # can occur in any ploidy level
-        duplication <- rbinom(nrow(seeds), 1, ploidy_rate) == 0
+        duplication <- rbinom(nrow(seeds), 1, ploidy_rate) == 1
         if(any(duplication)){
+          message("  Duplication events: ", which(duplication == T) %>% length())
           seeds <- seeds %>% mutate(
             ploidy = replace(
               # double ploidy where duplication occurs
