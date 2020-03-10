@@ -101,10 +101,10 @@ sploidy <- function(
   )
   # BEGIN --------------
   # make sure there is a subfolder name for the set of simulations
-  if(is_null(name)){
+  if(is.null(name)){
     name <- ids::random_id(1, 10)
   }
-  if(is_null(fecundity_sd)){
+  if(is.null(fecundity_sd)){
     fecundity_sd <- fecundity / 5
   }
   message("Parameters are all appropriate.")
@@ -212,7 +212,10 @@ sploidy <- function(
       if(sum(nrow(seeds)) > 0){
         juveniles <- bind_rows(
           juveniles, 
-          sploidy::germinate(seeds, adults, germination_prob)
+          #sploidy::germinate(seeds, adults, germination_prob)
+          seeds %>% 
+            mutate(life_stage = rbinom(nrow(seeds), 1, germination_prob)) %>% 
+            filter(life_stage == 1)
         )
         seeds <- NULL # no seedbank
         message("  Seeds germinated at a rate of ", germination_prob)
@@ -291,23 +294,22 @@ sploidy <- function(
       # only happens when there are adults
       if(sum(nrow(adults)) > 0){
         # replicate adult data to create seeds with some stochasticity around seed output
-        message(sum(nrow(adults)))
-        message(fecundity)
-        message(fecundity_sd)
         seeds <- adults[rep(row.names(adults), rnorm(sum(nrow(adults)), fecundity, fecundity_sd)), ]
         # correct data for the new gen
         seeds <- seeds %>%
-          # these are maternal IDS
-          select(-ID) %>%
+          ungroup(ID) %>%
           mutate(
             # make new IDS
-            ID = paste(generation, 1:nrow(seeds), sep = "_"),
+            ID = paste(generation + 1, 1:nrow(seeds), sep = "_"),
             ploidy_mum = ploidy,
             ploidy_dad = sample(adults$ploidy, nrow(seeds), replace = T),
             ploidy = (ploidy_mum/2) + (ploidy_dad/2), # very basic
             gen = generation,
             life_stage = 0
           ) 
+        # exclude polyploid outcrossing with diploids
+        
+          
         # make whole genome duplication occurs at ploidy_rate specified 
         # can occur in any ploidy level
         duplication <- rbinom(nrow(seeds), 1, ploidy_rate) == 0

@@ -7,7 +7,7 @@
 #' @param prob a number between 0 and 1 representing the probability of germination.
 #' @return juveniles 
 #' @export
-germinate <- function(
+germination <- function(
   seeds = NULL,
   adults = NULL,
   prob = .5
@@ -21,6 +21,7 @@ germinate <- function(
     is.numeric(prob),
     between(prob, 0, 1)
   )
+  message(str(seeds))
   # do extra steps if there are adults
   if(sum(nrow(adults)) > 0){
     message("  adults detected.")
@@ -35,6 +36,7 @@ germinate <- function(
       "Y" %in% colnames(adults)
     )
     # stop redundant germinations on cells with adults
+    message("  completed stopifnots.")
     removals <- apply(
       adults, 1, # by row
       FUN = function(adult, seeds){
@@ -43,6 +45,8 @@ germinate <- function(
       },
       seeds
     )
+    message("  figured out removals")
+    message(str(removals))
     removals <- unique(combine(removals))
     message("  Seeds unable to germinate because of established adults: ", length(removals))
     # then remove those juveniles
