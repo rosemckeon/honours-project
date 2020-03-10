@@ -139,7 +139,7 @@ sploidy <- function(
             # manual germination
             life_stage = 1 
           ) %>%
-          select(-size, -sim)
+          dplyr::select(-size, -sim)
       } else {
         message("Loading data from last generation...")
         # or load data from the last generation into this one
@@ -166,7 +166,7 @@ sploidy <- function(
             # keep only random survivors
             juveniles <- juveniles %>% 
               # make sure generation updated to this one
-              mutate(gen = generation) %>% 
+              dplyr::mutate(gen = generation) %>% 
               disturploidy::survive(juvenile_survival_prob)
             message("  Surviving juveniles: ", nrow(juveniles), "/", n_juveniles)
           }
@@ -177,7 +177,7 @@ sploidy <- function(
             # keep only random survivors
             adults <- adults %>% 
               # make sure generation updated to this one
-              mutate(gen = generation) %>% 
+              dplyr::mutate(gen = generation) %>% 
               disturploidy::survive(adult_survival_prob)
             message("  Surviving adults: ", nrow(adults), "/", n_adults)
           }
@@ -188,7 +188,7 @@ sploidy <- function(
             # keep only random survivors
             seeds <- seeds %>% 
               # make sure generation updated to this one
-              mutate(gen = generation) %>% 
+              dplyr::mutate(gen = generation) %>% 
               disturploidy::survive(seed_survival_prob)
             message("  Surviving seeds: ", nrow(seeds), "/", n_seeds)
           }
@@ -212,10 +212,7 @@ sploidy <- function(
       tictoc::tic("Germination")
       # only germinate if there are seeds to transition
       if(sum(nrow(seeds)) > 0){
-        juveniles <- bind_rows(
-          juveniles, 
-          seeds 
-        )
+        juveniles <- dplyr::bind_rows(juveniles, seeds)
         seeds <- NULL # no seedbank
         message("  Juveniles after germination ", nrow(juveniles))
       } else {
@@ -235,9 +232,9 @@ sploidy <- function(
         # decide which ones will grow
         growth <- rbinom(nrow(juveniles), 1, growth_prob) == 0
         if(any(growth)){
-          adults <- bind_rows(
+          adults <- dplyr::bind_rows(
             adults,
-            juveniles[which(growth), ] %>% mutate(life_stage = 2)
+            juveniles[which(growth), ] %>% dplyr::mutate(life_stage = 2)
           )
           juveniles <- juveniles[-which(growth), ]
           message("  New adults: ", length(which(growth)))
@@ -270,7 +267,7 @@ sploidy <- function(
           message("  Locations with competition between adults: ", nrow(temp))
           # decide who wins
           temp$plants <- apply(temp, 1, disturploidy::compete, K)
-          adults <- bind_rows(adults, temp %>% tidyr::unnest(plants))
+          adults <- dplyr::bind_rows(adults, temp %>% tidyr::unnest(plants))
           message("  Adults after competition: ", nrow(adults))
           rm(temp)
         }
@@ -288,12 +285,12 @@ sploidy <- function(
       # only happens when there are adults
       if(sum(nrow(adults)) > 0){
         # replicate adult data to create seeds with some stochasticity around seed output
-        seeds <- adults[rep(row.names(adults), rnorm(sum(nrow(adults)), fecundity, fecundity_sd)), ] %>% ungroup(ID)
+        seeds <- adults[rep(row.names(adults), rnorm(sum(nrow(adults)), fecundity, fecundity_sd)), ] %>% dplyr::ungroup(ID)
         message("  Fertilisation attempts: ", nrow(seeds))
         # exclude polyploid outcrossing with diploids
         # infact make ploidy levels only be able to mate with the exact same ploidy level.
         seeds <- seeds %>%
-          mutate(
+          dplyr::mutate(
             ploidy_mum = ploidy,
             ploidy_dad = sample(adults$ploidy, nrow(seeds), replace = T),
             ploidy = (ploidy_mum/2) + (ploidy_dad/2), # very basic
@@ -304,14 +301,14 @@ sploidy <- function(
         message("  Viable seeds: ", nrow(seeds))
         # decide which ones are fated to germinate so we store less data
         seeds <- seeds %>% 
-          mutate(life_stage = rbinom(nrow(seeds), 1, germination_prob)) %>% 
-          filter(life_stage == 1)
+          dplyr::mutate(life_stage = rbinom(nrow(seeds), 1, germination_prob)) %>% 
+          dplyr::filter(life_stage == 1)
         # now give new IDS to those that make it
-        seeds <- seeds %>% mutate(ID = paste(generation + 1, 1:nrow(seeds), sep = "_"))
+        seeds <- seeds %>% dplyr::mutate(ID = paste(generation + 1, 1:nrow(seeds), sep = "_"))
         # and make whole genome duplication occur at ploidy_rate specified 
         duplication <- rbinom(nrow(seeds), 1, ploidy_rate) == 1
         if(any(duplication)){
-          seeds <- seeds %>% mutate(
+          seeds <- seeds %>% dplyr::mutate(
             ploidy = replace(
               # double ploidy where duplication occurs
               ploidy, which(duplication), seeds[which(duplication), ]$ploidy * 2
