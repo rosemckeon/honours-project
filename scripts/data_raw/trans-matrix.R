@@ -1,3 +1,5 @@
+library(tidyverse)
+# DATA -------------------------------
 # from @Peterson2016
 mimulus <- tibble(
   year = c(rep(2012, 7), rep(2013, 7)),
@@ -9,34 +11,39 @@ mimulus <- tibble(
   R = c(0, 1.03, 1.04, 1.02, 0.82, 0.66, 1.56, 0, 0.19, 0, 0.32, 0.17, 0.46, 0.31),
   n = c(239, 197, 80, 117, 40, 38, 39, 240, 199, 77, 122, 38, 42, 42)
 )
+A <- 6.7e-4 # from @Peterson2016
+D <- 0.534 # from @Elder2006
 
-means <- mimulus %>% 
-  dplyr::select(-year, -group, -n) %>%
-  dplyr::summarise_all(mean) %>%
-  dplyr::mutate(n = sum(mimulus$n))
+# Calculate transition matrices ------
+matrices <- list()
+for(row in 1:nrow(mimulus)){
+  G <- mimulus$G[row]
+  O <- mimulus$O[row]
+  F <- mimulus$F[row]
+  S <- mimulus$S[row]
+  R <- mimulus$R[row]
+  # build the population matrix
+  matrices[[row]] <- matrix(
+    c(
+      D * (1 - G),
+      D * G,
+      0,
+      F * O * A * (1 - G),
+      F * O * A * G,
+      S * R,
+      F * O * A * (1 - G),
+      F * O * A * G,
+      S * R
+    ), 
+    ncol = 3, nrow = 3
+  )
+}
 
-A <- 6.7e-4
-G <- means$G
-O <- means$O
-F <- means$F
-S <- means$S
-R <- means$R
+# update data
+mimulus <- mimulus %>% dplyr::mutate(matrix = matrices)
 
-# from @Elderd2006
-D <- 0.534
+# calculate mean transisiton matrix -------------------
+trans <- apply(simplify2array(matrices), c(1, 2), mean)
 
-# based on @Peterson2016 Matrix 1
-trans <- matrix(
-  c(
-    D * (1 - G),
-    D * G,
-    0,
-    F * O * A * (1 - G),
-    F * O * A * G,
-    S * R,
-    F * O * A * (1 - G),
-    F * O * A * G,
-    S * R
-  ), 
-  ncol = 3, nrow = 3
-)
+# export mean transisiton matrix
+saveRDS(trans, "scripts/data/trans-matrix.RDS")
