@@ -3,17 +3,10 @@
 #' @description A spatially explicit individual-based model which runs a simulation, or repeated simulations, of a plant population over time.
 #' @usage sploidy()
 #' @author Rose McKeon
-#' @param pop_size integer representing starting population size, all individuals begin as juveniles (default = 500).
+#' @param pop_size integer representing starting population size, all individuals begin as seedlings (default = 500).
 #' @param grid_size integer representing the size of the landscape grid. Cells are numbered 0 to grid_size -1 along an X and Y axis (default = 10, so the grid is 10 x 10).
-#' @param K integer representing K, the carrying capacity (max population size) of any given cell. Seeds and juveniles are not taken into account for K, only adults who compete for resouces after growth (which creates adults) but before reproduction (default = 1, so only 1 new adult per square can survive to reproduce).
-#' @param germination_prob number between 0 and 1 representing the probability that any seed will germinate on cells which are not yet populated by adults (default = 0.3).
-#' @param growth_prob number between 0 and 1 representing the probability that juveniles will become adults (default = 0.5).
-#' @param fecundity integer representing the mean number of seeds output by any individual adult plant (default = 25).
-#' @param fecundity_sd integer representing the standard deviation around the fecundity mean (default = fecundity/5).
-#' @param adult_survival_prob number between 0 and 1 representing survival probability of adults between generations (default = 0.5).
-#' @param juvenile_survival_prob number representing the constant which converts trait values into probabilities. Used to select for plants wth higher growth rates by weighting survival chances of larger juveniles between generations (default = 0.1).
-#' @param seed_survival_prob number between 0 and 1 representing survival probability of seeds between generations (default = 0, so there is no seedbank). New seeds are pooled with surviving seeds from previous generations after reproduction. Survival takes place before germination.
 #' @param ploidy_rate number between 0 and 1 representing the chance that genome duplication will occur (default = 0, so no genome duplication).
+#' @param trans matrix (3x3) representing the tranisiton probabilities between life stages 1 to 3 (default = NULL).
 #' @param generations integer representing the number of generations the model should attempt to run for (default = 10). The simulation will break early if extinction occurs.
 #' @param simulations integer representing the number of simulations which should be run with these parameters (default = 2).
 #' @param return logical value which indicates whether or not to return output at the end of the simulation/s.
@@ -41,15 +34,8 @@
 sploidy <- function(
   pop_size = 500,
   grid_size = 10,
-  K = 1,
-  germination_prob = .3,
-  growth_prob = .5,
-  fecundity = 25,
-  fecundity_sd = NULL,
-  adult_survival_prob = .5,
-  juvenile_survival_prob = .1,
-  seed_survival_prob = .9,
   ploidy_rate = 0.01,
+  trans = NULL,
   generations = 10,
   simulations = 2,
   return = FALSE,
@@ -65,14 +51,8 @@ sploidy <- function(
       c(
         pop_size,
         grid_size,
-        K,
-        germination_prob,
-        growth_prob,
-        fecundity,
-        adult_survival_prob,
-        juvenile_survival_prob,
-        seed_survival_prob,
         ploidy_rate,
+        trans,
         generations,
         simulations
       )
@@ -82,20 +62,11 @@ sploidy <- function(
     c(
       pop_size,
       grid_size,
-      K,
-      fecundity,
       generations,
       simulations
     )%%1==0,
     dplyr::between(
-      c(
-        germination_prob,
-        growth_prob,
-        adult_survival_prob,
-        juvenile_survival_prob,
-        seed_survival_prob,
-        ploidy_rate
-      ),
+      c(ploidy_rate, trans),
       0, 1
     )
   )
@@ -112,7 +83,7 @@ sploidy <- function(
   # store the session info
   store_session(match.call(), name)
   # setup objects for data storage
-  juveniles <- NULL; adults <- NULL; seeds <- NULL
+  seedlings <- NULL; rosettes <- NULL; seeds <- NULL
 
   # Run the replicate simulations
   for(this_sim in 1:simulations){
@@ -127,17 +98,17 @@ sploidy <- function(
       message("Generation: ", generation, " ----------")
       file_gen <- sprintf("%04d", generation)
       # initialise temp life stage files
-      tmp_files <- setup_tmp_files(juveniles, adults, seeds, generation)
+      tmp_files <- setup_tmp_files(seedlings, rosettes, seeds, generation)
       # LOAD GEN DATA -----------
       if(generation == 0){
         # start with a cohort of diploids
-        message("Populating ", grid_size, " by ", grid_size, " landscape with ", pop_size, " diploid juveniles.")
-        juveniles <- disturploidy::create_pop(pop_size, grid_size, this_sim) %>%
+        message("Populating ", grid_size, " by ", grid_size, " landscape with ", pop_size, " diploid seedlings.")
+        seedlings <- disturploidy::create_pop(pop_size, grid_size, this_sim) %>%
           dplyr::mutate(
             ploidy = 2, # no need for genomes
             gen = 0, 
             # manual germination
-            life_stage = 1 
+            life_stage = 2 
           ) %>%
           dplyr::select(-size, -sim)
       } else {
@@ -145,56 +116,47 @@ sploidy <- function(
         # or load data from the last generation into this one
         last_gen <- generation - 1
         last_file_gen <- sprintf("%04d", last_gen)
-        juveniles <- readRDS(file.path(filepath, name, folder_sim, paste0("juveniles_", last_file_gen, ".rds")))
-        adults <- readRDS(file.path(filepath, name, folder_sim, paste0("adults_", last_file_gen, ".rds")))
+        seedlings <- readRDS(file.path(filepath, name, folder_sim, paste0("seedlings_", last_file_gen, ".rds")))
+        rosettes <- readRDS(file.path(filepath, name, folder_sim, paste0("rosettes_", last_file_gen, ".rds")))
         seeds <- readRDS(file.path(filepath, name, folder_sim, paste0("seeds_", last_file_gen, ".rds")))
       }
       # save data to tmp files
-      store_tmp_data(juveniles, paste0("juveniles_", file_gen))
-      store_tmp_data(adults, paste0("adults_", file_gen))
+      store_tmp_data(seedlings, paste0("seedlings_", file_gen))
+      store_tmp_data(rosettes, paste0("rosettes_", file_gen))
       store_tmp_data(seeds, paste0("seeds_", file_gen))
       if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
       
       # SURVIVAL -----------------
       # only happens after initial generation of growth and competition
+      last_seedlings <- NULL; last_rosettes <- NULL
       if(generation > 0){
         message("Survival:")
         tictoc::tic("Survival")
-        if(!is.null(juveniles)){
-          n_juveniles <- nrow(juveniles)
-          if(n_juveniles > 0){
-            # keep only random survivors
-            juveniles <- juveniles %>% 
-              # make sure generation updated to this one
-              dplyr::mutate(gen = generation) %>% 
-              disturploidy::survive(juvenile_survival_prob)
-            message("  Surviving juveniles: ", nrow(juveniles), "/", n_juveniles)
-          }
-        }
-        if(!is.null(adults)){
-          n_adults <- nrow(adults)
-          if(n_adults > 0){
-            # keep only random survivors
-            adults <- adults %>% 
-              # make sure generation updated to this one
-              dplyr::mutate(gen = generation) %>% 
-              disturploidy::survive(adult_survival_prob)
-            message("  Surviving adults: ", nrow(adults), "/", n_adults)
-          }
-        }
         if(!is.null(seeds)){
           n_seeds <- nrow(seeds)
           if(n_seeds > 0){
-            # keep only random survivors
-            seeds <- seeds %>% 
-              # make sure generation updated to this one
-              dplyr::mutate(gen = generation) %>% 
-              disturploidy::survive(seed_survival_prob)
+            seeds <- seeds %>% survive(trans[1,1])
             message("  Surviving seeds: ", nrow(seeds), "/", n_seeds)
           }
         }
+        if(!is.null(seedlings)){
+          n_seedlings <- nrow(seedlings)
+          if(n_seedlings > 0){
+            last_seedlings <- seedlings # save last gen seedlings for germination
+            seedlings <- seedlings %>% survive(trans[2,2]) 
+            message("  Surviving seedlings: ", nrow(seedlings), "/", n_seedlings)
+          }
+        }
+        if(!is.null(rosettes)){
+          n_rosettes <- nrow(rosettes)
+          if(n_rosettes > 0){
+            last_rosettes <- rosettes # save last gen rosettes for germination
+            rosettes <- rosettes %>% survive(trans[3,3]) 
+            message("  Surviving rosettes: ", nrow(rosettes), "/", n_rosettes)
+          }
+        }
         # check for extinction
-        if(sum(nrow(juveniles), nrow(adults), nrow(seeds)) == 0){
+        if(sum(nrow(seedlings), nrow(rosettes), nrow(seeds)) == 0){
           message("  *** EXTINCTION ***")
           message("  Ending simulation.")
           break
@@ -202,122 +164,93 @@ sploidy <- function(
         tictoc::toc() # survival
       }
       # update tmp files
-      store_tmp_data(juveniles, paste0("juveniles_", file_gen))
-      store_tmp_data(adults, paste0("adults_", file_gen))
+      store_tmp_data(seedlings, paste0("seedlings_", file_gen))
+      store_tmp_data(rosettes, paste0("rosettes_", file_gen))
       store_tmp_data(seeds, paste0("seeds_", file_gen))
       if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
+      
+      # A-SEXUAL REPRODUCTION -------------
+      # @Pearson2016 calculate trans[3,2] as a product of winter survival and rosette production
+      # Therefore, it should go before germination so that new seedling counts for t+1 are excluded
+      message("A-sexual Reproduction:")
+      tictoc::tic("A-sexual Reproduction")
+      # only happens when there are asexually reproducing life stages 
+      if(sum(nrow(seedlings)) > 0){
+        # add new clonal growth to existing rosettes
+        rosettes <- dplyr::bind_rows(
+          rosettes,
+          seedlings %>% 
+            survive(trans[3,2]) %>% 
+            dplyr::mutate(life_stage = 3, ID = paste(ID, generation, "_")) %>% 
+            disturploidy::move(grid_size, F, 2)
+        )
+        message("  Rosettes after reproduction: ", nrow(rosettes))
+      } else {
+        message("  No A-sexually reproducing plants on landscape.")
+      }
+      # save data to tmp files
+      store_tmp_data(rosettes, paste0("rosettes_", file_gen))
+      if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
+      tictoc::toc()
       
       # GERMINATION ------------
       message("Germination:")
       tictoc::tic("Germination")
-      # only germinate if there are seeds to transition
-      if(sum(nrow(seeds)) > 0){
-        juveniles <- dplyr::bind_rows(juveniles, seeds)
-        seeds <- NULL # no seedbank
-        message("  Juveniles after germination ", nrow(juveniles))
+      # only germinate if there are seeds to transition or rosettes to transition
+      # @Pearson2016 supply transtion values for seed to seedling as well as from rosette to seedling
+      # Both are given as processes of germination so the seedlings created from rosettes should
+      # also be sexually produced with new parental ploidy levels etc.
+      if(sum(nrow(seeds), nrow(rosettes)) > 0){
+        germination_results <- seeds %>% survive(trans[2,1], dead = T)
+        seedlings <- dplyr::bind_rows(
+          seedlings, 
+          germination_results$survivors %>% 
+            dplyr::mutate(life_stage = 2),
+          last_rosettes %>% 
+            survive(trans[2,3]) %>%
+            as.seeds(dplyr::bind_rows(last_seedlings, last_rosettes), generation - 1) %>%
+            dplyr::mutate(life_stage = 2) %>%
+            duplicate_genomes(ploidy_rate) %>%
+            disturploidy::move(grid_size, F, grid_size - 1)
+        )
+        seeds <- germination_results$dead
+        rm(germination_results, last_seedlings, last_rosettes)
+        message("  seedlings after germination ", nrow(seedlings))
       } else {
         message("  No seeds germinated.")
       }
       # update tmp files
-      store_tmp_data(juveniles, paste0("juveniles_", file_gen))
+      store_tmp_data(seedlings, paste0("seedlings_", file_gen))
       store_tmp_data(seeds, paste0("seeds_", file_gen))
       if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
       tictoc::toc() # germination
       
-      # GROWTH -----------------
-      message("Growth:")
-      tictoc::tic("Growth")
-      # growth is just transition between life stages so only juveniles grow
-      if(sum(nrow(juveniles)) > 0){
-        # decide which ones will grow
-        growth <- rbinom(nrow(juveniles), 1, growth_prob) == 0
-        if(any(growth)){
-          adults <- dplyr::bind_rows(
-            adults,
-            juveniles[which(growth), ] %>% dplyr::mutate(life_stage = 2)
-          )
-          juveniles <- juveniles[-which(growth), ]
-          message("  New adults: ", length(which(growth)))
-        }
+      # SEXUAL REPRODUCTION --------------
+      message("Sexual Reproduction:")
+      tictoc::tic("Sexual Reproduction")
+      # only happens when there are sexually reproducing life stages
+      if(sum(nrow(seedlings), nrow(rosettes)) > 0){
+        # combine sexually reproducing stages to make a pool of pollen donors
+        parents <- dplyr::bind_rows(seedlings, rosettes)
+        message("  Sexually reproducing plants: ", nrow(parents))
+        # choose the mothers and set size of seed pool with transition probabilities
+        new_seeds <- dplyr::bind_rows(
+          seedlings %>% 
+            survive(trans[1,2]) %>% 
+            disturploidy::move(seeds, grid_size, F, grid_size - 1),
+          rosettes %>% 
+            survive(trans[1,3]) %>% 
+            disturploidy::move(seeds, grid_size, F, grid_size - 1)
+        ) %>%
+          as.seeds(parents, generation) %>% 
+          duplicate_genomes(ploidy_rate)
+        message("  Viable new seeds: ", nrow(new_seeds))
+        # combine with seedbank
+        seeds <- bind_rows(seeds, new_seeds)
+        rm(parents, new_seeds)
+        message("  Total seeds: ", nrow(seeds))
       } else {
-        message("  No juveniles to grow.")
-      }
-      # update tmp files
-      store_tmp_data(juveniles, paste0("juveniles_", file_gen))
-      store_tmp_data(adults, paste0("adults_", file_gen))
-      if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
-      tictoc::toc() # growth
-      
-      # COMPETITION -------------
-      message("Competition:")
-      tictoc::tic("Competition")
-      # Only K adults can survive on any one space
-      if(sum(nrow(adults)) > 0){
-        # get cell density counts
-        N <- adults %>% dplyr::group_by(X,Y) %>% dplyr::arrange(X,Y) %>% dplyr::tally() %>% dplyr::pull(n)
-        # nest and arrange adults by coordinates so rows match the vector above
-        adults <- adults %>% disturploidy::nest_by_location()
-        # subset those that need to compete 
-        temp <- adults[which(N > K), ]
-        # and keep those that didn't
-        adults <- adults[which(N <= K), ] %>% tidyr::unnest(plants)
-        message("  Adults that survive without competing: ", nrow(adults))
-        # Does competition occur?
-        if(sum(nrow(temp)) > 0){
-          message("  Locations with competition between adults: ", nrow(temp))
-          # decide who wins
-          temp$plants <- apply(temp, 1, disturploidy::compete, K)
-          adults <- dplyr::bind_rows(adults, temp %>% tidyr::unnest(plants))
-          message("  Adults after competition: ", nrow(adults))
-          rm(temp)
-        }
-      } else {
-        message("  No adults to compete.")
-      }
-      # update tmp files
-      store_tmp_data(adults, paste0("adults_", file_gen))
-      if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
-      tictoc::toc() # Competition
-      
-      # REPRODUCTION --------------
-      message("Reproduction:")
-      tictoc::tic("Reproduction")
-      # only happens when there are adults
-      if(sum(nrow(adults)) > 0){
-        # replicate adult data to create seeds with some stochasticity around seed output
-        seeds <- adults[rep(row.names(adults), rnorm(sum(nrow(adults)), fecundity, fecundity_sd)), ] %>% dplyr::ungroup(ID)
-        message("  Fertilisation attempts: ", nrow(seeds))
-        # exclude polyploid outcrossing with diploids
-        # infact make ploidy levels only be able to mate with the exact same ploidy level.
-        seeds <- seeds %>%
-          dplyr::mutate(
-            ploidy_mum = ploidy,
-            ploidy_dad = sample(adults$ploidy, nrow(seeds), replace = T),
-            ploidy = (ploidy_mum/2) + (ploidy_dad/2), # very basic
-            gen = generation,
-            life_stage = 0
-          ) 
-        seeds <- seeds[which(seeds$ploidy_mum == seeds$ploidy_dad), ]
-        message("  Viable seeds: ", nrow(seeds))
-        # decide which ones are fated to germinate so we store less data
-        seeds <- seeds %>% 
-          dplyr::mutate(life_stage = rbinom(nrow(seeds), 1, germination_prob)) %>% 
-          dplyr::filter(life_stage == 1)
-        # now give new IDS to those that make it
-        seeds <- seeds %>% dplyr::mutate(ID = paste(generation + 1, 1:nrow(seeds), sep = "_"))
-        # and make whole genome duplication occur at ploidy_rate specified 
-        duplication <- rbinom(nrow(seeds), 1, ploidy_rate) == 1
-        if(any(duplication)){
-          seeds <- seeds %>% dplyr::mutate(
-            ploidy = replace(
-              # double ploidy where duplication occurs
-              ploidy, which(duplication), seeds[which(duplication), ]$ploidy * 2
-            )
-          )
-          message("  Duplication events: ", which(duplication == T) %>% length())
-        }
-        # disperse!
-        seeds <- disturploidy::move(seeds, grid_size, FALSE, grid_size - 1)
+        message("  No sexually reproducing plants on landscape.")
       }
       # save data to tmp files
       store_tmp_data(seeds, paste0("seeds_", file_gen))
@@ -326,7 +259,7 @@ sploidy <- function(
       
       # PROPER SAVE AND CLEAR CACHE --------------
       store_data(tmp_files, name, this_sim)
-      seeds <- NULL; juveniles <- NULL; adults <- NULL;
+      seeds <- NULL; seedlings <- NULL; rosettes <- NULL;
     }
     message("Simulation duration: ", start_time - Sys.time())
     # stop logging
