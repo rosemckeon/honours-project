@@ -13,7 +13,7 @@
 #' @param filepath character string defining the file path where output files should be stored (relative to working directory). If this folder does not exist it will be created (default = "data").
 #' @param name character string defining the name of the filepath subfolder which countains output RDS files. (default = unique random identifier).
 #' @param log logical value which indicates whether a log file with verbose output messages should be stored in filepath/name (default = T).
-#' @return if return == T, a dataframe of all simulations will be returned showing the population state at the end of each generation (immediately after reproduction, before survival). If return == F, data/dploidy.rda will be stored automatically and can be accessed with `data(sploidy)`.
+#' @return if return == T, a dataframe of all simulations will be returned showing the population state at the end of each generation (immediately after reproduction, before survival). If return == F, data/dploidy.rda will be stored automatically and can be accessed with data(sploidy).
 #' @examples
 #' # with default parameters
 #' sploidy()
@@ -74,9 +74,6 @@ sploidy <- function(
   # make sure there is a subfolder name for the set of simulations
   if(is.null(name)){
     name <- ids::random_id(1, 10)
-  }
-  if(is.null(fecundity_sd)){
-    fecundity_sd <- fecundity / 5
   }
   message("Parameters are all appropriate.")
   message("Simulation set ", name, " can begin...")
@@ -180,9 +177,9 @@ sploidy <- function(
         rosettes <- dplyr::bind_rows(
           rosettes,
           seedlings %>% 
-            survive(trans[3,2]) %>% 
             dplyr::mutate(life_stage = 3, ID = paste(ID, generation, "_")) %>% 
-            disturploidy::move(grid_size, F, 2)
+            disturploidy::move(grid_size, F, 2) %>%
+            survive(trans[3,2]) # mutate and move first incase no survivors
         )
         message("  Rosettes after reproduction: ", nrow(rosettes))
       } else {
@@ -200,21 +197,29 @@ sploidy <- function(
       # @Pearson2016 supply transtion values for seed to seedling as well as from rosette to seedling
       # Both are given as processes of germination so the seedlings created from rosettes should
       # also be sexually produced with new parental ploidy levels etc.
-      if(sum(nrow(seeds), nrow(rosettes)) > 0){
-        germination_results <- seeds %>% survive(trans[2,1], dead = T)
-        seedlings <- dplyr::bind_rows(
-          seedlings, 
-          germination_results$survivors %>% 
-            dplyr::mutate(life_stage = 2),
-          last_rosettes %>% 
-            survive(trans[2,3]) %>%
-            as.seeds(dplyr::bind_rows(last_seedlings, last_rosettes), generation - 1) %>%
-            dplyr::mutate(life_stage = 2) %>%
-            duplicate_genomes(ploidy_rate) %>%
-            disturploidy::move(grid_size, F, grid_size - 1)
-        )
-        seeds <- germination_results$dead
-        rm(germination_results, last_seedlings, last_rosettes)
+      if(sum(nrow(seeds), nrow(last_rosettes)) > 0){
+        if(sum(nrow(seeds)) > 0){
+          germination_results <- seeds %>% survive(trans[2,1], dead = T)
+          seedlings <- dplyr::bind_rows(
+            seedlings, 
+            germination_results$survivors %>% 
+              dplyr::mutate(life_stage = 2)
+          )
+          seeds <- germination_results$dead
+          rm(germination_results)
+        }
+        if(sum(nrow(last_rosettes)) > 0){
+          seedlings <- dplyr::bind_rows(
+            seedlings,
+            last_rosettes %>% 
+              survive(trans[2,3]) %>%
+              as.seeds(dplyr::bind_rows(last_seedlings, last_rosettes), generation - 1) %>%
+              dplyr::mutate(life_stage = 2) %>%
+              duplicate_genomes(ploidy_rate) %>%
+              disturploidy::move(grid_size, F, grid_size - 1) 
+          )
+        }
+        rm(last_seedlings, last_rosettes)
         message("  seedlings after germination ", nrow(seedlings))
       } else {
         message("  No seeds germinated.")
@@ -234,17 +239,24 @@ sploidy <- function(
         parents <- dplyr::bind_rows(seedlings, rosettes)
         message("  Sexually reproducing plants: ", nrow(parents))
         # choose the mothers and set size of seed pool with transition probabilities
-        new_seeds <- dplyr::bind_rows(
-          seedlings %>% 
-            survive(trans[1,2]) %>% 
-            disturploidy::move(seeds, grid_size, F, grid_size - 1),
-          rosettes %>% 
-            survive(trans[1,3]) %>% 
-            disturploidy::move(seeds, grid_size, F, grid_size - 1)
-        ) %>%
-          as.seeds(parents, generation) %>% 
-          duplicate_genomes(ploidy_rate)
-        message("  Viable new seeds: ", nrow(new_seeds))
+        new_seeds <- NULL
+        if(sum(nrow(seedlings)) > 0){
+          new_seeds <- seedlings %>% survive(trans[1,2])
+        }
+        if(sum(nrow(rosettes)) > 0){
+          new_seeds <- dplyr::bind_rows(
+            new_seeds,
+            rosettes %>% survive(trans[1,3])
+          )
+        }
+        # if we actually have new seeds
+        if(sum(nrow(new_seeds)) > 0){
+          new_seeds <- new_seeds %>%
+            disturploidy::move(grid_size, F, grid_size - 1) %>%
+            as.seeds(parents, generation) %>% 
+            duplicate_genomes(ploidy_rate)
+        }
+        message("  Viable new seeds: ", sum(nrow(new_seeds)))
         # combine with seedbank
         seeds <- bind_rows(seeds, new_seeds)
         rm(parents, new_seeds)

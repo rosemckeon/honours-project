@@ -9,7 +9,8 @@
 #' @export
 as.seeds <- function(seeds = NULL, parents = NULL, generation = NULL){
   stopifnot(
-    is.data.frame(c(seeds, parents)),
+    is.data.frame(seeds),
+    is.data.frame(parents),
     is.numeric(generation),
     generation%%1==0
   )
@@ -22,5 +23,9 @@ as.seeds <- function(seeds = NULL, parents = NULL, generation = NULL){
     ) 
   # remove those where ploidy levels of parents don't match
   seeds <- seeds[which(seeds$ploidy_mum == seeds$ploidy_dad), ]
-  return(dplyr::mutate(ID = paste(generation, 1:nrow(seeds), sep = "_")))
+  return(
+    seeds %>% dplyr::mutate(
+      ID = paste(generation, 1:nrow(seeds), sep = "_")
+    )
+  )
 }
