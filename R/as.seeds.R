@@ -14,6 +14,7 @@ as.seeds <- function(seeds = NULL, parents = NULL, generation = NULL){
     is.numeric(generation),
     generation%%1==0
   )
+  message("  Seeds undergoing formatting: ", nrow(seeds))
   seeds <- seeds %>%
     dplyr::mutate(
       life_stage = 1,
@@ -23,9 +24,14 @@ as.seeds <- function(seeds = NULL, parents = NULL, generation = NULL){
     ) 
   # remove those where ploidy levels of parents don't match
   seeds <- seeds[which(seeds$ploidy_mum == seeds$ploidy_dad), ]
-  return(
-    seeds %>% dplyr::mutate(
-      ID = paste(generation, 1:nrow(seeds), sep = "_")
+  message("  Seeds after ploidy matching: ", nrow(seeds))
+  if(sum(nrow(seeds)) > 0){
+    return(
+      seeds %>% dplyr::mutate(
+        ID = paste(generation, 1:nrow(seeds), sep = "_")
+      )
     )
-  )
+  } else {
+    return(seeds)
+  }
 }

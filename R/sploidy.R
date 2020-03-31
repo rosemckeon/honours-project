@@ -177,8 +177,8 @@ sploidy <- function(
         rosettes <- dplyr::bind_rows(
           rosettes,
           seedlings %>% 
-            dplyr::mutate(life_stage = 3, ID = paste(ID, generation, "_")) %>% 
             disturploidy::move(grid_size, F, 2) %>%
+            dplyr::mutate(life_stage = 3, ID = paste(ID, generation, "_")) %>% 
             survive(trans[3,2]) # mutate and move first incase no survivors
         )
         message("  Rosettes after reproduction: ", nrow(rosettes))
@@ -200,23 +200,33 @@ sploidy <- function(
       if(sum(nrow(seeds), nrow(last_rosettes)) > 0){
         if(sum(nrow(seeds)) > 0){
           germination_results <- seeds %>% survive(trans[2,1], dead = T)
-          seedlings <- dplyr::bind_rows(
-            seedlings, 
-            germination_results$survivors %>% 
-              dplyr::mutate(life_stage = 2)
-          )
-          seeds <- germination_results$dead
+          if(is.list(germination_results) & !is.null(germination_results$survivors)){
+            # there were deaths
+            seedlings <- dplyr::bind_rows(
+              seedlings, 
+              germination_results$survivors %>% 
+                dplyr::mutate(life_stage = 2)
+            )
+            seeds <- germination_results$dead
+          } else {
+            # there were no deaths
+            seedlings <- dplyr::bind_rows(
+              seedlings, 
+              germination_results %>% 
+                dplyr::mutate(life_stage = 2)
+            )
+          }
           rm(germination_results)
         }
         if(sum(nrow(last_rosettes)) > 0){
           seedlings <- dplyr::bind_rows(
             seedlings,
             last_rosettes %>% 
-              survive(trans[2,3]) %>%
               as.seeds(dplyr::bind_rows(last_seedlings, last_rosettes), generation - 1) %>%
               dplyr::mutate(life_stage = 2) %>%
               duplicate_genomes(ploidy_rate) %>%
-              disturploidy::move(grid_size, F, grid_size - 1) 
+              disturploidy::move(grid_size, F, grid_size - 1) %>%
+              survive(trans[2,3]) 
           )
         }
         rm(last_seedlings, last_rosettes)
