@@ -89,10 +89,10 @@ sploidy <- function(
     folder_sim <- paste0("sim-", sprintf("%03d", this_sim))
     # Start logging
     if(log){ log_info <- setup_log() }
-    message("SIMULATION ", this_sim, ":")
+    message("# SIMULATION ", this_sim, ": Ploidy rate = ", ploidy_rate)
     # advance time
     for(generation in 0:generations){
-      message("Generation: ", generation, " ----------")
+      message("## Generation: ", generation, " ----------")
       file_gen <- sprintf("%04d", generation)
       # initialise temp life stage files
       tmp_files <- setup_tmp_files(seedlings, rosettes, seeds, generation)
@@ -136,14 +136,9 @@ sploidy <- function(
             message("  Surviving seeds: ", nrow(seeds), "/", n_seeds)
           }
         }
-        if(!is.null(seedlings)){
-          n_seedlings <- nrow(seedlings)
-          if(n_seedlings > 0){
-            last_seedlings <- seedlings # save last gen seedlings for germination
-            seedlings <- seedlings %>% survive(trans[2,2]) 
-            message("  Surviving seedlings: ", nrow(seedlings), "/", n_seedlings)
-          }
-        }
+        last_seedlings <- seedlings
+        seedlings <- NULL
+        message("  Surviving seedlings: 0/", sum(nrow(last_seedlings))) 
         if(!is.null(rosettes)){
           n_rosettes <- nrow(rosettes)
           if(n_rosettes > 0){
@@ -166,9 +161,79 @@ sploidy <- function(
       store_tmp_data(seeds, paste0("seeds_", file_gen))
       if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
       
+      # GERMINATION ------------
+      message("Germination:")
+      tictoc::tic("Germination")
+      # only germinate if there are seeds to transition or rosettes to transition
+      # @Pearson2016 supply transtion values for seed to seedling as well as from rosette to seedling
+      # Both are given as processes of germination so the seedlings created from rosettes should
+      # also be sexually produced with new parental ploidy levels etc.
+      if(sum(nrow(seeds), nrow(last_rosettes), nrow(last_seedlings)) > 0){
+        # germinate seeds created in the last generation
+        # seed -> seedling transition
+        message("  Seedlings before germination: ", sum(nrow(seedlings)))
+        if(sum(nrow(seeds)) > 0){
+          germination_results <- seeds %>% survive(trans[2,1], dead = T)
+          if(germination_results %>% inherits("list")){
+            # there were ungerminated seeds
+            # were there also germinations?
+            if(sum(nrow(germination_results$survivors)) > 0){
+              seedlings <- germination_results$survivors %>% 
+                  dplyr::mutate(life_stage = 2)
+              message("  Seeds germinated: ", sum(nrow(germination_results$survivors)), "/", sum(nrow(seeds)))
+            }
+            message("  Seeds ungerminated: ", sum(nrow(germination_results$deaths)), "/", sum(nrow(seeds)))
+            seeds <- germination_results$deaths
+          } else {
+            # all seeds were germinated
+            seedlings <- germination_results %>% 
+                dplyr::mutate(life_stage = 2)
+            message("  Seeds germinated: ", sum(nrow(germination_results)), "/", sum(nrow(seeds)))
+            seeds <- NULL
+          }
+          rm(germination_results)
+          #message("  Seedlings after seed -> seedling transition: ", sum(nrow(seedlings)))
+        }
+        # germinate assumed additional seeds based on rosettes
+        # rosette -> seedling transition
+        if(sum(nrow(last_rosettes)) > 0){
+          seedlings <- dplyr::bind_rows(
+            seedlings,
+            last_rosettes %>% 
+              as.seeds(dplyr::bind_rows(last_seedlings, last_rosettes), generation - 1) %>%
+              dplyr::mutate(life_stage = 2) %>%
+              duplicate_genomes(ploidy_rate) %>%
+              disturploidy::move(grid_size, F, grid_size - 1) %>%
+              survive(trans[2,3]) 
+          )
+          #message("  Seedlings after rosette -> seedling transition: ", sum(nrow(seedlings)))
+        }
+        # germinate assumed additional seeds based on seedlings
+        # seedling -> seedling transition
+        if(sum(nrow(last_seedlings)) > 0){
+          seedlings <- dplyr::bind_rows(
+            seedlings,
+            last_seedlings %>% 
+              as.seeds(dplyr::bind_rows(last_seedlings, last_rosettes), generation - 1) %>%
+              dplyr::mutate(life_stage = 2) %>%
+              duplicate_genomes(ploidy_rate) %>%
+              disturploidy::move(grid_size, F, grid_size - 1) %>%
+              survive(trans[2,2]) 
+          )
+          #message("  Seedlings after seedling -> seedling transition: ", sum(nrow(seedlings)))
+        }
+        rm(last_seedlings, last_rosettes)
+        message("  Seedlings after all transitions: ", sum(nrow(seedlings)))
+      } else {
+        message("  No seeds germinated.")
+      }
+      # update tmp files
+      store_tmp_data(seedlings, paste0("seedlings_", file_gen))
+      store_tmp_data(seeds, paste0("seeds_", file_gen))
+      if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
+      tictoc::toc() # germination
+      
       # A-SEXUAL REPRODUCTION -------------
-      # @Pearson2016 calculate trans[3,2] as a product of winter survival and rosette production
-      # Therefore, it should go before germination so that new seedling counts for t+1 are excluded
       message("A-sexual Reproduction:")
       tictoc::tic("A-sexual Reproduction")
       # only happens when there are asexually reproducing life stages 
@@ -189,56 +254,6 @@ sploidy <- function(
       store_tmp_data(rosettes, paste0("rosettes_", file_gen))
       if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
       tictoc::toc()
-      
-      # GERMINATION ------------
-      message("Germination:")
-      tictoc::tic("Germination")
-      # only germinate if there are seeds to transition or rosettes to transition
-      # @Pearson2016 supply transtion values for seed to seedling as well as from rosette to seedling
-      # Both are given as processes of germination so the seedlings created from rosettes should
-      # also be sexually produced with new parental ploidy levels etc.
-      if(sum(nrow(seeds), nrow(last_rosettes)) > 0){
-        if(sum(nrow(seeds)) > 0){
-          germination_results <- seeds %>% survive(trans[2,1], dead = T)
-          if(is.list(germination_results) & !is.null(germination_results$survivors)){
-            # there were deaths
-            seedlings <- dplyr::bind_rows(
-              seedlings, 
-              germination_results$survivors %>% 
-                dplyr::mutate(life_stage = 2)
-            )
-            seeds <- germination_results$dead
-          } else {
-            # there were no deaths
-            seedlings <- dplyr::bind_rows(
-              seedlings, 
-              germination_results %>% 
-                dplyr::mutate(life_stage = 2)
-            )
-          }
-          rm(germination_results)
-        }
-        if(sum(nrow(last_rosettes)) > 0){
-          seedlings <- dplyr::bind_rows(
-            seedlings,
-            last_rosettes %>% 
-              as.seeds(dplyr::bind_rows(last_seedlings, last_rosettes), generation - 1) %>%
-              dplyr::mutate(life_stage = 2) %>%
-              duplicate_genomes(ploidy_rate) %>%
-              disturploidy::move(grid_size, F, grid_size - 1) %>%
-              survive(trans[2,3]) 
-          )
-        }
-        rm(last_seedlings, last_rosettes)
-        message("  seedlings after germination ", nrow(seedlings))
-      } else {
-        message("  No seeds germinated.")
-      }
-      # update tmp files
-      store_tmp_data(seedlings, paste0("seedlings_", file_gen))
-      store_tmp_data(seeds, paste0("seeds_", file_gen))
-      if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
-      tictoc::toc() # germination
       
       # SEXUAL REPRODUCTION --------------
       message("Sexual Reproduction:")
@@ -268,9 +283,10 @@ sploidy <- function(
         }
         message("  Viable new seeds: ", sum(nrow(new_seeds)))
         # combine with seedbank
+        message("  Seeds in seedbank: ", sum(nrow(seeds)))
         seeds <- bind_rows(seeds, new_seeds)
         rm(parents, new_seeds)
-        message("  Total seeds: ", nrow(seeds))
+        message("  Total seeds: ", sum(nrow(seeds)))
       } else {
         message("  No sexually reproducing plants on landscape.")
       }
