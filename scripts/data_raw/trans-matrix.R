@@ -41,9 +41,8 @@ for(row in 1:nrow(mimulus)){
 
 # update data
 mimulus <- mimulus %>% dplyr::mutate(matrix = matrices)
+saveRDS(mimulus, "scripts/data/mimulus.RDS")
 
 # calculate mean transisiton matrix -------------------
 trans <- apply(simplify2array(matrices), c(1, 2), mean)
-
-# export mean transisiton matrix
 saveRDS(trans, "scripts/data/trans-matrix.RDS")
