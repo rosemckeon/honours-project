@@ -23,9 +23,13 @@ as.seeds <- function(seeds = NULL, parents = NULL, generation = NULL){
     ) 
   # remove those where ploidy levels of parents don't match
   seeds <- seeds[which(seeds$ploidy_mum == seeds$ploidy_dad), ]
-  return(
-    seeds %>% dplyr::mutate(
-      ID = paste(generation, 1:nrow(seeds), sep = "_")
+  if(sum(nrow(seeds)) > 0){
+    return(
+      seeds %>% dplyr::mutate(
+        ID = paste(generation, 1:nrow(seeds), sep = "_")
+      )
     )
-  )
+  } else {
+    return(seeds)
+  }
 }

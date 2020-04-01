@@ -22,6 +22,7 @@ survive <- function(pop, prob = 1, dead = F){
     # only attempt removals if there are deaths
     if(dead == T){
       # return deaths if requested
+      message("  Returning survivors and deaths as list.")
       return(
         list(
           survivors = pop[-which(deaths), ],
@@ -30,10 +31,12 @@ survive <- function(pop, prob = 1, dead = F){
       )
     } else {
       # or just the survivors
+      #message("  Returning survivors only.")
       return(pop[-which(deaths), ])
     }
   } else {
     # return whole pop as survivors when no deaths 
+    #message("  Returning survivors only.")
     return(pop)
   }
 }
