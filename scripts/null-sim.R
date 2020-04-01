@@ -5,21 +5,14 @@ library(disturploidy)
 devtools::install_github("rosemckeon/honours-project", auth_token = "60bcd5244537f523313ffae0b061b4ba00873f5d")
 library(sploidy)
 
-# create a range of ploidy rates with more values close to min than max (following exponential distribution).
-ploidy_rates <- runif(
-  n = 100000, 
-  min = log(0.001), 
-  max = log(0.01)
-) %>%
-  exp()
-
-# run random ploidy_rate simulations
+# run null simulations
 sploidy(
   pop_size = 10000,
   grid_size = 100,
-  simulations = 1,
+  simulations = 10,
   generations = 100,
-  ploidy_rate = sample(ploidy_rates, 1, F),
+  ploidy_rate = 0,
+  name = "null-ploidy_rate-0",
   trans = readRDS("scripts/data/mimulus.RDS") %>%
     dplyr::filter(group == "Low-elevation perennials") %>%
     dplyr::filter(year == 2013) %>%
