@@ -19,7 +19,8 @@ as.seeds <- function(seeds = NULL, parents = NULL, generation = NULL){
       life_stage = 1,
       ploidy_mum = ploidy,
       ploidy_dad = sample(parents$ploidy, nrow(seeds), replace = T),
-      ploidy = (ploidy_mum/2) + (ploidy_dad/2) # very basic
+      ploidy = (ploidy_mum/2) + (ploidy_dad/2), # very basic
+      gen_created = generation
     ) 
   # remove those where ploidy levels of parents don't match
   seeds <- seeds[which(seeds$ploidy_mum == seeds$ploidy_dad), ]
