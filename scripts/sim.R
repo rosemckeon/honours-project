@@ -13,19 +13,26 @@ ploidy_rates <- runif(
 ) %>%
   exp()
 
-# run random ploidy_rate simulations
+mimulus <- readRDS("scripts/data/mimulus.RDS") %>%
+  dplyr::filter(group == "Low-elevation perennials") %>%
+  dplyr::filter(year == 2013)
+
+# run null simulations
 sploidy(
-  pop_size = 10000,
+  pop_size = c(20, 20, 20),
   grid_size = 100,
   simulations = 1,
-  generations = 100,
+  generations = 1000,
   ploidy_rate = sample(ploidy_rates, 1, F),
-  trans = readRDS("scripts/data/mimulus.RDS") %>%
-    dplyr::filter(group == "Low-elevation perennials") %>%
-    dplyr::filter(year == 2013) %>%
-    pull(matrix) %>%
-    magrittr::extract2(1)
+  name = "_NULL",
+  trans = mimulus %>%
+    dplyr::pull(matrix) %>%
+    magrittr::extract2(1),
+  D = 0.534,
+  G = mimulus %>%
+    dplyr::pull(G),
+  seed_longevity = 0
 )
 
 # make sure console message print to console if a simulation has benn interupted by an error
-# sink(type = "message")
+sink(type = "message")
