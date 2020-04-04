@@ -7,7 +7,7 @@
 #' @examples 
 #' setup_tmp_files(seedbank, juveniles, adults, seedoutput, 1)
 #' @export
-setup_tmp_files <- function(seedlings, rosettes, seeds, generation){
+setup_tmp_files <- function(seedlings, rosettes, seeds, generation, counts){
   stopifnot(
     # needs some checks for dataframe objects (colnames or whatever)
     is.numeric(generation),
@@ -18,5 +18,6 @@ setup_tmp_files <- function(seedlings, rosettes, seeds, generation){
   seedling_tmp_file <- store_tmp_data(seedlings, paste0("seedlings_", generation))
   rosette_tmp_file <- store_tmp_data(rosettes, paste0("rosettes_", generation))
   seed_tmp_file <- store_tmp_data(seeds, paste0("seeds_", generation))
-  return(c(seedling_tmp_file, rosette_tmp_file, seed_tmp_file))
+  counts_tmp_file <- store_tmp_data(counts, "_counts")
+  return(c(seedling_tmp_file, rosette_tmp_file, seed_tmp_file, counts_tmp_file))
 }

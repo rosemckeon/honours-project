@@ -91,10 +91,7 @@ sploidy <- function(
   message("Simulation set ", name, " can begin...")
   # store the session info
   store_session(match.call(), name)
-  # setup objects for data storage
-  last_seedlings <- NULL; last_rosettes <- NULL; last_seeds <- NULL
-  seedlings <- NULL; rosettes <- NULL; seeds <- NULL
-
+    
   # Run the replicate simulations
   for(this_sim in 1:simulations){
     start_time <- Sys.time()
@@ -103,13 +100,28 @@ sploidy <- function(
     # Start logging
     if(log){ log_info <- setup_log() }
     message("# SIMULATION ", this_sim, ": Ploidy rate = ", ploidy_rate)
+    # setup objects for data storage
+    last_seedlings <- NULL; last_rosettes <- NULL; last_seeds <- NULL
+    seedlings <- NULL; rosettes <- NULL; seeds <- NULL
+    counts <- tibble::tibble(
+      gen = numeric(),
+      seeds = numeric(),
+      diploid_seeds = numeric(),
+      polyploid_seeds = numeric(),
+      seedlings = numeric(),
+      rosettes = numeric(),
+      adults = numeric(),
+      diploid_adults = numeric(),
+      polyploid_adults = numeric(),
+      total = numeric()
+    )
     # advance time
     for(generation in 0:generations){
       tictoc::tic(paste0("Generation ", generation, " complete"))
       message("## Generation: ", generation, " ----------")
       file_gen <- sprintf("%04d", generation)
-      # initialise temp life stage files
-      tmp_files <- setup_tmp_files(seedlings, rosettes, seeds, generation)
+      # initialise temp life stage files and count file
+      tmp_files <- setup_tmp_files(seedlings, rosettes, seeds, generation, counts)
       # LOAD GEN DATA -----------
       if(generation == 0){
         message("Populating ", grid_size, " by ", grid_size, " landscape with:")
@@ -393,7 +405,33 @@ sploidy <- function(
       store_tmp_data(seedlings, paste0("seedlings_", file_gen))
       store_tmp_data(rosettes, paste0("rosettes_", file_gen))
       if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
-      # PROPER SAVE AND CLEAR CACHE --------------
+      # PROPER SAVE, COUNT AND CLEAR CACHE --------------
+      adults <- dplyr::bind_rows(seedlings, rosettes)
+      this_count <- tibble::tibble(
+          gen = generation,
+          seeds = sum(nrow(seeds)),
+          diploid_seeds = NA,
+          polyploid_seeds = NA,
+          seedlings = sum(nrow(seedlings)),
+          rosettes = sum(nrow(rosettes)),
+          adults = sum(nrow(adults)),
+          diploid_adults = NA,
+          polyploid_adults = NA,
+          total = sum(nrow(seeds), nrow(seedlings), nrow(rosettes)),
+        )
+      if(sum(nrow(seeds)) > 0){
+        this_count$diploid_seeds <- seeds %>% 
+          dplyr::filter(ploidy == 2) %>% nrow() %>% sum()
+        this_count$polyploid_seeds <- seeds %>% 
+          dplyr::filter(ploidy > 2) %>% nrow() %>% sum()
+      }
+      if(sum(nrow(adults)) > 0){
+        this_count$diploid_adults <- adults %>% dplyr::filter(ploidy == 2) %>% nrow() %>% sum()
+        this_count$polyploid_adults <- adults %>% dplyr::filter(ploidy > 2) %>% nrow() %>% sum()
+      }
+      counts <- counts %>% tibble::add_row(this_count)
+      rm(this_count, adults)
+      store_tmp_data(counts, "_counts")
       store_data(tmp_files, name, this_sim)
       seeds <- NULL; seedlings <- NULL; rosettes <- NULL
       tictoc::toc() # gen time
