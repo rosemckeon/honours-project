@@ -15,6 +15,7 @@ A <- 6.7e-4 # from @Peterson2016
 D <- 0.534 # from @Elder2006
 
 # Calculate transition matrices ------
+stages <- c("seed", "seedling", "rosette")
 matrices <- list()
 for(row in 1:nrow(mimulus)){
   G <- mimulus$G[row]
@@ -44,5 +45,5 @@ mimulus <- mimulus %>% dplyr::mutate(matrix = matrices)
 saveRDS(mimulus, "scripts/data/mimulus.RDS")
 
 # calculate mean transisiton matrix -------------------
-trans <- apply(simplify2array(matrices), c(1, 2), mean)
-saveRDS(trans, "scripts/data/trans-matrix.RDS")
+#trans <- apply(simplify2array(matrices), c(1, 2), mean)
+#saveRDS(trans, "scripts/data/trans-matrix.RDS")
