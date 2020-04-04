@@ -176,24 +176,16 @@ sploidy <- function(
           # That way we're not just having the same seed pool being resampled at a probability rate.
           seeds <- last_seeds %>% survive(D)
           message("  Seeds that survive: ", sum(nrow(seeds)), "/", nrow(last_seeds))
-          germination_results <- seeds %>% survive(G, dead = T)
-          if(germination_results %>% inherits("list")){
-            # # there were ungerminated seeds
-            # # were there also germinations?
-            # if(sum(nrow(germination_results$survivors)) > 0){
-            #   seedlings <- germination_results$survivors %>% 
-            #     dplyr::mutate(life_stage = 2)
-            #   message("  Seeds germinated: ", sum(nrow(germination_results$survivors)), "/", sum(nrow(seeds)))
-            # }
-            message("  Surviving seeds that don't germinate: ", sum(nrow(germination_results$deaths)), "/", sum(nrow(seeds)))
-            seeds <- germination_results$deaths
-          } else {
-            # # all seeds were germinated
-            # seedlings <- germination_results %>% 
-            #   dplyr::mutate(life_stage = 2)
-            # message("  Seeds germinated: ", sum(nrow(germination_results)), "/", sum(nrow(seeds)))
-            message("  Surviving seeds that don't germinate: 0/", sum(nrow(seeds)))
-            seeds <- NULL
+          germination_results <- NULL
+          if(sum(nrow(seeds)) > 0){
+            germination_results <- seeds %>% survive(G, dead = T)
+            if(germination_results %>% inherits("list")){
+              message("  Surviving seeds that don't germinate: ", sum(nrow(germination_results$deaths)), "/", sum(nrow(seeds)))
+              seeds <- germination_results$deaths
+            } else {
+              message("  Surviving seeds that don't germinate: 0/", sum(nrow(seeds)))
+              seeds <- NULL
+            }
           }
         }
         # store data and log
@@ -220,7 +212,7 @@ sploidy <- function(
           if(sum(nrow(new_seeds)) > 0){
             new_seeds <- new_seeds %>%
               disturploidy::move(grid_size, FALSE, grid_size - 1) %>%
-              as.seeds(parents, generation) %>% 
+              as.seeds(last_parents, generation) %>% 
               duplicate_genomes(ploidy_rate)
           }
           message("  Viable new seeds: ", sum(nrow(new_seeds)))
@@ -250,7 +242,7 @@ sploidy <- function(
               dplyr::mutate(life_stage = 2)
             message("  Surviving seeds that germinate: ", sum(nrow(germination_results$survivors)), "/", sum(nrow(seeds)))
           }
-        } else {
+        } else if(!is.null(germination_results)) {
           # all seeds were germinated
           seedlings <- germination_results %>%
             dplyr::mutate(life_stage = 2)
@@ -284,9 +276,9 @@ sploidy <- function(
               disturploidy::move(grid_size, FALSE, grid_size - 1)
             seedlings <- dplyr::bind_rows(seedlings, new_seedlings)
           }
-          message("  New seedlings created: ", nrow(new_seedlings))
-          rm(new_seedlings)
         }
+        message("  New seedlings created: ", sum(nrow(new_seedlings)))
+        new_seedlings  <- NULL
         # store data and log
         store_tmp_data(seedlings, paste0("seedlings_", file_gen))
         if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
@@ -294,7 +286,7 @@ sploidy <- function(
         # Transition 2,3 (Rosette to Seedling) -------------
         # Transition value = F*O*A*G 
         # There's no survival here, just sexual reproduction and germination
-        message("Transitioning to seedlings from rosettess...")
+        message("Transitioning to seedlings from rosettes...")
         if(sum(nrow(last_rosettes)) > 0){
           if(trans[2,3] > 1){
             # growth
@@ -314,8 +306,8 @@ sploidy <- function(
               duplicate_genomes(ploidy_rate) %>%
               disturploidy::move(grid_size, FALSE, grid_size - 1)
           }
-          message("  New seedlings created: ", nrow(new_seedlings))
         }
+        message("  New seedlings created: ", sum(nrow(new_seedlings)))
         seedlings <- dplyr::bind_rows(seedlings, new_seedlings) %>%
           dplyr::mutate(gen = generation)
         rm(new_seedlings, last_parents)
@@ -329,6 +321,7 @@ sploidy <- function(
         # Transition 3,2 (Seedling to Rosette)
         # Transition value = S*R
         # Survival and vegatative rosette production (clones are defined by lack of ID change)
+        message("Transitioning to rosettes from seedlings...")
         if(sum(nrow(last_seedlings)) > 0){
           if(trans[3,2] > 1){
             # growth
@@ -346,10 +339,11 @@ sploidy <- function(
               disturploidy::move(grid_size, FALSE, 2) %>% # movement range limited to 2 cells
               dplyr::mutate(life_stage = 3, gen_created = generation)
             rosettes <- dplyr::bind_rows(rosettes, new_rosettes)
-            message("  Rosettes created: ", nrow(new_rosettes))
           }
         }
-        rm(last_seedlings, new_rosettes)
+        message("  Rosettes that survive or are created: ", sum(nrow(new_rosettes)))
+        new_rosettes <- NULL
+        rm(last_seedlings)
         # store data and log
         store_tmp_data(rosettes, paste0("rosettes_", file_gen))
         if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
@@ -357,6 +351,7 @@ sploidy <- function(
         # Transition 3,3 (Rosette to Rosette)
         # Transition value = S*R
         # Survival and vegatative rosette production (clones are defined by lack of ID change)
+        message("Transitioning to rosettes from rosettes...")
         if(sum(nrow(last_rosettes)) > 0){
           if(trans[3,3] > 1){
             # growth
@@ -373,9 +368,9 @@ sploidy <- function(
             new_rosettes <- new_rosettes %>% 
               disturploidy::move(grid_size, FALSE, 2) %>% # movement range limited to 2 cells
               dplyr::mutate(life_stage = 3, gen_created = generation)
-            message("  Rosettes created: ", nrow(new_rosettes))
           }
         }
+        message("  Rosettes that survive or are created: ", sum(nrow(new_rosettes)))
         rosettes <- dplyr::bind_rows(rosettes, new_rosettes) %>%
           dplyr::mutate(gen = generation)
         rm(new_rosettes, last_rosettes)
