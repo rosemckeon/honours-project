@@ -5,7 +5,7 @@ setwd("data")
 # loop through the sub directories
 for(dir in list.dirs(full.names = F, recursive = F)){
   wd_data <- getwd()
-  setwd(dir)war
+  setwd(dir)
   # loop through any simulation replicate subfolders
   for(sim in list.dirs(full.names = F, recursive = F)){
     wd_dir <- getwd()
