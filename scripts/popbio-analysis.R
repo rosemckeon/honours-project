@@ -1,4 +1,5 @@
 rm(list=ls())
+library(tidyverse)
 library(popbio)
 
 # load the matrix
@@ -13,7 +14,7 @@ stages <- c("seed", "seedling", "rosette")
 dimnames(trans)[1:2] <- list(stages)
 
 # set starting population size by stage
-N <- c(0, 5, 0)
+N <- c(20, 20, 20)
 # make predictions
 predictions <- popbio::pop.projection(trans, N, 1000)
 predictions %>% str()
