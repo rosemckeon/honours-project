@@ -91,7 +91,7 @@ sploidy <- function(
   message("Simulation set ", name, " can begin...")
   # store the session info
   store_session(match.call(), name)
-    
+
   # Run the replicate simulations
   for(this_sim in 1:simulations){
     start_time <- Sys.time()
@@ -113,7 +113,8 @@ sploidy <- function(
       adults = numeric(),
       diploid_adults = numeric(),
       polyploid_adults = numeric(),
-      total = numeric()
+      total = numeric(),
+      ploidy_rate = numeric()
     )
     # advance time
     for(generation in 0:generations){
@@ -131,9 +132,9 @@ sploidy <- function(
           seeds <- disturploidy::create_pop(pop_size[1], grid_size, this_sim) %>%
             dplyr::mutate(
               ploidy = 2,
-              gen = 0, 
+              gen = 0,
               gen_created = 0,
-              life_stage = 1 
+              life_stage = 1
             ) %>%
             dplyr::select(-size, -sim)
         }
@@ -142,9 +143,9 @@ sploidy <- function(
           seedlings <- disturploidy::create_pop(pop_size[2], grid_size, this_sim) %>%
             dplyr::mutate(
               ploidy = 2,
-              gen = 0, 
+              gen = 0,
               gen_created = 0,
-              life_stage = 2 
+              life_stage = 2
             ) %>%
             dplyr::select(-size, -sim)
         }
@@ -153,9 +154,9 @@ sploidy <- function(
           rosettes <- disturploidy::create_pop(pop_size[3], grid_size, this_sim) %>%
             dplyr::mutate(
               ploidy = 2,
-              gen = 0, 
+              gen = 0,
               gen_created = 0,
-              life_stage = 3 
+              life_stage = 3
             ) %>%
             dplyr::select(-size, -sim)
         }
@@ -180,7 +181,7 @@ sploidy <- function(
         # transition value = seed survival * (1-germination)
         if(sum(nrow(last_seeds)) > 0){
           # make sure the seedbank can't get too crazy big by removing seeds older than seed_longevity
-          last_seeds <- last_seeds %>% 
+          last_seeds <- last_seeds %>%
             dplyr::filter(gen - gen_created <= seed_longevity)
           # then transition the remainder
           # Rather than use the transition value (trans[1,1]) here we're going to do seed survival and then
@@ -203,7 +204,7 @@ sploidy <- function(
         # store data and log
         store_tmp_data(seeds, paste0("seeds_", file_gen))
         if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
-        
+
         message("Transitioning to seeds from sexual life stages...")
         if(sum(nrow(last_seedlings), nrow(last_rosettes)) > 0){
           # combine sexually reproducing stages to make a pool of pollen donors
@@ -224,7 +225,7 @@ sploidy <- function(
           if(sum(nrow(new_seeds)) > 0){
             new_seeds <- new_seeds %>%
               disturploidy::move(grid_size, FALSE, grid_size - 1) %>%
-              as.seeds(last_parents, generation) %>% 
+              as.seeds(last_parents, generation) %>%
               duplicate_genomes(ploidy_rate)
           }
           message("  Viable new seeds: ", sum(nrow(new_seeds)))
@@ -232,7 +233,7 @@ sploidy <- function(
           seeds <- dplyr::bind_rows(seeds, new_seeds) %>%
             dplyr::mutate(gen = generation)
           rm(new_seeds)
-          
+
           message("  Total seeds: ", sum(nrow(seeds)))
         } else {
           message("  No seeds created as no seedlings or rosettes last generation to mate.")
@@ -240,7 +241,7 @@ sploidy <- function(
         # store data and log
         store_tmp_data(seeds, paste0("seeds_", file_gen))
         if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
-        
+
         # Transition 2,1 (Seed to Seedling) -------------
         message("Transitioning to seedlings from seeds...")
         # Transition value = D * G
@@ -263,9 +264,9 @@ sploidy <- function(
         # store data and log
         store_tmp_data(seedlings, paste0("seedlings_", file_gen))
         if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
-        
+
         # Transition 2,2 (Seedling to Seedling) -------------
-        # Transition value = F*O*A*G 
+        # Transition value = F*O*A*G
         # There's no survival here, just sexual reproduction and germination
         message("Transitioning to seedlings from seedlings...")
         if(sum(nrow(last_seedlings)) > 0){
@@ -281,7 +282,7 @@ sploidy <- function(
           }
           if(sum(nrow(new_seedlings)) > 0){
             # complete the transition
-            new_seedlings <- new_seedlings %>% 
+            new_seedlings <- new_seedlings %>%
               as.seeds(last_parents, generation - 1) %>%
               dplyr::mutate(life_stage = 2) %>%
               duplicate_genomes(ploidy_rate) %>%
@@ -294,9 +295,9 @@ sploidy <- function(
         # store data and log
         store_tmp_data(seedlings, paste0("seedlings_", file_gen))
         if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
-        
+
         # Transition 2,3 (Rosette to Seedling) -------------
-        # Transition value = F*O*A*G 
+        # Transition value = F*O*A*G
         # There's no survival here, just sexual reproduction and germination
         message("Transitioning to seedlings from rosettes...")
         if(sum(nrow(last_rosettes)) > 0){
@@ -312,7 +313,7 @@ sploidy <- function(
           }
           if(sum(nrow(new_seedlings)) > 0){
             # complete the transition
-            new_seedlings <- new_seedlings %>% 
+            new_seedlings <- new_seedlings %>%
               as.seeds(last_parents, generation - 1) %>%
               dplyr::mutate(life_stage = 2) %>%
               duplicate_genomes(ploidy_rate) %>%
@@ -327,9 +328,9 @@ sploidy <- function(
         # store data and log
         store_tmp_data(seedlings, paste0("seedlings_", file_gen))
         if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
-        
+
         # Transition 3,1 = 0 (may need to add in code for this at some point incase of different matrices)
-        
+
         # Transition 3,2 (Seedling to Rosette)
         # Transition value = S*R
         # Survival and vegatative rosette production (clones are defined by lack of ID change)
@@ -342,12 +343,12 @@ sploidy <- function(
             dplyr::sample_n(nrow(last_seedlings) * trans[3,2], replace = T)
           } else {
             # decline
-            new_rosettes <- last_seedlings %>% 
+            new_rosettes <- last_seedlings %>%
               survive(trans[3,2])
           }
           if(sum(nrow(new_rosettes)) > 0){
             # complete the transition
-            new_rosettes <- new_rosettes %>% 
+            new_rosettes <- new_rosettes %>%
               disturploidy::move(grid_size, FALSE, 2) %>% # movement range limited to 2 cells
               dplyr::mutate(life_stage = 3, gen_created = generation)
             rosettes <- dplyr::bind_rows(rosettes, new_rosettes)
@@ -359,7 +360,7 @@ sploidy <- function(
         # store data and log
         store_tmp_data(rosettes, paste0("rosettes_", file_gen))
         if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
-        
+
         # Transition 3,3 (Rosette to Rosette)
         # Transition value = S*R
         # Survival and vegatative rosette production (clones are defined by lack of ID change)
@@ -372,12 +373,12 @@ sploidy <- function(
               dplyr::sample_n(nrow(last_rosettes) * trans[3,3], replace = T)
           } else {
             # decline
-            new_rosettes <- last_rosettes %>% 
+            new_rosettes <- last_rosettes %>%
               survive(trans[3,3])
           }
           if(sum(nrow(new_rosettes)) > 0){
             # complete the transition
-            new_rosettes <- new_rosettes %>% 
+            new_rosettes <- new_rosettes %>%
               disturploidy::move(grid_size, FALSE, 2) %>% # movement range limited to 2 cells
               dplyr::mutate(life_stage = 3, gen_created = generation)
           }
@@ -418,11 +419,12 @@ sploidy <- function(
           diploid_adults = NA,
           polyploid_adults = NA,
           total = sum(nrow(seeds), nrow(seedlings), nrow(rosettes)),
+          ploidy_rate = ploidy_rate
         )
       if(sum(nrow(seeds)) > 0){
-        this_count$diploid_seeds <- seeds %>% 
+        this_count$diploid_seeds <- seeds %>%
           dplyr::filter(ploidy == 2) %>% nrow() %>% sum()
-        this_count$polyploid_seeds <- seeds %>% 
+        this_count$polyploid_seeds <- seeds %>%
           dplyr::filter(ploidy > 2) %>% nrow() %>% sum()
       }
       if(sum(nrow(adults)) > 0){
@@ -439,7 +441,7 @@ sploidy <- function(
     message("Simulation duration: ", start_time - Sys.time())
     # stop logging
     tictoc::toc() # sim time (not sure why there's an extra toc needed? do we have an erroneous tic?)
-    if(log){ 
+    if(log){
       store_data(log_info$path, name, this_sim, filepath)
       stop_log(log_info)
     }
