@@ -14,7 +14,8 @@ for(dir in list.dirs(full.names = F, recursive = F)){
     setwd(sim)
     # transform the count data
     counts <- readRDS("_counts.rds") %>%
-      dplyr::mutate(total = sum(seeds, seedlings, rosettes))
+      dplyr::group_by(gen) %>%
+      mutate(total = sum(seeds, adults))
     # overwrite the data file
     saveRDS(counts, "_counts.rds")
     message("Counts for ", dir, "/", sim, " updated with new totals.")
