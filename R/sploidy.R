@@ -418,20 +418,23 @@ sploidy <- function(
           adults = sum(nrow(adults)),
           diploid_adults = NA,
           polyploid_adults = NA,
-          total = sum(nrow(seeds), nrow(seedlings), nrow(rosettes)),
+          total = sum(seeds, adults), # uses the tibble vars now
           ploidy_rate = ploidy_rate
         )
+
       if(sum(nrow(seeds)) > 0){
         this_count$diploid_seeds <- seeds %>%
           dplyr::filter(ploidy == 2) %>% nrow() %>% sum()
         this_count$polyploid_seeds <- seeds %>%
           dplyr::filter(ploidy > 2) %>% nrow() %>% sum()
       }
+
       if(sum(nrow(adults)) > 0){
         this_count$diploid_adults <- adults %>% dplyr::filter(ploidy == 2) %>% nrow() %>% sum()
         this_count$polyploid_adults <- adults %>% dplyr::filter(ploidy > 2) %>% nrow() %>% sum()
       }
-      counts <- counts %>% tibble::add_row(this_count)
+
+      counts <- dplyr::bind_rows(counts, this_count)
       rm(this_count, adults)
       store_tmp_data(counts, "_counts")
       store_data(tmp_files, name, this_sim)
