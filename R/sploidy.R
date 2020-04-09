@@ -13,27 +13,11 @@
 #' @param seed_longevity integer representing the maximum seed life during dormancy (default = 1).
 #' @param generations integer representing the number of generations the model should attempt to run for (default = 10). The simulation will break early if extinction occurs.
 #' @param simulations integer representing the number of simulations which should be run with these parameters (default = 2).
-#' @param return logical value which indicates whether or not to return output at the end of the simulation/s.
 #' @param filepath character string defining the file path where output files should be stored (relative to working directory). If this folder does not exist it will be created (default = "data").
 #' @param name character string defining the name of the filepath subfolder which countains output RDS files. (default = unique random identifier).
 #' @param log logical value which indicates whether a log file with verbose output messages should be stored in filepath/name (default = T).
-#' @return if return == T, a dataframe of all simulations will be returned showing the population state at the end of each generation (immediately after reproduction, before survival). If return == F, data/dploidy.rda will be stored automatically and can be accessed with data(sploidy).
-#' @examples
-#' # with default parameters
-#' sploidy()
-#' data(sploidy)
-#' sploidy
-#'
-#' # with minimal console output
-#' # (the rest logged to TXT files)
-#' sploidy(logfilename = "whatever")
-#'
-#' # with stored data object as RDS file
-#' sploidy(filename = "whatever")
-#'
-#' # assigning output to a new object
-#' whatever <- sploidy(return = T)
-#'
+#' @param output_gen_data logical value that defines whether population data contining info on all individuals at the end of every generation is stored (default = F, storage intensive).
+#' @return Nothing is returned. Messages are output to the console so you can see each generation complete, and data output is stored according to the filepath and name paremeters.
 #' @export
 sploidy <- function(
   pop_size = c(5, 5, 5),
@@ -49,7 +33,8 @@ sploidy <- function(
   return = FALSE,
   filepath = "data",
   name = NULL,
-  log = T
+  log = T,
+  output_gen_data = F
 ){
   tictoc::tic.clearlog()
   tictoc::tic("Entire run time")
@@ -68,7 +53,7 @@ sploidy <- function(
         simulations
       )
     ),
-    is.logical(c(return, log)),
+    is.logical(c(output_gen_data, log)),
     is.character(filepath),
     c(
       pop_size,
@@ -116,13 +101,17 @@ sploidy <- function(
       total = numeric(),
       ploidy_rate = numeric()
     )
+    # initialise tmp count file
+    counts_tmp <- store_tmp_data(counts, "_counts")
     # advance time
     for(generation in 0:generations){
       tictoc::tic(paste0("Generation ", generation, " complete"))
       message("## Generation: ", generation, " ----------")
       file_gen <- sprintf("%04d", generation)
-      # initialise temp life stage files and count file
-      tmp_files <- setup_tmp_files(seedlings, rosettes, seeds, generation, counts)
+      # initialise temp life stage files
+      seeds_tmp <- store_tmp_data(seeds, paste0("seeds_", file_gen))
+      seedlings_tmp <- store_tmp_data(seedlings, paste0("seedlings_", file_gen))
+      rosettes_tmp <- store_tmp_data(rosettes, paste0("rosettes_", file_gen))
       # LOAD GEN DATA -----------
       if(generation == 0){
         message("Populating ", grid_size, " by ", grid_size, " landscape with:")
@@ -170,9 +159,17 @@ sploidy <- function(
         message("Loading data from last generation...")
         last_gen <- generation - 1
         last_file_gen <- sprintf("%04d", last_gen)
-        last_seedlings <- readRDS(file.path(filepath, name, folder_sim, paste0("seedlings_", last_file_gen, ".rds")))
-        last_rosettes <- readRDS(file.path(filepath, name, folder_sim, paste0("rosettes_", last_file_gen, ".rds")))
-        last_seeds <- readRDS(file.path(filepath, name, folder_sim, paste0("seeds_", last_file_gen, ".rds")))
+        # store the tmp file paths for removal
+        last_seeds_tmp <- file.path(tempdir(), paste0("seeds_", last_file_gen, ".rds"))
+        last_seedlings_tmp <- file.path(tempdir(), paste0("seedlings_", last_file_gen, ".rds"))
+        last_rosettes_tmp <- file.path(tempdir(), paste0("rosettes_", last_file_gen, ".rds"))
+        # and load the data into objects
+        last_seeds <- readRDS(last_seeds_tmp)
+        last_seedlings <- readRDS(last_seedlings_tmp)
+        last_rosettes <- readRDS(last_rosettes_tmp)
+        # remove tmp files and objects no longer needed
+        unlink(c(last_seeds_tmp, last_seedlings_tmp, last_rosettes_tmp))
+        rm(last_seeds_tmp, last_seedlings_tmp, last_rosettes_tmp)
         # save log
         if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
         # and use these data for transitions to t+1
@@ -421,29 +418,38 @@ sploidy <- function(
           total = sum(seeds, adults), # uses the tibble vars now
           ploidy_rate = ploidy_rate
         )
-
+      # make sure we count diploid vs polyploid seeds
       if(sum(nrow(seeds)) > 0){
         this_count$diploid_seeds <- seeds %>%
           dplyr::filter(ploidy == 2) %>% nrow() %>% sum()
         this_count$polyploid_seeds <- seeds %>%
           dplyr::filter(ploidy > 2) %>% nrow() %>% sum()
       }
-
+      # make sure we count diploid vs polyploid adults
       if(sum(nrow(adults)) > 0){
         this_count$diploid_adults <- adults %>% dplyr::filter(ploidy == 2) %>% nrow() %>% sum()
         this_count$polyploid_adults <- adults %>% dplyr::filter(ploidy > 2) %>% nrow() %>% sum()
       }
-
+      # combine these counts with all previous generations
       counts <- dplyr::bind_rows(counts, this_count)
-      rm(this_count, adults)
+      rm(adults)
       store_tmp_data(counts, "_counts")
-      store_data(tmp_files, name, this_sim)
+      store_data(counts_tmp, name, this_sim, filepath, T)
+      # store generation population data if requested
+      if(output_gen_data){
+        # keep the tmp files intact for loading from next gen
+        store_data(seeds_tmp, name, this_sim, filepath, T, "seeds")
+        store_data(seedlings_tmp, name, this_sim, filepath, T, "seedlings")
+        store_data(rosettes_tmp, name, this_sim, filepath, T, "rosettes")
+        # but remove the objects holding the paths that re no longer needed.
+        rm(seeds_tmp, seedlings_tmp, rosettes_tmp)
+      }
       seeds <- NULL; seedlings <- NULL; rosettes <- NULL
       tictoc::toc() # gen time
     }
     message("Simulation duration: ", start_time - Sys.time())
+    tictoc::toc() # sim time
     # stop logging
-    tictoc::toc() # sim time (not sure why there's an extra toc needed? do we have an erroneous tic?)
     if(log){
       store_data(log_info$path, name, this_sim, filepath)
       stop_log(log_info)

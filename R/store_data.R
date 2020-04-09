@@ -6,14 +6,13 @@
 #' @param tmp_files charactor vector containing temp file path/s.
 #' @param name character string defining the name of the filepath subfolder which countains output RDS files. (default = unique random identifier).
 #' @param this_sim integer representing the simulation number.
-#' @param sploidy_call object containing the results from match.call().
-#' @param start_time object containing the results from Sys.time().
 #' @param filepath character string defining the file path where output files should be stored (relative to working directory). If this folder does not exist it will be created (default = "data").
 #' @param keep_tmp logical value that defines whether temp files should be kept or removed (default = FALSE, cleans up tmp files that have been stored).
-#' @examples 
+#' @param subdir character string representing the subfolder inside the simulation folder that the file should be stored in (default = NULL).
+#' @examples
 #' store_data()
 #' @export
-store_data <- function(tmp_files, name = NULL, this_sim = NULL, filepath = "data", keep_tmp = FALSE){
+store_data <- function(tmp_files, name = NULL, this_sim = NULL, filepath = "data", keep_tmp = FALSE, subdir = NULL){
   stopifnot(
     file.exists(tmp_files),
     is.character(filepath)
@@ -45,8 +44,19 @@ store_data <- function(tmp_files, name = NULL, this_sim = NULL, filepath = "data
     if(!dir.exists(sim_dir)){
       dir.create(sim_dir)
     }
-    # copy tmp_file to sim_dir
-    file.copy(tmp_files, sim_dir, overwrite = T)
+    # create further subdirectory if required
+    if(!is.null(subdir)){
+      stopifnot(is.character(subdir))
+      subdir <- file.path(filepath, name, paste0("sim-", this_sim), subdir)
+      if(!dir.exists(subdir)){
+        dir.create(subdir)
+      }
+      # and copy tmp_file in here
+      file.copy(tmp_files, subdir, overwrite = T)
+    } else {
+      # or copy tmp_file to sim_dir
+      file.copy(tmp_files, sim_dir, overwrite = T)
+    }
   } else {
     # or to the main run directory
     file.copy(tmp_files, file.path(filepath, name), overwrite = T)

@@ -35,7 +35,7 @@ survive <- function(pop, prob = 1, dead = F){
       return(pop[-which(deaths), ])
     }
   } else {
-    # return whole pop as survivors when no deaths 
+    # return whole pop as survivors when no deaths
     #message("  Returning survivors only.")
     return(pop)
   }
