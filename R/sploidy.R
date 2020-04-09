@@ -446,6 +446,13 @@ sploidy <- function(
       }
       seeds <- NULL; seedlings <- NULL; rosettes <- NULL
       tictoc::toc() # gen time
+      # now all the gen data is stored, check for extinction
+      if(this_count$total == 0){
+        message("EXTINCTION.")
+        rm(this_count)
+        break
+      }
+      rm(this_count)
     }
     message("Simulation duration: ", start_time - Sys.time())
     tictoc::toc() # sim time
