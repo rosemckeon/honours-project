@@ -19,16 +19,18 @@ store_data <- function(tmp_files, name = NULL, this_sim = NULL, filepath = "data
     # needs some checks for sploidy call and start time
   )
   # make sure filepath exists
-  if(!dir.exists(filepath)){
-    dir.create(filepath)
+  data_dir <- file.path(filepath)
+  if(!dir.exists(data_dir)){
+    dir.create(data_dir)
   }
   # make sure there is a filename
   if(is.null(name)){
     name <- random_id(1, 10)
   }
   # make sure named subfolder exists
-  if(!dir.exists(file.path(filepath, name))){
-    dir.create(file.path(filepath, name))
+  name_dir <- file.path(filepath, name)
+  if(!dir.exists(name_dir){
+    dir.create(name_dir)
   }
   # create this_sim subfolder if required
   if(!is.null(this_sim)){

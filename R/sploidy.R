@@ -8,6 +8,7 @@
 #' @param ploidy_rate number between 0 and 1 representing the chance that genome duplication will occur (default = 0, so no genome duplication).
 #' @param trans matrix (3x3) representing the tranisiton probabilities between life stages 1 to 3. Values [1,1] and [2,1] are not used. These transtitons are a product of G*D instead (default = NULL).
 #' @param G numerical value representing the rate of germination (default = 0.5).
+#' @param G_modifier numerical value representing the factor by which to multiply G for polyploid seeds (default = 1, no change).
 #' @param D numerical value representing the seed survival rate (default = 0.5).
 #' @param K numerical value representing the carrying capacity of the entire landscape (default = grid_size x grid_size x 10).
 #' @param seed_longevity integer representing the maximum seed life during dormancy (default = 1).
@@ -25,6 +26,7 @@ sploidy <- function(
   ploidy_rate = 0.01,
   trans = NULL,
   G = 0.5,
+  G_modifier = 1,
   D = 0.5,
   K = NULL,
   seed_longevity = 25,
@@ -47,6 +49,7 @@ sploidy <- function(
         ploidy_rate,
         trans,
         G,
+        G_modifier,
         D,
         seed_longevity,
         generations,
@@ -75,7 +78,7 @@ sploidy <- function(
   message("Parameters are all appropriate.")
   message("Simulation set ", name, " can begin...")
   # store the session info
-  store_session(match.call(), name)
+  store_session(match.call(), name, filepath)
 
   # Run the replicate simulations
   for(this_sim in 1:simulations){
@@ -99,7 +102,8 @@ sploidy <- function(
       diploid_adults = numeric(),
       polyploid_adults = numeric(),
       total = numeric(),
-      ploidy_rate = numeric()
+      ploidy_rate = numeric(),
+      G_modifier = numeric()
     )
     # initialise tmp count file
     counts_tmp <- store_tmp_data(counts, "_counts")
@@ -188,14 +192,49 @@ sploidy <- function(
           message("  Seeds that survive: ", sum(nrow(seeds)), "/", nrow(last_seeds))
           germination_results <- NULL
           if(sum(nrow(seeds)) > 0){
-            germination_results <- seeds %>% survive(G, dead = T)
-            if(germination_results %>% inherits("list")){
-              message("  Surviving seeds that don't germinate: ", sum(nrow(germination_results$deaths)), "/", sum(nrow(seeds)))
-              seeds <- germination_results$deaths
-            } else {
-              message("  Surviving seeds that don't germinate: 0/", sum(nrow(seeds)))
-              seeds <- NULL
+            # separate the diploid seeds
+            diploids <- seeds %>%
+              dplyr::filter(ploidy == 2)
+            # do germination for diploid seeds
+            if(sum(nrow(diploids)) > 0){
+              diploid_germination_results <- seeds %>% survive(G, dead = T)
+              if(diploid_germination_results %>% inherits("list")){
+                message("  Surviving diploid seeds that don't germinate: ", sum(nrow(diploid_germination_results$deaths)), "/", sum(nrow(diploids)))
+                diploids <- diploid_germination_results$deaths
+                germination_results$survivors <- diploid_germination_results$survivors
+              } else {
+                message("  Surviving diploid seeds that don't germinate: 0/", sum(nrow(diploids)))
+                diploids <- NULL
+                germination_results <- diploid_germination_results
+              }
+              rm(diploid_germination_results)
             }
+            # and then separate the polyploid seeds
+            polyploids <- seeds %>%
+              dplyr::filter(ploidy > 2)
+            # so the germination rate can be modified
+            if(sum(nrow(polyploids)) > 0){
+              polyploid_germination_results <- seeds %>% survive(G * G_modifier, dead = T)
+              if(polyploid_germination_results %>% inherits("list")){
+                message("  Surviving polyploid seeds that don't germinate: ", sum(nrow(polyploid_germination_results$deaths)), "/", sum(nrow(polyploids)))
+                polyploids <- polyploid_germination_results$deaths
+                germination_results$survivors <- dplyr::bind_rows(
+                  germination_results$survivors,
+                  polyploid_germination_results$survivors
+                )
+              } else {
+                message("  Surviving polyploid seeds that don't germinate: 0/", sum(nrow(polyploids)))
+                polyploids <- NULL
+                germination_results <- dplyr::bind_rows(
+                  germination_results,
+                  polyploid_germination_results
+                )
+              }
+              rm(polyploid_germination_results)
+            }
+            # bind together all the seeds that didn't germinate and clean up objects
+            seeds <- dplyr::bind_rows(diploids, polyploids)
+            rm(diploids, polyploids)
           }
         }
         # store data and log
@@ -416,7 +455,8 @@ sploidy <- function(
           diploid_adults = NA,
           polyploid_adults = NA,
           total = sum(seeds, adults), # uses the tibble vars now
-          ploidy_rate = ploidy_rate
+          ploidy_rate = ploidy_rate,
+          G_modifier = G_modifier
         )
       # make sure we count diploid vs polyploid seeds
       if(sum(nrow(seeds)) > 0){

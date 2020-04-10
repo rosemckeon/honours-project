@@ -8,7 +8,7 @@
 #' @examples 
 #' store_session(match.call(), "whatever")
 #' @export
-store_session <- function(sploidy_call, name){
+store_session <- function(sploidy_call, name, filepath){
   stopifnot(
     is.character(name)
   )
@@ -22,6 +22,6 @@ store_session <- function(sploidy_call, name){
     "session_info"
   )
   # copy the tmp file to the right sim subfolder
-  store_data(session_tmp_file, name)
+  store_data(session_tmp_file, name, filepath = filepath)
   message("Session info stored.")
 }
