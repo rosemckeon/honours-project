@@ -6,11 +6,11 @@ setwd("data")
 # make sure we exclude the null data
 null_dirs <- c("_NULL", "_NULL-2", "_NULL-3", "_NULL-4")
 sim_dirs <- list.dirs(full.names = F, recursive = F)
-sim_dirs <- ran_dirs[-which(ran_dirs %in% null_dirs)]
+sim_dirs <- sim_dirs[-which(sim_dirs %in% null_dirs)]
 # setup some storage and replicate ID variables
 all_counts <- NULL
 i <- 1
-for(dir in null_dirs){
+for(dir in sim_dirs){
   wd_data <- getwd()
   setwd(dir)
   # loop through any simulation replicate subfolders
@@ -19,7 +19,7 @@ for(dir in null_dirs){
     setwd(sim)
     # get the count data
     counts <- readRDS("_counts.rds") %>%
-      mutate(ID = i)
+      mutate(ID = i, ploidy_rate = as.numeric(ploidy_rate))
     # increase i for next replicate ID
     i <- i + 1
     # combine data
