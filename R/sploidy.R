@@ -87,7 +87,8 @@ sploidy <- function(
     folder_sim <- paste0("sim-", sprintf("%03d", this_sim))
     # Start logging
     if(log){ log_info <- setup_log() }
-    message("# SIMULATION ", this_sim, ": Ploidy rate = ", ploidy_rate)
+    message("See temp directory log for warnings/errors on failure: ", filepath(tempdir(), "_sploidy-log.txt"))
+    message("# SIMULATION ", this_sim, ": Ploidy rate = ", ploidy_rate, ", G_modifier = ", G_modifier)
     # setup objects for data storage
     last_seedlings <- NULL; last_rosettes <- NULL; last_seeds <- NULL
     seedlings <- NULL; rosettes <- NULL; seeds <- NULL
