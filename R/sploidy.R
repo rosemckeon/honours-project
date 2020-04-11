@@ -77,8 +77,7 @@ sploidy <- function(
   }
   message("Parameters are all appropriate.")
   message("Simulation set ", file.path(filepath, name), " can begin...")
-  message("See temp directory log for warnings/errors on failure: ")
-  message("  ", file.path(tempdir(), "_sploidy-log.txt"))
+  error_log <- file.path(tempdir(), "_sploidy-log.txt")
   # store the session info
   store_session(match.call(), name, filepath)
 
@@ -375,6 +374,7 @@ sploidy <- function(
         # Transition value = S*R
         # Survival and vegatative rosette production (clones are defined by lack of ID change)
         message("Transitioning to rosettes from seedlings...")
+        new_rosettes <- NULL
         if(sum(nrow(last_seedlings)) > 0){
           if(trans[3,2] > 1){
             # growth
@@ -508,4 +508,5 @@ sploidy <- function(
   }
   message("Simulation set ", name, " with ", simulations, " replicate simulations complete.")
   tictoc::toc() # run time
+  return(error_log)
 }
