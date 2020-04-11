@@ -318,11 +318,15 @@ sploidy <- function(
           }
           if(sum(nrow(new_seedlings)) > 0){
             # complete the transition
-            new_seedlings <- new_seedlings %>%
-              as.seeds(last_parents, generation - 1) %>%
-              dplyr::mutate(life_stage = 2) %>%
-              duplicate_genomes(ploidy_rate) %>%
-              disturploidy::move(grid_size, FALSE, grid_size - 1)
+            new_seedlings <- new_seedlings %>% as.seeds(last_parents, generation - 1) 
+            # make sure we didn't loos all the seeds to ploidy mismatching
+            if(sum(nrow(new_seedlings)) > 0){
+              new_seedlings <- new_seedlings %>%
+                dplyr::mutate(life_stage = 2) %>%
+                duplicate_genomes(ploidy_rate) %>%
+                disturploidy::move(grid_size, FALSE, grid_size - 1)
+            }
+            # and combine
             seedlings <- dplyr::bind_rows(seedlings, new_seedlings)
           }
         }
