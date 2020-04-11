@@ -302,6 +302,7 @@ sploidy <- function(
         # Transition value = F*O*A*G
         # There's no survival here, just sexual reproduction and germination
         message("Transitioning to seedlings from seedlings...")
+        new_seedlings <- NULL
         if(sum(nrow(last_seedlings)) > 0){
           if(trans[2,2] > 1){
             # growth
