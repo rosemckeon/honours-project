@@ -15,7 +15,7 @@ mimulus <- readRDS("scripts/data/mimulus.RDS") %>%
 
 # set a roughly 6 hr process going to run the simulations
 # each named randomly with a random ploidy_rate
-for(rate in sample(ploidy_rates, 1, F)){
+for(rate in sample(ploidy_rates, 100, F)){
   sploidy(
     pop_size = c(20, 20, 20),
     grid_size = 100,
