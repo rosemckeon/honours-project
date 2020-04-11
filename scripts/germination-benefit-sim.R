@@ -26,7 +26,7 @@ for(modifier in sample(G_modifiers, 20, F)){
     grid_size = 100,
     simulations = 1,
     generations = 1000,
-    ploidy_rate = 0.5,
+    ploidy_rate = sample(ploidy_rates, 1, F),
     filepath = "data/germination-benefit/",
     trans = mimulus %>%
       dplyr::pull(matrix) %>%
@@ -34,7 +34,7 @@ for(modifier in sample(G_modifiers, 20, F)){
     D = 0.534,
     G = mimulus %>%
       dplyr::pull(G),
-    G_modifier = sample(ploidy_rates, 1, F),
+    G_modifier = modifier,
     seed_longevity = 0
   )
 }
