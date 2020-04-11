@@ -190,7 +190,7 @@ sploidy <- function(
           # That way we're not just having the same seed pool being resampled at a probability rate.
           seeds <- last_seeds %>% survive(D)
           message("  Seeds that survive: ", sum(nrow(seeds)), "/", nrow(last_seeds))
-          germination_results <- NULL
+          germination_results <- list(survivors = NULL, deaths = NULL)
           if(sum(nrow(seeds)) > 0){
             # separate the diploid seeds
             diploids <- seeds %>%
@@ -200,12 +200,12 @@ sploidy <- function(
               diploid_germination_results <- seeds %>% survive(G, dead = T)
               if(diploid_germination_results %>% inherits("list")){
                 message("  Surviving diploid seeds that don't germinate: ", sum(nrow(diploid_germination_results$deaths)), "/", sum(nrow(diploids)))
-                diploids <- diploid_germination_results$deaths
+                diploids <- germination_results$deaths <- diploid_germination_results$deaths
                 germination_results$survivors <- diploid_germination_results$survivors
               } else {
                 message("  Surviving diploid seeds that don't germinate: 0/", sum(nrow(diploids)))
-                diploids <- NULL
-                germination_results <- diploid_germination_results
+                diploids <- germination_results$deaths <- NULL
+                germination_results$survivors <- diploid_germination_results
               }
               rm(diploid_germination_results)
             }
@@ -217,16 +217,16 @@ sploidy <- function(
               polyploid_germination_results <- seeds %>% survive(G * G_modifier, dead = T)
               if(polyploid_germination_results %>% inherits("list")){
                 message("  Surviving polyploid seeds that don't germinate: ", sum(nrow(polyploid_germination_results$deaths)), "/", sum(nrow(polyploids)))
-                polyploids <- polyploid_germination_results$deaths
+                polyploids <- germination_results$deaths <- polyploid_germination_results$deaths
                 germination_results$survivors <- dplyr::bind_rows(
                   germination_results$survivors,
                   polyploid_germination_results$survivors
                 )
               } else {
                 message("  Surviving polyploid seeds that don't germinate: 0/", sum(nrow(polyploids)))
-                polyploids <- NULL
-                germination_results <- dplyr::bind_rows(
-                  germination_results,
+                polyploids <- germination_results$deaths <- NULL
+                germination_results$survivors <- dplyr::bind_rows(
+                  germination_results$survivors,
                   polyploid_germination_results
                 )
               }
@@ -283,19 +283,10 @@ sploidy <- function(
         # Transition value = D * G
         # This part is also not using transition value, but using seed survival (D) and germination rate (G)
         # so that the germinated seeds are separated correctly from the ungerminated ones.
-        if(germination_results %>% inherits("list")){
-          # there were ungerminated seeds
-          # were there also germinations?
-          if(sum(nrow(germination_results$survivors)) > 0){
-            seedlings <- germination_results$survivors %>%
-              dplyr::mutate(life_stage = 2)
-            message("  Surviving seeds that germinate: ", sum(nrow(germination_results$survivors)), "/", sum(nrow(seeds)))
-          }
-        } else if(!is.null(germination_results)) {
-          # all seeds were germinated
-          seedlings <- germination_results %>%
+        if(sum(nrow(germination_results$survivors)) > 0){
+          seedlings <- germination_results$survivors %>%
             dplyr::mutate(life_stage = 2)
-          message("  Surviving seeds that germinate: ", sum(nrow(germination_results)), "/", sum(nrow(seeds)))
+          message("  Surviving seeds that germinate: ", sum(nrow(germination_results$survivors)), "/", sum(nrow(seeds)))
         }
         # store data and log
         store_tmp_data(seedlings, paste0("seedlings_", file_gen))
