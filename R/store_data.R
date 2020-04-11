@@ -29,7 +29,7 @@ store_data <- function(tmp_files, name = NULL, this_sim = NULL, filepath = "data
   }
   # make sure named subfolder exists
   name_dir <- file.path(filepath, name)
-  if(!dir.exists(name_dir){
+  if(!dir.exists(name_dir)){
     dir.create(name_dir)
   }
   # create this_sim subfolder if required
