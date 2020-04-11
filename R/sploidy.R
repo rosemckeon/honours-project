@@ -184,57 +184,63 @@ sploidy <- function(
           # make sure the seedbank can't get too crazy big by removing seeds older than seed_longevity
           last_seeds <- last_seeds %>%
             dplyr::filter(gen - gen_created <= seed_longevity)
-          # then transition the remainder
-          # Rather than use the transition value (trans[1,1]) here we're going to do seed survival and then
-          # work out germination results so the correct germinated and ungerminated seeds go to the right place.
-          # That way we're not just having the same seed pool being resampled at a probability rate.
-          seeds <- last_seeds %>% survive(D)
-          message("  Seeds that survive: ", sum(nrow(seeds)), "/", nrow(last_seeds))
-          germination_results <- list(survivors = NULL, deaths = NULL)
-          if(sum(nrow(seeds)) > 0){
-            # separate the diploid seeds
-            diploids <- seeds %>%
-              dplyr::filter(ploidy == 2)
-            # do germination for diploid seeds
-            if(sum(nrow(diploids)) > 0){
-              diploid_germination_results <- seeds %>% survive(G, dead = T)
-              if(diploid_germination_results %>% inherits("list")){
-                message("  Surviving diploid seeds that don't germinate: ", sum(nrow(diploid_germination_results$deaths)), "/", sum(nrow(diploids)))
-                diploids <- germination_results$deaths <- diploid_germination_results$deaths
-                germination_results$survivors <- diploid_germination_results$survivors
-              } else {
-                message("  Surviving diploid seeds that don't germinate: 0/", sum(nrow(diploids)))
-                diploids <- germination_results$deaths <- NULL
-                germination_results$survivors <- diploid_germination_results
+          # make sure we still have seeds to continue with
+          if(sum(nrow(last_seeds)) > 0){
+            # then transition the remainder
+            # Rather than use the transition value (trans[1,1]) here we're going to do seed survival and then
+            # work out germination results so the correct germinated and ungerminated seeds go to the right place.
+            # That way we're not just having the same seed pool being resampled at a probability rate.
+            seeds <- last_seeds %>% survive(D)
+            message("  Seeds that survive: ", sum(nrow(seeds)), "/", nrow(last_seeds))
+            germination_results <- list(survivors = NULL, deaths = NULL)
+            if(sum(nrow(seeds)) > 0){
+              # separate the diploid seeds
+              diploids <- seeds %>%
+                dplyr::filter(ploidy == 2)
+              # do germination for diploid seeds
+              if(sum(nrow(diploids)) > 0){
+                diploid_germination_results <- seeds %>% survive(G, dead = T)
+                if(diploid_germination_results %>% inherits("list")){
+                  message("  Surviving diploid seeds that don't germinate: ", sum(nrow(diploid_germination_results$deaths)), "/", sum(nrow(diploids)))
+                  diploids <- germination_results$deaths <- diploid_germination_results$deaths
+                  germination_results$survivors <- diploid_germination_results$survivors
+                } else {
+                  message("  Surviving diploid seeds that don't germinate: 0/", sum(nrow(diploids)))
+                  diploids <- germination_results$deaths <- NULL
+                  germination_results$survivors <- diploid_germination_results
+                }
+                rm(diploid_germination_results)
               }
-              rm(diploid_germination_results)
-            }
-            # and then separate the polyploid seeds
-            polyploids <- seeds %>%
-              dplyr::filter(ploidy > 2)
-            # so the germination rate can be modified
-            if(sum(nrow(polyploids)) > 0){
-              polyploid_germination_results <- seeds %>% survive(G * G_modifier, dead = T)
-              if(polyploid_germination_results %>% inherits("list")){
-                message("  Surviving polyploid seeds that don't germinate: ", sum(nrow(polyploid_germination_results$deaths)), "/", sum(nrow(polyploids)))
-                polyploids <- germination_results$deaths <- polyploid_germination_results$deaths
-                germination_results$survivors <- dplyr::bind_rows(
-                  germination_results$survivors,
-                  polyploid_germination_results$survivors
-                )
-              } else {
-                message("  Surviving polyploid seeds that don't germinate: 0/", sum(nrow(polyploids)))
-                polyploids <- germination_results$deaths <- NULL
-                germination_results$survivors <- dplyr::bind_rows(
-                  germination_results$survivors,
-                  polyploid_germination_results
-                )
+              # and then separate the polyploid seeds
+              polyploids <- seeds %>%
+                dplyr::filter(ploidy > 2)
+              # so the germination rate can be modified
+              if(sum(nrow(polyploids)) > 0){
+                polyploid_germination_results <- seeds %>% survive(G * G_modifier, dead = T)
+                if(polyploid_germination_results %>% inherits("list")){
+                  message("  Surviving polyploid seeds that don't germinate: ", sum(nrow(polyploid_germination_results$deaths)), "/", sum(nrow(polyploids)))
+                  polyploids <- germination_results$deaths <- polyploid_germination_results$deaths
+                  germination_results$survivors <- dplyr::bind_rows(
+                    germination_results$survivors,
+                    polyploid_germination_results$survivors
+                  )
+                } else {
+                  message("  Surviving polyploid seeds that don't germinate: 0/", sum(nrow(polyploids)))
+                  polyploids <- germination_results$deaths <- NULL
+                  germination_results$survivors <- dplyr::bind_rows(
+                    germination_results$survivors,
+                    polyploid_germination_results
+                  )
+                }
+                rm(polyploid_germination_results)
               }
-              rm(polyploid_germination_results)
+              # bind together all the seeds that didn't germinate and clean up objects
+              seeds <- dplyr::bind_rows(diploids, polyploids)
+              rm(diploids, polyploids)
             }
-            # bind together all the seeds that didn't germinate and clean up objects
-            seeds <- dplyr::bind_rows(diploids, polyploids)
-            rm(diploids, polyploids)
+          } else {
+            seeds <- NULL
+            message("  Seed longevity emptied seedbank.")
           }
         }
         # store data and log
