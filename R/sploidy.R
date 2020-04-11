@@ -249,6 +249,7 @@ sploidy <- function(
         if(log){ store_data(log_info$path, name, this_sim, filepath, T) }
 
         message("Transitioning to seeds from sexual life stages...")
+        last_parents <- NULL
         if(sum(nrow(last_seedlings), nrow(last_rosettes)) > 0){
           # combine sexually reproducing stages to make a pool of pollen donors
           last_parents <- dplyr::bind_rows(last_seedlings, last_rosettes)
@@ -506,7 +507,6 @@ sploidy <- function(
       stop_log(log_info)
     }
   }
-  message("Simulation set ", name, " with ", simulations, " replicate simulations complete.")
+  message("Simulation set ", file.path(filepath, name), " with ", simulations, " replicate simulations complete.")
   tictoc::toc() # run time
-  return(error_log)
 }
