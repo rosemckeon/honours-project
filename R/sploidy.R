@@ -76,7 +76,9 @@ sploidy <- function(
     K <- grid_size * grid_size * 10
   }
   message("Parameters are all appropriate.")
-  message("Simulation set ", name, " can begin...")
+  message("Simulation set ", file.path(filepath, name), " can begin...")
+  message("See temp directory log for warnings/errors on failure: ")
+  message("  ", file.path(tempdir(), "_sploidy-log.txt"))
   # store the session info
   store_session(match.call(), name, filepath)
 
@@ -87,7 +89,7 @@ sploidy <- function(
     folder_sim <- paste0("sim-", sprintf("%03d", this_sim))
     # Start logging
     if(log){ log_info <- setup_log() }
-    message("# SIMULATION ", this_sim, ": Ploidy rate = ", ploidy_rate)
+    message("# SIMULATION ", this_sim, ": Ploidy rate = ", ploidy_rate, ", G_modifier = ", G_modifier)
     # setup objects for data storage
     last_seedlings <- NULL; last_rosettes <- NULL; last_seeds <- NULL
     seedlings <- NULL; rosettes <- NULL; seeds <- NULL
