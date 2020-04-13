@@ -1,0 +1,38 @@
+---
+title: "Evolution of Polyploidy in Flowering Plants"
+date: "Last edited: `r format(Sys.time(), '%B %d %Y')`"
+author: 
+- name: '2417024'
+  num: 
+runninghead: Evolution of Polyploidy.
+abstract: ''
+keywords: Polyploidy; Evolution; Angiosperm; Mimulus;
+bibliography: book.bib
+bibliographystyle: BES.bst
+output: 
+  pdf_document:
+    template: crumpet.tex
+    citation_package: natbib
+    keep_tex: no
+    fig_caption: yes
+    fig_width: 5
+    fig_height: 5
+documentclass: crumpet
+classoption:
+- Review
+- times
+- doublespace
+longtable: yes
+---
+
+```{r setup, include=FALSE}
+library(kableExtra)
+library(tidyverse) 
+```
+
+```{r intro, child="intro.Rmd"}
+```
+
+```{r intro, child="methods.Rmd"}
+```
+
