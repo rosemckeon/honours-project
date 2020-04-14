@@ -5,14 +5,19 @@ diploid_colour = "#000000"
 polyploid_colour = "#30a068"
 ploidy_gradient = c("#10442a", "#3bbf7d")
 # read in the data and make long
-counts <- readRDS("thesis/_data/sim_counts.rds") %>%
+counts <- readRDS("thesis/_data/sim_counts.rds") %>% dplyr::mutate(G_modifier = 1) 
+counts <- counts %>%
+  dplyr::bind_rows(
+    readRDS("thesis/_data/increased_rate_counts.rds") %>%
+      dplyr::mutate(ID = ID + max(counts$ID))
+  ) %>%
   tidyr::gather("population", "count", seeds:total)
 
 # what did the life stage composition look like
 # VERY similar to null tests
 life_stages <- counts %>%
   dplyr::filter(population %in% c("seeds", "seedlings", "rosettes")) %>%
-  mutate(treatment = "ploidy_rate = 0.001-0.010") %>%
+  mutate(treatment = "ploidy_rate > 0") %>%
   bind_rows(
     readRDS("thesis/_data/null_counts.rds") %>%
       tidyr::gather("population", "count", seeds:total) %>%
@@ -28,7 +33,7 @@ life_stage_plot <- life_stages %>%
     facet_wrap(~treatment)
 
 life_stage_plot %>%
-  saveRDS("thesis/_plots/exploratory/life-stages.rds")
+  saveRDS("thesis/_plots/exploratory/life-stages-ploidy.rds")
 
 rm(life_stage_plot, life_stages)
 
@@ -73,12 +78,36 @@ polyploid_plot_2 <- polyploids %>%
   scale_colour_gradient(low = ploidy_gradient[1], high = ploidy_gradient[2]) +
   theme_classic() +
   theme(legend.position = "none") +
-  facet_wrap(~round(ploidy_rate, 3), ncol = 5)
+  facet_wrap(~round(ploidy_rate, 2), ncol = 5)
 
-polyploid_plot_2 %>%
+polyploid_plot_2 +
+  facet_wrap(~round(ploidy_rate, 2), ncol = 5) %>%
   saveRDS("thesis/_plots/exploratory/polyploid-counts-by-rate.rds")
 
 rm(polyploid_plot_2)
+
+polyploid_plot_3 <- polyploids %>%
+  ggplot(aes(x = ploidy_rate, y = count/100000, colour = gen)) +
+  geom_point(alpha = .2) +
+  theme_classic()
+
+polyploid_plot_3 %>%
+  saveRDS("thesis/_plots/exploratory/frequency~rate.rds")
+
+rm(polyploid_plot_3)
+
+polyploid_plot_4 <- adults %>%
+  ggplot(aes(x = ploidy_rate, y = count/100000, colour = gen)) +
+  geom_point(alpha = .2) +
+  theme_classic()
+
+polyploid_plot_4 <- polyploid_plot_4 +
+  facet_wrap(~population) 
+
+polyploid_plot_4 %>%
+  saveRDS("thesis/_plots/exploratory/frequency~rate-diploids-vs-polyploids.rds")
+
+rm(polyploid_plot_4)
 
 # and show the rate relationship
 last_500yrs <- adults %>%
