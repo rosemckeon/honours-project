@@ -2,13 +2,15 @@
 
 In order to examine how changes in the rate of whole-genome duplication might affect the evolution of polyploidy in angiosperm systems, I created an individual-based model (IBM) which simulates the life cycle of the yellow monkey flower (*Mimulus guttatus*) as laid out by @Peterson2016 and detailed in figure \ref{fig:life-cycle}. *Mimulus* are popular study organisms [@REF] so data was readliy available and whole-genome duplication has been well documented in the *M. guttatus* complex [@Vickery1995].
 
-```{r life-cycle, fig.cap="", eval=FALSE, include=FALSE}
-knitr::include_graphics("thesis/_images/life-cycle.png")
+```{r life-cycle, fig.cap="Life cycle of \\textit{Mimulus guttatus} taken from \\cite{@Peterson2016}. Seedlings and rosettes are sexually reproductive flowering stages. Rosettes are asexually produced clones."}
+knitr::include_graphics("_images/m.guttatus-lifecycle-peterson2016.png")
 ```
 
-The model was created as an R package, and is available here along with simulation scripts and data output: https://github.com/rosemckeon/honours-project. 
+## The model {#methods-model}
 
-## Model assumptions
+The model was created as an R package, and is available here along with simulation scripts used for this work, as well as the data output: https://github.com/rosemckeon/honours-project. 
+
+### Assumptions {#methods-model-assumptions}
 
 The assumptions made by the model were as follows:
 
@@ -20,14 +22,19 @@ The assumptions made by the model were as follows:
 - All plants were hermaphrodite; mothers and fathers were chosen via random sampling from the same pool of individuals.
 - Pollen range spanned the entire landscape.
 - Seed dispersal spanned the entire landscape.
-- Asexual reproduction was disabled.
-- There was no seedbank.
-- Carrying capacity curbed exponential growth of the adult population at around 100000 (with some stochasticity).
 
-The model was parameratised with known demographic data taken from @Peterson2016 and @Elder2006. For the purposes of this simulation, I chose data for an *M. guttatus* population that had the most stable properties; minimal growth that could be kept in check with carrying capacity and low elasticity. The chosen transition matrix also had no asexual reproduction which was useful so as not to over-complicate the initial simulations. @Peterson2016 described the formula for computing transition data as laid out in figure \ref{fig:trans-formula}. The values I modelled were taken from the Low-elevation perennial population in 2013, as shown in table \ref{tab:trans-values}, which produced the transition matrix shown in figure \ref{tab:trans-matrix}.
+The *rbinom* function in base R was used throughout the model--where transitions reduced cohort size--to choose individuals that transitioned successfully. This allowed for a natural amount of stochasticity around the transition probabilities, similar to that which we would expect in nature. Where transition values increased cohort size, the function *sample_n* from the package *{Dplyr}* was used, instead, with replacement. 
 
-```{r trans-formula, fig.cap="", eval=FALSE, include=FALSE}
-knitr::include_graphics("thesis/_images/trans-formula.png")
+## Simulation strategy {#methods-model-sims}
+
+Rounds of simulations were run using the model function *sploidy* in order to home-in on the parameter ranges to include in the experiment design. These initial simulations were run for 1000 generations on a 100x100 landscape grid (to allow the default carrying capacity to maintain the adult population size at around one hundred thousand). The starting population contained sixty diploid individuals (twenty of each life stage), to simulate a pioneering species entering an empty space and the **ploidy_rate** parameter was varied between zero and 0.5. Seed dormancy was disabled by setting **seed_longevity** to zero. As was clonal reproduction, via the transition matrix provided to the **trans** parameter. Transition parameters--the transition matrix (**trans**), germination rate (**G**), and seed surival rate (**D**)--were taken from known demographic data [@Peterson2016; @Elder2006]. 
+
+### Transition data {#methods-model-sims-trans}
+
+Data for an *M. guttatus* population that had the most stable properties were used; minimal growth that could be kept in check with carrying capacity and low elasticity. @Peterson2016 described the formula for computing transition data as laid out in figure \ref{fig:trans-formula} and provided the values for a low-elevation perennial *M. guttatus* population as shown in table \ref{tab:trans-values}. These data produced the transition matrix (figure \ref{tab:trans-matrix}) provided to the model, along with the values of G (0.652) and D (0.534) shown in figure \ref{tab:trans-values}.
+
+```{r trans-formula, fig.cap="How the transition matrix (table \\ref{tab:trans-matrix}) was calculated from the data provided in table \\ref{tab:trans-values}, according to this formula taken from \\cite{@Peterson2016}."}
+knitr::include_graphics("_images/m.guttatus-transformula-peterson2016.png")
 ```
 
 ```{r trans-values, echo=FALSE}
@@ -74,17 +81,7 @@ trans %>%
   )
 ```
 
-Transitions from seed to seedling were modelled using seed survival (D) and germination rates (G), rather than the calculated transtion values in figure \ref{tab:trans-matrix}. This enabled the model to ensure that ungerminated seeds had the opportunity to persist in the environment if a seedbank were to be turned on, without resampling seeds by some probability, and inevitably sampling some individuals that did infact transition.
-
-The *rbinom* function in base R was used throughout the model--where transitions reduced cohort size--to choose individuals that transitioned successfully. This allowed for a natural amount of stochasticity around the transition probabilities, similar to that which we would expect in nature. Where transition values increased cohort size, the function *sample_n* from the package *{Dplyr}* was used, instead, with replacement.
-
-## Simulations
-
-Simulations were run for 1000 generations on a 100x100 landscape grid, with a starting population that contained 20 of each diploid life stage (seeds, seedlings and rosettes). 
-
-### Control
-
-Simulations with the rate of whole-genome duplication set to zero confirmed the expected pattern of population growth and stability for a scenario where no polyploids can evolve.
+## 
 
 ### Varying the rate of whole-genome duplication
 
