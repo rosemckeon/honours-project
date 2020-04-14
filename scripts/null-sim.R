@@ -13,10 +13,10 @@ mimulus <- readRDS("scripts/data/mimulus.RDS") %>%
 sploidy(
   pop_size = c(20, 20, 20),
   grid_size = 100,
-  simulations = 10,
+  simulations = 1,
   generations = 1000,
   ploidy_rate = 0,
-  name = "_NULL",
+  filepath = "data/_NULL",
   trans = mimulus %>%
     dplyr::pull(matrix) %>%
     magrittr::extract2(1),
@@ -28,3 +28,4 @@ sploidy(
 
 # make sure console message print to console if a simulation has benn interupted by an error
 #sink(type = "message")
+rm(list=ls())

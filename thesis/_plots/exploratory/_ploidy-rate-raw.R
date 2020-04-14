@@ -5,7 +5,12 @@ diploid_colour = "#000000"
 polyploid_colour = "#30a068"
 ploidy_gradient = c("#10442a", "#3bbf7d")
 # read in the data and make long
-counts <- readRDS("thesis/_data/sim_counts.rds") %>%
+counts <- readRDS("thesis/_data/sim_counts.rds") %>% dplyr::mutate(G_modifier = 1) 
+counts <- counts %>%
+  dplyr::bind_rows(
+    readRDS("thesis/_data/increased_rate_counts.rds") %>%
+      dplyr::mutate(ID = ID + max(counts$ID))
+  ) %>%
   tidyr::gather("population", "count", seeds:total)
 
 # what did the life stage composition look like

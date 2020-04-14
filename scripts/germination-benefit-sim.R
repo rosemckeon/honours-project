@@ -41,4 +41,5 @@ for(modifier in sample(G_modifiers, 20, F)){
 
 
 # make sure console message print to console if a simulation has benn interupted by an error
-sink(type = "message")
+#sink(type = "message")
+rm(list=ls())

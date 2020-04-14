@@ -2,7 +2,7 @@ rm(list=ls())
 library(tidyverse)
 library(magrittr)
 library(disturploidy)
-#devtools::install_github("rosemckeon/honours-project", auth_token = "60bcd5244537f523313ffae0b061b4ba00873f5d")
+devtools::install_github("rosemckeon/honours-project", auth_token = "60bcd5244537f523313ffae0b061b4ba00873f5d")
 library(sploidy)
 
 # create a range of ploidy rates with more values close to min than max (following exponential distribution).
@@ -26,6 +26,7 @@ for(rate in sample(ploidy_rates, 20, F)){
     grid_size = 100,
     simulations = 1,
     generations = 1000,
+    filepath = "data/_ploidy_rate_0.001-0.010",
     ploidy_rate = rate,
     trans = mimulus %>%
       dplyr::pull(matrix) %>%
@@ -39,3 +40,4 @@ for(rate in sample(ploidy_rates, 20, F)){
 
 # make sure console message print to console if a simulation has benn interupted by an error
 #sink(type = "message")
+rm(list=ls())
