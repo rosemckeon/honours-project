@@ -1,6 +1,8 @@
 # Results {#results}
 
 ```{r results-setup, message=FALSE, warning=FALSE}
+#library(sploidy)
+#count_combine("data/results", "thesis/_data/results")
 counts <- readRDS("_data/results.rds") %>%
   dplyr::select(-diploid_seeds, -polyploid_seeds, -rosettes, -adults) %>%
   tidyr::gather("subset", "count", seeds:total)
@@ -34,7 +36,7 @@ counts %>%
     geom_point(alpha = .2) +
     theme_classic() +
     theme(legend.position = "top") +
-    facet_wrap(~round(ploidy_rate, 4), ncol = 4)
+    facet_wrap(~round(ploidy_rate, 3), ncol = 4)
 ```
 
 ```{r results-extinctions, echo=FALSE, message=FALSE, warning=FALSE}
