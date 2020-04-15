@@ -1,0 +1,59 @@
+---
+title: "The evolution of polyploidy and the extreme cost of pollen-swamping"
+date: "Last edited: `r format(Sys.time(), '%B %d %Y')`"
+author: 
+- name: '2417024'
+  num: 
+runninghead: The cost of pollen-swamping
+abstract: 'Amazing summary of project here...'
+keywords: polyploidy; evolution; angiosperm; mimulus; guttatus; pollen-swamping; mate-choice;
+bibliography:
+- book.bib
+- packages.bib
+bibliographystyle: BES.bst
+output: 
+  pdf_document:
+    template: crumpet.tex
+    citation_package: natbib
+    keep_tex: no
+    fig_caption: yes
+    fig_width: 5
+    fig_height: 5
+documentclass: crumpet
+classoption:
+- Review
+- times
+- doublespace
+longtable: yes
+---
+
+```{r setup, include=FALSE}
+library(kableExtra)
+library(tidyverse) 
+devtools::install_github("rosemckeon/honours-project", auth_token = "60bcd5244537f523313ffae0b061b4ba00873f5d")
+library(sploidy)
+knitr::write_bib(c(
+  .packages(), 'sploidy'
+), 'packages.bib')
+
+packages <- knitr::write_bib(c(
+  .packages(), 'sploidy'
+))
+```
+
+```{r intro, child="intro.Rmd"}
+```
+
+```{r methods, child="methods.Rmd"}
+```
+
+```{r results, child="results.Rmd", include=FALSE}
+```
+
+```{r discussion, child="discussion.Rmd"}
+```
+
+```{r conclusion, child="conclusion.Rmd"}
+```
+
+# References {#references}

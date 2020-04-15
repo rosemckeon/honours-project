@@ -1,0 +1,100 @@
+# Methods {#methods}
+
+An individual-based modelling approach was used to examine these aims. The model was created, from scratch, in *R* [@Rbase] to simulate the life cycle of the yellow monkey flower (*Mimulus guttatus*) as laid out by @Peterson2016 and detailed in figure \ref{fig:life-cycle}. The *M. guttatus* complex was a suitable choice due to whole-genome duplication being well documented throughout [@Vickery1995], and data being readily available.
+
+```{r life-cycle, fig.cap="\\label{fig:life-cycle}Life cycle of \\textit{Mimulus guttatus} taken from \\cite{@Peterson2016}. Seedlings and rosettes are sexually reproductive flowering stages. Rosettes are asexually produced clones."}
+knitr::include_graphics("_images/m-guttatus-lifecycle-peterson2016.png")
+```
+
+## The model {#methods-model}
+
+The model was created as an open source R package *{sploidy}*, and is available along with the simulation scripts used for this work and the raw data, on Github [@Rsploidy]. 
+
+### Assumptions {#methods-model-assumptions}
+
+To test our hypotheses the model needed to make particular assumptions about the reproductive interactions between individuals, as well as how particular parameters (like whole genome duplication rate) were applied mechanistically. To see if the rate of duplication could overcome the effects of limited mate-choice, mate choice had to first be limited in some manner. This was achieved using a simple matching rule that defined whether attempts to fertilise were successful, based on parental ploidy level. Simulating, therefore, the cost of pollen-swamping.
+
+The model assumptions were as follows:
+
+- All individuals began as diploid.
+- Polyploids arose at a set rate of whole-genome duplication during all sexually reproductive transitions.
+- Diploids and polyploids could both out-cross, but never with each other. In addition, polyploids could not outcross with other polyploids of differing ploidy level, ie:- a tetraploid was not compatible with an octoploid. 
+- All individuals could self-fertilise.
+- Offspring produced had the same ploidy level as their parents; two diploids produced a diploid, and so on.
+- When whole-genome duplication occured, the ploidy level of an individual was doubled; in this case two diploid parents would produce a tetraploid.
+- All plants were hermaphrodite; mothers and fathers were chosen via random sampling from the same pool of individuals.
+- Pollen range spanned the entire landscape.
+- Seed dispersal spanned the entire landscape.
+
+The *rbinom* function in base R was used throughout the model--where transitions reduced cohort size--to choose individuals that transitioned successfully. This allowed for a natural amount of stochasticity around the transition probabilities, similar to that which we would expect in nature. Where transition values increased cohort size, the function *sample_n* from the package *{Dplyr}* [@R-dplyr] was used, instead, with replacement. 
+
+## Simulation strategy {#methods-model-sims}
+
+Rounds of simulations were run using the model function *sploidy* in order to home-in on the parameter ranges to include in the experiment design. These initial simulations were run for 1000 generations on a 100x100 landscape grid (to allow the default carrying capacity to maintain the adult population size at around one hundred thousand). The starting population contained sixty diploid individuals (twenty of each life stage), to simulate a pioneering species entering an empty space and the **ploidy_rate** parameter was varied between zero and 0.5. Seed dormancy was disabled by setting **seed_longevity** to zero. As was clonal reproduction, via the transition matrix provided to the **trans** parameter. Transition parameters--the transition matrix (**trans**), germination rate (**G**), and seed surival rate (**D**)--were taken from known demographic data [@Peterson2016; @Elder2006]. 
+
+### Transition data {#methods-model-sims-trans}
+
+Data for an *M. guttatus* population that had the most stable properties were used; minimal growth that could be kept in check with carrying capacity and low elasticity. @Peterson2016 described the formula for computing transition data as laid out in figure \ref{fig:trans-formula} and provided the values for a low-elevation perennial *M. guttatus* population as shown in table \ref{tab:trans-values}. These data produced the transition matrix (figure \ref{tab:trans-matrix}) provided to the model, along with the values of G (0.652) and D (0.534) shown in figure \ref{tab:trans-values}.
+
+```{r trans-formula, fig.cap="How the transition matrix (table \\ref{tab:trans-matrix}) was calculated from the data provided in table \\ref{tab:trans-values}, according to this formula taken from \\cite{@Peterson2016}."}
+knitr::include_graphics("_images/m-guttatus-transformula-peterson2016.png")
+```
+
+```{r trans-values, echo=FALSE}
+readRDS("_data/mimulus.rds") %>%
+  dplyr::filter(year == 2013) %>% 
+  dplyr::select(-matrix, -group, -year, -n) %>%
+  dplyr::mutate(A = signif(A, 3) %>% as.character()) %>%
+  knitr::kable(
+    "latex",
+    caption = "\\label{tab:trans-values} Components of Low-elevation perennial *Mimulus guttatus* life-cycle transition. Seed survival (D) is a general value taken from \\cite{@Elder2006}. All other components taken from \\cite{@Peterson2016} who recorded values specific to that *M. guttatus* population in the year 2013 (N = 77). G = germination rate, O = ovule number per flower, F = flower production, S = winter survival, R = rosette production, A = proportional recruitment success of ovules relative to rosettes.",
+    booktabs = T,
+    digits = 3,
+    escape = F
+  ) %>% 
+  kableExtra::kable_styling(
+    full_width = T,
+    font_size = 8
+  )
+```
+
+```{r trans-matrix, echo=FALSE}
+# get the matrix
+trans <- readRDS("_data/mimulus.rds") %>%
+  dplyr::filter(year == 2013) %>%
+  pull(matrix) %>%
+  magrittr::extract2(1)
+# name the dimensions
+stages <- c("Seed", "Seedling", "Rosette")
+dimnames(trans)[2] <- list(paste0(stages, " (t)"))
+dimnames(trans)[1] <- list(paste0(stages, " (t+1)"))
+# format the table for latex
+trans %>%
+  knitr::kable(
+    "latex",
+    caption = "\\label{tab:trans-matrix}Transition matrix used for the model, based on the formula shown in \\ref{fig:trans-formula} and the data from figure \\ref{tab:trans-values}.",
+    booktabs = T,
+    row.names = T,
+    digits = 3,
+    escape = F
+  ) %>% 
+  kableExtra::kable_styling(
+    full_width = T,
+    font_size = 8
+  )
+```
+
+## 
+
+### Varying the rate of whole-genome duplication
+
+In order to quantify how the rate of whole-genome duplication affected fixation of polyploid genotypes, a randomly sampled range of polyploidisation rates were chosen from an exponential distribution of 100000 random uniform numbers ranging between 0.001 and 0.010. Using an exponential distribution gave higher resolution around the lower parameter rates which we expected to be most interesting. 
+
+Diagnostic plotting of these data revealed that increased rates needed to be examined. Further simulations were then run using randomly sampled rates from 100000 random uniform numbers between 0.010 and 0.500 in an attempt to determine how high the mutation rate needed to be in order for polyploids to break free from the inherent selection against them due to mate-choice limitation.
+
+### Germination rate benefit
+
+Further simulations which inferred a germination benefit to polyploids were run using the same randomly sampled rates of polyploidisation as above. A randomly sampled range of germination rate modifiers were chosen from 100000 random uniform numbers between 1 and 1.5, where the modifier was used to multiply the germination rate (G = 0.652). The max value of 1.5 would cause polyploid seeds to germinate at very close to complete success (G = 0.978), simulating the observation that polyploid seeds can have increased germination success due to germination over a wider temperature range [@Vickkery].
+
+
+

@@ -20,26 +20,26 @@ mimulus <- readRDS("scripts/data/mimulus.RDS") %>%
   dplyr::filter(year == 2013)
 
 # roughly a 10 hr process
-for(rate in sample(ploidy_rates, 12, F)){
+for(rate in sample(ploidy_rates, 30, F)){
   #  get a starting pop size
   n <- sample(N, 1) 
   # do a control test
-  sploidy(
-    pop_size = c(n, n, 0),
-    grid_size = 100,
-    simulations = 1,
-    generations = 1000,
-    filepath = "data/results",
-    ploidy_rate = 0,
-    trans = mimulus %>%
-      dplyr::pull(matrix) %>%
-      magrittr::extract2(1),
-    D = 0.534,
-    G = mimulus %>%
-      dplyr::pull(G),
-    G_modifier = 1,
-    seed_longevity = 0
-  )
+  # sploidy(
+  #   pop_size = c(n, n, 0),
+  #   grid_size = 100,
+  #   simulations = 1,
+  #   generations = 1000,
+  #   filepath = "data/results",
+  #   ploidy_rate = 0,
+  #   trans = mimulus %>%
+  #     dplyr::pull(matrix) %>%
+  #     magrittr::extract2(1),
+  #   D = 0.534,
+  #   G = mimulus %>%
+  #     dplyr::pull(G),
+  #   G_modifier = 1,
+  #   seed_longevity = 0
+  # )
   # and a ploidy_rate test for that same starting N
   sploidy(
     pop_size = c(n, n, 0),
