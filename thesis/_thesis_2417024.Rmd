@@ -5,7 +5,7 @@ author:
 - name: '2417024'
   num: 
 runninghead: Evolution of Polyploidy.
-abstract: ''
+abstract: 'Amazing summary of project here...'
 keywords: Polyploidy; Evolution; Angiosperm; Mimulus;
 bibliography: book.bib
 bibliographystyle: BES.bst
@@ -26,6 +26,9 @@ longtable: yes
 ---
 
 ```{r setup, include=FALSE}
+knitr::write_bib(c(
+  .packages(), 'disturploidy', 'sploidy' 
+), 'packages.bib')
 library(kableExtra)
 library(tidyverse) 
 ```
@@ -33,6 +36,16 @@ library(tidyverse)
 ```{r intro, child="intro.Rmd"}
 ```
 
-```{r intro, child="methods.Rmd"}
+```{r methods, child="methods.Rmd"}
 ```
 
+```{r results, child="results.Rmd"}
+```
+
+```{r discussion, child="discussion.Rmd"}
+```
+
+```{r conclusion, child="conclusion.Rmd"}
+```
+
+# References {#references}

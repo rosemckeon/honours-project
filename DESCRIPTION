@@ -1,7 +1,8 @@
 Package: sploidy
-Title: An Individual-Based Model
+Title: An individual-based model of polyploid evolution in the yellow monkey flower (Mimulus guttatus).
 Version: 0.1.8
 Authors@R: person("Rose", "McKeon", email = "rosemckeon@gmail.com", role = c("aut", "cre"))
+Url: https://github.com/rosemckeon/honours-project
 Description:
 Depends: R (>= 3.4.4)
 License: GPL-3
