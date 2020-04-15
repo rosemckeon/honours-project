@@ -1,5 +1,3 @@
-<!--- BD: A bit more manageable for a dissertation would be to try to flesh out one or two of these mechanisms and ask some questions about the conditions that it specifically is predicted to contribute substantially to diversification of polyploids -- e.g., are there reasons to think that pollen swamping will lead to dead ends under some conditions, but diversification (or at least not dead ends) under others? --->
-
 # Introduction {#intro}
 
 > Would some images of genome duplication be helpful?
@@ -20,7 +18,7 @@ Amongst these, polyploidy is exceptionally well tolerated in plants.
 @Jiao2011 found that genome-doubling is a ubiquitous feature in the lineages of almost all flowering plants (angiosperms), and @Wood2009 also found that it has occurred even more recently (post genera formation) for 35% of all vascular plants. 
 Plant surveys of natural populations over the last century further support this, reporting mean polyploid frequencies of 25% [@REFNEEDED]. 
 
-## The Role of Genome-Doubling in Plant Diversification
+## The Role of Genome-Doubling in Plant Diversification  {#intro-diversification}
 
 Genome-doubling is thought to be fundamental in the diversification of plant species; having been found to coincide with 15% of angiosperm speciation events, and 31% in ferns [@Wood2009]. 
 Furthermore, @Jiao2011 showed that whole-genome duplication could even be linked with major biological innovations that have lead to diversification of the plant phyla. 
@@ -48,7 +46,8 @@ On the other hand, polyploids are frequently linked with distinct traits such as
 Additionally, benefits of polyploidy can include enhanced capabilities for buffering of deleterious mutation (due to increased heterozygosity), hybrid vigour (heterosis), and a reversal of selfing inhibition [@Woodhouse2009; @Ramsey2014]. 
 These traits are thought to overcome the reproductive disadvantages of polyploidy and, in those rare cases, make this mutation key to the invasive and adaptive potential of plants. 
 
-## Limited mate-choice for polyploids {#intro-limited-mate-choice}
+## The cost of being polyploid (limited mate-choice) {#intro-cost-of-polyploidy}
+
 
 
 ### Diploid Pollen-Swamping {#intro-pollen-swamping}
@@ -70,6 +69,11 @@ Polyploidisation events have been well documented in *Mimulus guttatus* [@Vicker
 
 ## Aims {#intro-aims}
 
-Here we aim to quanitify the selection which works against the evolution of polyploidy via limiting mate choice by pollen-swamping, by testing how high the rate of whole-genome duplication would need to be in order to overcome this selection and lead to the fixation of polyploidy. Or, if indeed, this even is the case. Will increasing the rate of whole-genome duplication lead to the fixation of polyploidy? And, if so, at what threshold point does this occur? 
+Here we aimed to quanitify the cost of pollen-swamping by testing how high the rate of whole-genome duplication would need to be in order to overcome the strength of negative selection. We asked: 
 
-In addition, we aim to discover how varying the starting population size affects these results. Does an established population react in the same way to increased duplication rates as a pioneering population entering an empty landscape? 
+- Will increasing the rate of whole-genome duplication lead to the fixation of polyploidy? 
+- And, if so, at what threshold point does this occur? 
+
+In addition, we aimed to discover how varying the starting population size affected these results:
+
+- Does an established population react in the same way to increased duplication rates as a pioneering population entering an empty landscape? 

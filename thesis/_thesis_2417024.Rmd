@@ -1,13 +1,13 @@
 ---
-title: "Evolution of Polyploidy in Flowering Plants"
+title: "The evolution of polyploidy and the extreme cost of pollen-swamping"
 date: "Last edited: `r format(Sys.time(), '%B %d %Y')`"
 author: 
 - name: '2417024'
   num: 
-runninghead: Evolution of Polyploidy.
+runninghead: The cost of pollen-swamping
 abstract: 'Amazing summary of project here...'
-keywords: Polyploidy; Evolution; Angiosperm; Mimulus;
-bibliography: book.bib
+keywords: polyploidy; evolution; angiosperm; mimulus; guttatus; pollen-swamping; mate-choice;
+bibliography: [book.bib, packages.bib]
 bibliographystyle: BES.bst
 output: 
   pdf_document:

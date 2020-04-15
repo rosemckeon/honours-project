@@ -3,7 +3,7 @@
 An individual-based modelling approach was used to examine these aims. The model was created, from scratch, in *R* [@R-base] to simulate the life cycle of the yellow monkey flower (*Mimulus guttatus*) as laid out by @Peterson2016 and detailed in figure \ref{fig:life-cycle}. The *M. guttatus* complex was a suitable choice due to whole-genome duplication being well documented throughout [@Vickery1995], and data being readily available.
 
 ```{r life-cycle, fig.cap="Life cycle of \\textit{Mimulus guttatus} taken from \\cite{@Peterson2016}. Seedlings and rosettes are sexually reproductive flowering stages. Rosettes are asexually produced clones."}
-knitr::include_graphics("_images/m.guttatus-lifecycle-peterson2016.png")
+knitr::include_graphics("_images/m-guttatus-lifecycle-peterson2016.png")
 ```
 
 ## The model {#methods-model}
@@ -37,7 +37,7 @@ Rounds of simulations were run using the model function *sploidy* in order to ho
 Data for an *M. guttatus* population that had the most stable properties were used; minimal growth that could be kept in check with carrying capacity and low elasticity. @Peterson2016 described the formula for computing transition data as laid out in figure \ref{fig:trans-formula} and provided the values for a low-elevation perennial *M. guttatus* population as shown in table \ref{tab:trans-values}. These data produced the transition matrix (figure \ref{tab:trans-matrix}) provided to the model, along with the values of G (0.652) and D (0.534) shown in figure \ref{tab:trans-values}.
 
 ```{r trans-formula, fig.cap="How the transition matrix (table \\ref{tab:trans-matrix}) was calculated from the data provided in table \\ref{tab:trans-values}, according to this formula taken from \\cite{@Peterson2016}."}
-knitr::include_graphics("_images/m.guttatus-transformula-peterson2016.png")
+knitr::include_graphics("_images/m-guttatus-transformula-peterson2016.png")
 ```
 
 ```{r trans-values, echo=FALSE}
