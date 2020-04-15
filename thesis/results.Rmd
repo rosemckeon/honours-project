@@ -1,0 +1,53 @@
+# Results {#results}
+
+```{r results-setup, message=FALSE, warning=FALSE}
+#library(sploidy)
+#count_combine("data/results", "thesis/_data/results")
+counts <- readRDS("_data/results.rds") %>%
+  dplyr::select(-diploid_seeds, -polyploid_seeds, -rosettes, -adults) %>%
+  tidyr::gather("subset", "count", seeds:total)
+
+ploidylvl_colours = c("#000000", "#30a068")
+ploidy_gradient = c("#10442a", "#3bbf7d")
+```
+
+```{r results-totalpop-over-time, echo=FALSE, message=FALSE, warning=FALSE}
+counts %>%
+  dplyr::filter(
+    subset %in% c("seedlings"), 
+    between(ploidy_rate, 0, 0.21)
+  ) %>%
+  ggplot2::ggplot(aes(x = gen, y = count)) +
+    geom_point(alpha = .2) +
+    theme_classic() +
+    theme(legend.position = "top") +
+    facet_wrap(~round(ploidy_rate, 2), ncol = 4)
+```
+
+
+```{r results-ploidyrate-interference, echo=FALSE, message=FALSE, warning=FALSE}
+counts %>%
+  dplyr::filter(
+    subset %in% c("diploid_adults", "polyploid_adults"), 
+    between(ploidy_rate, 0.17, 0.18)
+  ) %>%
+  ggplot2::ggplot(aes(x = gen, y = count, colour = subset)) +
+    scale_colour_manual(values = ploidylvl_colours) +
+    geom_point(alpha = .2) +
+    theme_classic() +
+    theme(legend.position = "top") +
+    facet_wrap(~round(ploidy_rate, 3), ncol = 4)
+```
+
+```{r results-extinctions, echo=FALSE, message=FALSE, warning=FALSE}
+counts %>% 
+  dplyr::filter(
+    subset %in% c("total"),
+    count == 0,
+    between(ploidy_rate, 0, 0.25)
+  ) %>%
+  ggplot2::ggplot(aes(x = ploidy_rate, y = gen)) +
+    geom_point(alpha = .2) +
+    theme_classic() +
+    ylab("Generation at extinction")
+```

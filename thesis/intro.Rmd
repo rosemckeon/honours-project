@@ -1,14 +1,10 @@
-<!-- BD: You've identified several really relevant costs and benefits to polyploidy. I think it would be good to think about them all individually, and which ones you think are likely to be most important or most interesting. A good theory dissertation or manuscript doesn't need to look at everything. Actually, I think that a lot of really good theory work focuses on one mechanism of interest to understand it more clearly (much like an experiment might try to test how one factor affects something in a system). One useful approach for you might be to try pin down what you think is the most interesting process affecting polyploidy (after doing some background reading on each), or the one that sounds most suspicious (i.e., if you read something and think -- "that doesn't sound completely plausible -- what if x, y, or z?"). If you were to show, for example, that pollen swamping is unlikely under most conditions (all else being equal), that would be enough for a good paper. You could also think about interesting ways to link the costs and benefits -- maybe, e.g., pollen swamping is important because it is predicted to cause selection for reversal of selfing inhibition (again, all else being equal). --->
-
-<!--- BD: I'm starting to think that it might help to narrow down a bit on one or two mechanisms that you find most interesting or potentially fruitful in terms of theoretical questions. You've got a really good grasp of what ideas have been proposed for the costs and benefits of polyploidy. There are a lot of interesting places you can go to from here. The most difficult would be to introduce an entirely new idea of how polyploidy might arise and spread (new costs or benefits), assuming one(s) exists. The second most difficult would probably be to show that one or more of these costs and benefits hypothesised do not actually make sense -- i.e., that the prediction (hypothesis) does not follow logically from the starting assumptions. A bit more manageable for a dissertation would be to try to flesh out one or two of these mechanisms and ask some questions about the conditions that it specifically is predicted to contribute substantially to diversification of polyploids -- e.g., are there reasons to think that pollen swamping will lead to dead ends under some conditions, but diversification (or at least not dead ends) under others? --->
-
 # Introduction {#intro}
 
 > Would some images of genome duplication be helpful?
 
 Whole-genome duplication (polyploidisation) is an extreme mutation which occurs due to errors during cell division; such as non-disjunction where sister chromatids are not separated during anaphase. 
 Failed disjunction leads to all the genetic material ending up in one of the two daughter cells; essentially doubling the genome within that cell.
-When this occurs during gametogenesis, it can lead to whole organisms with more than two complete sets of chromosomes (polyploids).
+When this occurs during gametogenesis, it can lead to whole organisms with more than two complete sets of chromosomes (polyploids). 
 According to @REFNEEDED, the estimated rate of polyploidisation is one order of magnitude higher than that of standard mutation (10^-5^).
 In humans, it coincides with around 5% of miscarriages [@Creasy1976]. 
 Moreover, while there have been some live birth cases of triploid human infants, they usually die within hours. 
@@ -22,7 +18,7 @@ Amongst these, polyploidy is exceptionally well tolerated in plants.
 @Jiao2011 found that genome-doubling is a ubiquitous feature in the lineages of almost all flowering plants (angiosperms), and @Wood2009 also found that it has occurred even more recently (post genera formation) for 35% of all vascular plants. 
 Plant surveys of natural populations over the last century further support this, reporting mean polyploid frequencies of 25% [@REFNEEDED]. 
 
-## The Role of Genome-Doubling in Plant Diversification
+## The Role of Genome-Doubling in Plant Diversification  {#intro-diversification}
 
 Genome-doubling is thought to be fundamental in the diversification of plant species; having been found to coincide with 15% of angiosperm speciation events, and 31% in ferns [@Wood2009]. 
 Furthermore, @Jiao2011 showed that whole-genome duplication could even be linked with major biological innovations that have lead to diversification of the plant phyla. 
@@ -47,54 +43,37 @@ Furthermore, can we predict which conditions will lead to their survival?
 Despite having been studied for over a century, the factors that drive the success of polyploid establishment in the face of high extinction rates are still unclear. 
 @Arrigo2012 conclude that polyploids tend to become extinct at the establishment phase due to reproductive disadvantages such as triploid sterility, or limited mate-choice; the latter occurring via diploid pollen-swamping, or delayed flowering. 
 On the other hand, polyploids are frequently linked with distinct traits such as "gigas effects", which describes their increased size and plant organs. 
-Additionally, benefits of polyploidy can include enhanced capabilities for buffering of deleterious mutation (due to increased heterozygosity), hybrid vigour (heterosis), and — somewhat contentiously — a reversal of selfing inhibition [@Woodhouse2009; @Ramsey2014]. 
-These traits are thought to overcome the reproductive disadvantages of polyploidy and, in those rare cases, make this mutation key to the invasive and adaptive potential of plants. Let us examine these mechanisms in more detail:
+Additionally, benefits of polyploidy can include enhanced capabilities for buffering of deleterious mutation (due to increased heterozygosity), hybrid vigour (heterosis), and a reversal of selfing inhibition [@Woodhouse2009; @Ramsey2014]. 
+These traits are thought to overcome the reproductive disadvantages of polyploidy and, in those rare cases, make this mutation key to the invasive and adaptive potential of plants. 
 
-## Benefits
-
-### Gigas-effects {#gigas}
-
-### Genetic buffering {#buffering}
-
-### Hybrid Vigour {#vigour}
-
-## Costs
-
-> Are they realistic? How do they work? Why/when are they important? Consider the conditions.
-
-### Diploid Pollen-Swamping {#pollen-swamping}
-
-### Delayed Flowering {#flowering}
-
-### Triploid Sterility {#sterility}
+## The cost of being polyploid (limited mate-choice) {#intro-cost-of-polyploidy}
 
 
-> So what are the core mechanisms? 
 
-> Or the most suspicious?
+### Diploid Pollen-Swamping {#intro-pollen-swamping}
 
-## How do these mechanisms link?
 
-> Does limited mate-choice set the scene for the evolution of selfing vs out-crossing?
+
+
+### Delayed flowering {#intro-delayed-flowering}
 
 > Delayed flowering (cost) is associated with gigas-effects of increased size (benefit). TRADE-OFF.
 
-## Mimulus study system
+
+
+## Mimulus study system {#intro-mimulus}
 
 Polyploidisation events have been well documented in *Mimulus guttatus* [@Vickery1995].
 
 @Peterson2016 details 3-stage *M. guttatus* life-cycle and transition matrices.
 
+## Aims {#intro-aims}
 
-## Aims
+Here we aimed to quanitify the cost of pollen-swamping by testing how high the rate of whole-genome duplication would need to be in order to overcome the strength of negative selection. We asked: 
 
-Outcrossing VS cloning. 
-Everyone can do both, but polyploids will be forced only to clone while mate options are reduced.
-Simplified polyploidy - on/off
-Cloning - if adjacent square empty, chance of cloning into it.
-Outcrossing set to maximum range (this exagerrates any pattern).
+- Will increasing the rate of whole-genome duplication lead to the fixation of polyploidy? 
+- And, if so, at what threshold point does this occur? 
 
-1. look at distribution of polyploids without cloning
-2. look at distribution with cloning.
-3. compare frequencies to natural populations.
-3. possibly then disable/reduce cloning in diploids if sensible form reading.
+In addition, we aimed to discover how varying the starting population size affected these results:
+
+- Does an established population react in the same way to increased duplication rates as a pioneering population entering an empty landscape? 
