@@ -1,8 +1,11 @@
 Package: sploidy
-Title: An Individual-Based Model
-Version: 0.1.8
+Title: An individual-based model of polyploid evolution that demonstrates the extreme cost of pollen-swamping.
+Version: 0.1.9
+Date: 2020-04-15
 Authors@R: person("Rose", "McKeon", email = "rosemckeon@gmail.com", role = c("aut", "cre"))
-Description:
+Url: https://github.com/rosemckeon/honours-project
+BugReports: https://github.com/rosemckeon/honours-project/issues
+Description: This model simulates whole-genome duplication in the life-cycle of the yellow monkey flower (Mimulus guttatus).
 Depends: R (>= 3.4.4)
 License: GPL-3
 Encoding: UTF-8

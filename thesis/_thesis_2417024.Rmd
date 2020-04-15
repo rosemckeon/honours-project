@@ -47,6 +47,7 @@ packages <- knitr::write_bib(c(
 ```{r methods, child="methods.Rmd"}
 ```
 
+
 ```{r results, child="results.Rmd", include=FALSE}
 ```
 

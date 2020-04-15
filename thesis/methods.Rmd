@@ -8,7 +8,7 @@ knitr::include_graphics("_images/m-guttatus-lifecycle-peterson2016.png")
 
 ## The model {#methods-model}
 
-The model was created as an open source R package *{sploidy}*, and is available along with the simulation scripts used for this work and the raw data, on Github [@Rsploidy]. 
+The model was created as an open source R package *{sploidy}*, and is available along with the simulation scripts used for this work and the raw data, on Github [@R-sploidy]. 
 
 ### Assumptions {#methods-model-assumptions}
 
