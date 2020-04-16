@@ -11,35 +11,66 @@ ploidylvl_colours = c("#000000", "#30a068")
 ploidy_gradient = c("#10442a", "#3bbf7d")
 ```
 
-```{r results-totalpop-over-time, echo=FALSE, message=FALSE, warning=FALSE}
+```{r results-total, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6.5, fig.cap="\\label{fig:results-total}Total adult population size over time (generations). Each panel represents simulations run at varying rates of whole-genome duplication (rounded to 2 significant figures); 0 shows the expected results without mutation while panels 0.15 through to 0.19 show how the pattern of population growth and decline begins to change within this range of rates."}
 counts %>%
   dplyr::filter(
     subset %in% c("seedlings"), 
-    between(ploidy_rate, 0, 0.21)
+    between(round(ploidy_rate, 2), 0, 0.19)
   ) %>%
   ggplot2::ggplot(aes(x = gen, y = count)) +
-    geom_point(alpha = .2) +
+    facet_wrap(~round(ploidy_rate, 2), ncol = 2) +
+    geom_point(alpha = .2, size = .2) +
     theme_classic() +
-    theme(legend.position = "top") +
-    facet_wrap(~round(ploidy_rate, 2), ncol = 4)
+    theme(
+      axis.title = element_text(size = 7, face = "bold"),
+      plot.background = element_rect(fill = "#efefef"),
+      strip.background = element_rect(colour = "white"),
+      strip.text = element_text(size = 7, face = "bold")
+    ) +
+    xlab("Generation") +
+    ylab("Population size") +
+    scale_x_continuous(
+      breaks = seq(0, 1000, 500), 
+      limits = c(0, 1000)
+    ) +
+    scale_y_continuous(
+      breaks = seq(0, 100000, 25000), 
+      limits = c(0, 100000)
+    )
 ```
 
 
-```{r results-ploidyrate-interference, echo=FALSE, message=FALSE, warning=FALSE}
+```{r results-total-by-ploidy, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6.5, fig.cap="\\label{fig:results-total-by-ploidy}Adult population size over time (generations), split by diploid (black) and polyploid (green). This set of panels shows panel 4 of figure \\ref{fig:results-total} in higher resolution of whole-genome duplication rates (between 0.165 and 0.174 when rounded to 3 significant figures)."}
 counts %>%
   dplyr::filter(
     subset %in% c("diploid_adults", "polyploid_adults"), 
-    between(ploidy_rate, 0.17, 0.18)
+    between(round(ploidy_rate, 3), 0.165, 0.174)
   ) %>%
   ggplot2::ggplot(aes(x = gen, y = count, colour = subset)) +
+    facet_wrap(~round(ploidy_rate, 3), ncol = 3) +
     scale_colour_manual(values = ploidylvl_colours) +
-    geom_point(alpha = .2) +
+    geom_point(alpha = .2, size = .2) +
     theme_classic() +
-    theme(legend.position = "top") +
-    facet_wrap(~round(ploidy_rate, 3), ncol = 4)
+    theme(
+      legend.position = "none",
+      axis.title = element_text(size = 7, face = "bold"),
+      plot.background = element_rect(fill = "#efefef"),
+      strip.background = element_rect(colour = "white"),
+      strip.text = element_text(size = 7, face = "bold")
+    ) +
+    xlab("Generation") +
+    ylab("Population size") +
+    scale_x_continuous(
+      breaks = seq(0, 1000, 500), 
+      limits = c(0, 1000)
+    ) +
+    scale_y_continuous(
+      breaks = seq(0, 100000, 25000), 
+      limits = c(0, 100000)
+    )
 ```
 
-```{r results-extinctions, echo=FALSE, message=FALSE, warning=FALSE}
+```{r results-extinctions, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:results-extinctions}How the rate of whole-genome duplication affected extinction events. Each point represents a simulation that went extinct before one thousand generations had passed."}
 counts %>% 
   dplyr::filter(
     subset %in% c("total"),
@@ -47,7 +78,12 @@ counts %>%
     between(ploidy_rate, 0, 0.25)
   ) %>%
   ggplot2::ggplot(aes(x = ploidy_rate, y = gen)) +
-    geom_point(alpha = .2) +
+    geom_point(alpha = .4) +
     theme_classic() +
+    theme(
+      axis.title = element_text(size = 7, face = "bold"),
+      plot.background = element_rect(fill = "#efefef")
+    ) +
+    xlab("Rate of whole-genome duplication") +
     ylab("Generation at extinction")
 ```

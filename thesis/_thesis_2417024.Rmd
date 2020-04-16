@@ -40,7 +40,7 @@ system("bibtool -s -d book.bib packages.bib -o thesis.bib", F)
 ```{r methods, child="methods.Rmd"}
 ```
 
-```{r results, child="results.Rmd", include=FALSE}
+```{r results, child="results.Rmd"}
 ```
 
 ```{r discussion, child="discussion.Rmd"}

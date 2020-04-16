@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2020.4.16)  16 APR 2020 12:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2020.4.16)  16 APR 2020 13:55
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -533,17 +533,7 @@ Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 LaTeX Warning: Unused global option(s):
     [BES.bst].
 
-(./_thesis_2417024.aux
-
-LaTeX Warning: Label `fig:life-cycle' multiply defined.
-
-
-LaTeX Warning: Label `tab:trans-values' multiply defined.
-
-
-LaTeX Warning: Label `tab:trans-matrix' multiply defined.
-
-)
+(./_thesis_2417024.aux)
 \openout1 = `_thesis_2417024.aux'.
 
 LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 77.
@@ -774,39 +764,31 @@ File: ot1pcr.fd 2001/06/04 font definitions for OT1/pcr.
 )
 LaTeX Font Info:    Font shape `OT1/pcr/bx/n' in size <12> not available
 (Font)              Font shape `OT1/pcr/b/n' tried instead on input line 254.
-<_images/m-guttatus-lifecycle-peterson2016.png, id=139, 809.0225pt x 813.0375pt
+<_images/m-guttatus-lifecycle-peterson2016.png, id=135, 809.0225pt x 813.0375pt
 >
 File: _images/m-guttatus-lifecycle-peterson2016.png Graphic file (type png)
 <use _images/m-guttatus-lifecycle-peterson2016.png>
 Package pdftex.def Info: _images/m-guttatus-lifecycle-peterson2016.png  used on
- input line 259.
-(pdftex.def)             Requested size: 1618.12524pt x 1626.1951pt.
-
-Overfull \hbox (1265.31108pt too wide) in paragraph at lines 259--259
-[][] 
- []
-
+ input line 260.
+(pdftex.def)             Requested size: 176.40707pt x 177.28084pt.
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 8.54997pt on input line 259.
+(Font)              scaled to size 8.54997pt on input line 264.
 LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <9> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 259.
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 264.
 LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 8.54997pt on input line 259.
+(Font)              scaled to size 8.54997pt on input line 264.
 LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <9> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 259.
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 264.
 LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
-(Font)              scaled to size 8.54997pt on input line 259.
+(Font)              scaled to size 8.54997pt on input line 264.
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <9> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 259.
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 264.
 
 Package natbib Warning: Citation `@Peterson2016' on page 5 undefined on input l
-ine 259.
-
-
-LaTeX Warning: Float too large for page by 1130.8191pt on input line 260.
+ine 264.
 
 LaTeX Font Info:    Font shape `OMS/ptm/m/it' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 264.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 269.
 
 Overfull \vbox (0.91379pt too high) has occurred while \output is active []
 
@@ -816,110 +798,151 @@ Overfull \vbox (0.91379pt too high) has occurred while \output is active []
 [6 <./_images/m-guttatus-lifecycle-peterson2016.png>]
 
 Package natbib Warning: Citation `Peterson2016' on page 7 undefined on input li
-ne 334.
+ne 339.
 
 
 Package natbib Warning: Citation `Elder2006' on page 7 undefined on input line 
-334.
+339.
 
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Package natbib Warning: Citation `Peterson2016' on page 7 undefined on input li
+ne 345.
 
 
 Overfull \vbox (0.91379pt too high) has occurred while \output is active []
 
 [7]
-
-Package natbib Warning: Citation `Peterson2016' on page 8 undefined on input li
-ne 340.
-
-<_images/m-guttatus-transformula-peterson2016.png, id=170, 403.5075pt x 98.3675
+<_images/m-guttatus-transformula-peterson2016.png, id=167, 403.5075pt x 98.3675
 pt>
 File: _images/m-guttatus-transformula-peterson2016.png Graphic file (type png)
 <use _images/m-guttatus-transformula-peterson2016.png>
 Package pdftex.def Info: _images/m-guttatus-transformula-peterson2016.png  used
- on input line 356.
-(pdftex.def)             Requested size: 807.25575pt x 196.796pt.
+ on input line 362.
+(pdftex.def)             Requested size: 176.40707pt x 43.00414pt.
 
-Overfull \hbox (454.44159pt too wide) in paragraph at lines 356--356
-[][] 
+Package natbib Warning: Citation `@Peterson2016' on page 8 undefined on input l
+ine 366.
+
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 9.49997pt on input line 371.
+
+Package natbib Warning: Citation `@Elder2006' on page 8 undefined on input line
+ 371.
+
+
+Package natbib Warning: Citation `@Peterson2016' on page 8 undefined on input l
+ine 371.
+
+
+Overfull \vbox (0.91379pt too high) has occurred while \output is active []
+
+[8 <./_images/m-guttatus-transformula-peterson2016.png>]
+
+Package natbib Warning: Citation `Vickkery' on page 9 undefined on input line 4
+26.
+
+LaTeX Font Info:    Font shape `OT1/pcr/m/it' in size <12> not available
+(Font)              Font shape `OT1/pcr/m/sl' tried instead on input line 432.
+<_thesis_2417024_files/figure-latex/results-total-1.pdf, id=179, 363.3575pt x 4
+69.755pt>
+File: _thesis_2417024_files/figure-latex/results-total-1.pdf Graphic file (type
+ pdf)
+<use _thesis_2417024_files/figure-latex/results-total-1.pdf>
+Package pdftex.def Info: _thesis_2417024_files/figure-latex/results-total-1.pdf
+  used on input line 445.
+(pdftex.def)             Requested size: 363.3566pt x 469.75386pt.
+
+Overfull \hbox (10.54243pt too wide) in paragraph at lines 445--451
+ [][] 
  []
 
 
-Package natbib Warning: Citation `@Peterson2016' on page 8 undefined on input l
-ine 356.
+LaTeX Warning: Float too large for page by 5.87787pt on input line 452.
 
-LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 9.49997pt on input line 361.
+<_thesis_2417024_files/figure-latex/results-total-by-ploidy-1.pdf, id=180, 363.
+3575pt x 469.755pt>
+File: _thesis_2417024_files/figure-latex/results-total-by-ploidy-1.pdf Graphic 
+file (type pdf)
+<use _thesis_2417024_files/figure-latex/results-total-by-ploidy-1.pdf>
+Package pdftex.def Info: _thesis_2417024_files/figure-latex/results-total-by-pl
+oidy-1.pdf  used on input line 456.
+(pdftex.def)             Requested size: 363.3566pt x 469.75386pt.
 
-Package natbib Warning: Citation `@Elder2006' on page 8 undefined on input line
- 361.
+Overfull \hbox (10.54243pt too wide) in paragraph at lines 456--461
+ [][] 
+ []
 
+<_thesis_2417024_files/figure-latex/results-extinctions-1.pdf, id=182, 363.3575
+pt x 361.35pt>
+File: _thesis_2417024_files/figure-latex/results-extinctions-1.pdf Graphic file
+ (type pdf)
+<use _thesis_2417024_files/figure-latex/results-extinctions-1.pdf>
+Package pdftex.def Info: _thesis_2417024_files/figure-latex/results-extinctions
+-1.pdf  used on input line 466.
+(pdftex.def)             Requested size: 363.3566pt x 361.34912pt.
 
-Package natbib Warning: Citation `@Peterson2016' on page 8 undefined on input l
-ine 361.
+Overfull \hbox (10.54243pt too wide) in paragraph at lines 466--470
+ [][] 
+ []
 
 
 Overfull \vbox (0.91379pt too high) has occurred while \output is active []
 
-[8]
+[9]
 Overfull \vbox (0.91379pt too high) has occurred while \output is active []
 
-[9 <./_images/m-guttatus-transformula-peterson2016.png>]
-
-Package natbib Warning: Citation `Vickkery' on page 10 undefined on input line 
-418.
-
-(./_thesis_2417024.bbl
+[10 <./_thesis_2417024_files/figure-latex/results-total-1.pdf>]
 Overfull \vbox (0.91379pt too high) has occurred while \output is active []
 
-[10]
+[11 <./_thesis_2417024_files/figure-latex/results-total-by-ploidy-1.pdf>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
 Overfull \vbox (0.91379pt too high) has occurred while \output is active []
 
-[11])
+[12 <./_thesis_2417024_files/figure-latex/results-extinctions-1.pdf>] (./_thesi
+s_2417024.bbl
+Overfull \vbox (0.91379pt too high) has occurred while \output is active []
+
+[13])
 
 Package natbib Warning: There were undefined citations.
 
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 443.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 494.
 
 Overfull \vbox (0.91379pt too high) has occurred while \output is active []
 
-[12]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 443.
+[14]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 494.
 (./_thesis_2417024.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 443.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 443.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 494.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 494.
 Package rerunfilecheck Info: File `_thesis_2417024.out' has not changed.
-(rerunfilecheck)             Checksum: 31CA88291A1A6A92F0AB7DC3191227E0;1111.
-
-LaTeX Warning: There were multiply-defined labels.
-
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 443.
+(rerunfilecheck)             Checksum: 4F4FB86610FFB7D1A550E4A1348BFE2B;1065.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 494.
  ) 
 Here is how much of TeX's memory you used:
- 11379 strings out of 492609
- 166706 string characters out of 6129033
- 291294 words of memory out of 5000000
- 14980 multiletter control sequences out of 15000+600000
- 46319 words of font info for 96 fonts, out of 8000000 for 9000
+ 11408 strings out of 492609
+ 167907 string characters out of 6129033
+ 291256 words of memory out of 5000000
+ 14999 multiletter control sequences out of 15000+600000
+ 46936 words of font info for 98 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  43i,15n,46p,649b,556s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/home/rose/.texlive2019/texmf-dist/fonts/enc/dvips/base/8r.enc}</home/rose/.
 texlive2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></home/rose/.t
 exlive2019/texmf-dist/fonts/type1/urw/courier/ucrb8a.pfb></home/rose/.texlive20
 19/texmf-dist/fonts/type1/urw/courier/ucrr8a.pfb></home/rose/.texlive2019/texmf
--dist/fonts/type1/urw/helvetic/uhvb8a.pfb></home/rose/.texlive2019/texmf-dist/f
-onts/type1/urw/helvetic/uhvr8a.pfb></home/rose/.texlive2019/texmf-dist/fonts/ty
-pe1/urw/helvetic/uhvro8a.pfb></home/rose/.texlive2019/texmf-dist/fonts/type1/ur
-w/times/utmb8a.pfb></home/rose/.texlive2019/texmf-dist/fonts/type1/urw/times/ut
-mr8a.pfb></home/rose/.texlive2019/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
-Output written on _thesis_2417024.pdf (12 pages, 431886 bytes).
+-dist/fonts/type1/urw/courier/ucrro8a.pfb></home/rose/.texlive2019/texmf-dist/f
+onts/type1/urw/helvetic/uhvb8a.pfb></home/rose/.texlive2019/texmf-dist/fonts/ty
+pe1/urw/helvetic/uhvr8a.pfb></home/rose/.texlive2019/texmf-dist/fonts/type1/urw
+/helvetic/uhvro8a.pfb></home/rose/.texlive2019/texmf-dist/fonts/type1/urw/times
+/utmb8a.pfb></home/rose/.texlive2019/texmf-dist/fonts/type1/urw/times/utmr8a.pf
+b></home/rose/.texlive2019/texmf-dist/fonts/type1/urw/times/utmri8a.pfb>
+Output written on _thesis_2417024.pdf (14 pages, 11452413 bytes).
 PDF statistics:
- 246 PDF objects out of 1000 (max. 8388607)
- 216 compressed objects within 3 object streams
- 49 named destinations out of 1000 (max. 500000)
- 155 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 298 PDF objects out of 1000 (max. 8388607)
+ 256 compressed objects within 3 object streams
+ 53 named destinations out of 1000 (max. 500000)
+ 162 words of extra memory for PDF output out of 10000 (max. 10000000)
 

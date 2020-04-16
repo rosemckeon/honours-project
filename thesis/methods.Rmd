@@ -1,8 +1,8 @@
 # Methods {#methods}
 
-An individual-based modelling approach was used to examine these aims. The model was created, from scratch, in *R* [@R-base] to simulate the life cycle of the yellow monkey flower (*Mimulus guttatus*) as laid out by @Peterson2016 and detailed in figure \ref{fig:life-cycle}. The *M. guttatus* complex was a suitable choice due to whole-genome duplication being well documented throughout [@Vickery1995], and data being readily available.
+An individual-based modelling approach was used to examine these aims. The model was created, from scratch, in **R** [@R-base] to simulate the life cycle of the yellow monkey flower (*Mimulus guttatus*) as laid out by @Peterson2016 and detailed in figure \ref{fig:methods-life-cycle}. The *M. guttatus* complex was a suitable choice due to whole-genome duplication being well documented throughout [@Vickery1995], and data being readily available.
 
-```{r life-cycle, fig.cap="\\label{fig:life-cycle}Life cycle of \\textit{Mimulus guttatus} taken from \\cite{@Peterson2016}. Seedlings and rosettes are sexually reproductive flowering stages. Rosettes are asexually produced clones."}
+```{r life-cycle, out.width="70%", fig.align="center", fig.cap="\\label{fig:methods-life-cycle}Life cycle of \\textit{Mimulus guttatus} taken from \\cite{@Peterson2016}. Seedlings and rosettes are sexually reproductive flowering stages. Rosettes are asexually produced clones."}
 knitr::include_graphics("_images/m-guttatus-lifecycle-peterson2016.png")
 ```
 
@@ -34,9 +34,9 @@ Rounds of simulations were run using the model function *sploidy* in order to ho
 
 ### Transition data {#methods-model-sims-trans}
 
-Data for an *M. guttatus* population that had the most stable properties were used; minimal growth that could be kept in check with carrying capacity and low elasticity. @Peterson2016 described the formula for computing transition data as laid out in figure \ref{fig:trans-formula} and provided the values for a low-elevation perennial *M. guttatus* population as shown in table \ref{tab:trans-values}. These data produced the transition matrix (figure \ref{tab:trans-matrix}) provided to the model, along with the values of G (0.652) and D (0.534) shown in figure \ref{tab:trans-values}.
+Data for an *M. guttatus* population that had the most stable properties were used; minimal growth that could be kept in check with carrying capacity and low elasticity. @Peterson2016 described the formula for computing transition data as laid out in figure \ref{fig:methods-trans-formula} and provided the values for a low-elevation perennial *M. guttatus* population as shown in table \ref{tab:methods-trans-values}. These data produced the transition matrix (figure \ref{tab:methods-trans-matrix}) provided to the model, along with the values of G (0.652) and D (0.534) shown in figure \ref{tab:methods-trans-values}.
 
-```{r trans-formula, fig.cap="How the transition matrix (table \\ref{tab:trans-matrix}) was calculated from the data provided in table \\ref{tab:trans-values}, according to this formula taken from \\cite{@Peterson2016}."}
+```{r trans-formula, out.width="70%", fig.align="center", fig.cap="\\label{fig:methods-trans-formula}How the transition matrix (table \\ref{tab:methods-trans-matrix}) was calculated from the data provided in table \\ref{tab:methods-trans-values}, according to this formula taken from \\cite{@Peterson2016}."}
 knitr::include_graphics("_images/m-guttatus-transformula-peterson2016.png")
 ```
 
@@ -47,7 +47,7 @@ readRDS("_data/mimulus.rds") %>%
   dplyr::mutate(A = signif(A, 3) %>% as.character()) %>%
   knitr::kable(
     "latex",
-    caption = "\\label{tab:trans-values} Components of Low-elevation perennial *Mimulus guttatus* life-cycle transition. Seed survival (D) is a general value taken from \\cite{@Elder2006}. All other components taken from \\cite{@Peterson2016} who recorded values specific to that *M. guttatus* population in the year 2013 (N = 77). G = germination rate, O = ovule number per flower, F = flower production, S = winter survival, R = rosette production, A = proportional recruitment success of ovules relative to rosettes.",
+    caption = "\\label{tab:methods-trans-values} Components of Low-elevation perennial *Mimulus guttatus* life-cycle transition. Seed survival (D) is a general value taken from \\cite{@Elder2006}. All other components taken from \\cite{@Peterson2016} who recorded values specific to that *M. guttatus* population in the year 2013 (N = 77). G = germination rate, O = ovule number per flower, F = flower production, S = winter survival, R = rosette production, A = proportional recruitment success of ovules relative to rosettes.",
     booktabs = T,
     digits = 3,
     escape = F
@@ -72,7 +72,7 @@ dimnames(trans)[1] <- list(paste0(stages, " (t+1)"))
 trans %>%
   knitr::kable(
     "latex",
-    caption = "\\label{tab:trans-matrix}Transition matrix used for the model, based on the formula shown in \\ref{fig:trans-formula} and the data from figure \\ref{tab:trans-values}.",
+    caption = "\\label{tab:methods-trans-matrix}Transition matrix used for the model, based on the formula shown in \\ref{fig:methods-trans-formula} and the data from figure \\ref{tab:methods-trans-values}.",
     booktabs = T,
     row.names = T,
     digits = 3,
@@ -84,7 +84,6 @@ trans %>%
   )
 ```
 
-## 
 
 ### Varying the rate of whole-genome duplication
 
