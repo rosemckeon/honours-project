@@ -1,6 +1,6 @@
 # Methods {#methods}
 
-An individual-based modelling approach was used to examine these aims. The model was created, from scratch, in *R* [@Rbase] to simulate the life cycle of the yellow monkey flower (*Mimulus guttatus*) as laid out by @Peterson2016 and detailed in figure \ref{fig:life-cycle}. The *M. guttatus* complex was a suitable choice due to whole-genome duplication being well documented throughout [@Vickery1995], and data being readily available.
+An individual-based modelling approach was used to examine these aims. The model was created, from scratch, in *R* [@R-base] to simulate the life cycle of the yellow monkey flower (*Mimulus guttatus*) as laid out by @Peterson2016 and detailed in figure \ref{fig:life-cycle}. The *M. guttatus* complex was a suitable choice due to whole-genome duplication being well documented throughout [@Vickery1995], and data being readily available.
 
 ```{r life-cycle, fig.cap="\\label{fig:life-cycle}Life cycle of \\textit{Mimulus guttatus} taken from \\cite{@Peterson2016}. Seedlings and rosettes are sexually reproductive flowering stages. Rosettes are asexually produced clones."}
 knitr::include_graphics("_images/m-guttatus-lifecycle-peterson2016.png")

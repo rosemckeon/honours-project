@@ -2,14 +2,12 @@
 title: "The evolution of polyploidy and the extreme cost of pollen-swamping"
 date: "Last edited: `r format(Sys.time(), '%B %d %Y')`"
 author: 
-- name: '2417024'
+- name: Chintamani Rose McKeon (2417024)
   num: 
 runninghead: The cost of pollen-swamping
-abstract: 'Amazing summary of project here...'
+abstract: "Amazing summary of project here..."
 keywords: polyploidy; evolution; angiosperm; mimulus; guttatus; pollen-swamping; mate-choice;
-bibliography:
-- book.bib
-- packages.bib
+bibliography: thesis.bib
 bibliographystyle: BES.bst
 output: 
   pdf_document:
@@ -30,15 +28,10 @@ longtable: yes
 ```{r setup, include=FALSE}
 library(kableExtra)
 library(tidyverse) 
-devtools::install_github("rosemckeon/honours-project", auth_token = "60bcd5244537f523313ffae0b061b4ba00873f5d")
+# devtools::install_github("rosemckeon/honours-project", auth_token = "60bcd5244537f523313ffae0b061b4ba00873f5d")
 library(sploidy)
-knitr::write_bib(c(
-  .packages(), 'sploidy'
-), 'packages.bib')
-
-packages <- knitr::write_bib(c(
-  .packages(), 'sploidy'
-))
+knitr::write_bib(c(.packages()), 'packages.bib')
+system("bibtool -s -d book.bib packages.bib -o thesis.bib", F)
 ```
 
 ```{r intro, child="intro.Rmd"}
@@ -46,7 +39,6 @@ packages <- knitr::write_bib(c(
 
 ```{r methods, child="methods.Rmd"}
 ```
-
 
 ```{r results, child="results.Rmd", include=FALSE}
 ```
