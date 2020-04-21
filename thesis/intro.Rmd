@@ -1,79 +1,43 @@
 # Introduction {#intro}
 
-> Would some images of genome duplication be helpful?
+Polyploidy arises via mechanisms of whole-genome duplication (such as non-disjunction) and describes organisms with more than two sets of chromosomes. No polyploid mammal or bird species have been found, as the condition appears to be fatal in most animals [@Svartman2005; Wertheim2013]. However, polyploidy has been observed in amphibians, fish, fungi, reptiles, and plants. Amongst these, polyploidy is exceptionally well tolerated in plants. Infact, genome-doubling is a ubiquitous feature in the lineages of almost all flowering plants (angiosperms) and has occurred even more recently (post genera formation) for 35% of all vascular plants [@Jiao2011; @Wood2009].
 
-Whole-genome duplication (polyploidisation) is an extreme mutation which occurs due to errors during cell division; such as non-disjunction where sister chromatids are not separated during anaphase. 
-Failed disjunction leads to all the genetic material ending up in one of the two daughter cells; essentially doubling the genome within that cell.
-When this occurs during gametogenesis, it can lead to whole organisms with more than two complete sets of chromosomes (polyploids). 
-According to @REFNEEDED, the estimated rate of polyploidisation is one order of magnitude higher than that of standard mutation (10^-5^).
-In humans, it coincides with around 5% of miscarriages [@Creasy1976]. 
-Moreover, while there have been some live birth cases of triploid human infants, they usually die within hours. 
-In irregular cases, they survive for several months, but none have survived more than six years [@Hashimoto2018]. 
+## Autopolyploidy vs allopolyploidy {#intro-auto-vs-allo}
 
-> Newer data for miscarriage rate?
+Genome-doubling in plants occurs either intraspecifically (autopolyploidy) due to unreduced gametes, or via merging of genomes during hybridisation (allopolyploidy). The relative abundance and rates of the appearance of each type has long been debated [@Darlington1937; @Stebbins1947], but improved methods of determining ploidal levels (flow cytometry) has lead to a much clearer understanding of this topic in recent years as both cytological and genetic data have accumulated [@Dolezel2007]. In the past, autopolyploids were not recognised as distinct species, but categorised instead as cytotypes of their progenitors which lead to a gross underestimation of their prevelance [@Soltis2007]. Although the estimated rate of autotetraploid formation--10^-5--is usually higher than that of allotetraploid formation [@Ramsey1998], it is now thought that there are roughly equal autopolyploid and alloployploid taxa [@Barker2016]. Tropical and woody taxa, however, were underepresented in the cytological and genomic data that informed this estimate, so that could change if reviewed when these taxa are better represented.
 
-No polyploid mammal species has ever been found [@Svartman2005], and the same is also usually true for birds [@REFNEEDED].
-However, while in these taxa, genome-doubling is not well tolerated, for amphibians, fish, fungi, reptiles, and plants, the story is quite different. 
-Amongst these, polyploidy is exceptionally well tolerated in plants. 
-@Jiao2011 found that genome-doubling is a ubiquitous feature in the lineages of almost all flowering plants (angiosperms), and @Wood2009 also found that it has occurred even more recently (post genera formation) for 35% of all vascular plants. 
-Plant surveys of natural populations over the last century further support this, reporting mean polyploid frequencies of 25% [@REFNEEDED]. 
+## The role of genome-doubling in plant diversification  {#intro-diversification}
 
-## The Role of Genome-Doubling in Plant Diversification  {#intro-diversification}
+Because of the ubiquity of polyploidisation events in plant lineages, genome-doubling is thought to be fundamental in the diversification of plants. Furthermore, these doubling events have been found to coincide specifically with speciation at much larger rates than previously estimated; 15% in angiosperms and 31% in ferns [@Otto2000; @Wood2009]. Whole-genome duplication has even been linked with major biological innovations that lead to diversification of the seed plant (spermatophyte) and angiosperm phyla [@Jiao2011]. Seeds and flowers both being crucial innovations that allowed plants to transition from an aquatic life-cycle to a terrestrial one by removing their dependence on water for reproduction. These adaptations are broadly considered as one of the most significant in the history of our planet as they enabled the 'greening' of earth. It follows, therefore, that there has been a substantial drive to understand the evolution of polyploidy, and the mechanisms by which genome-doubling has been able to drive such adaptations. As a result of these efforts, polyploidisation has been shown to drastically alter phenotypes, breeding system, and physiology within just a few generations due to the massive genomic alterations that newly formed polyploids (neopolyploids) rapidly undergo [@Adams2005; @Levins2002; Soltis2014a]. Typically, polyploids tend to have larger flowers, seeds and stomata as well as being more robust all round [@Ramsey2002]. Because of these attributes, genome-doubling has been crucial in the domestication of many crop plants, for instance; wheat, maize, sugarcane, coffee, cotton and tobacco [@Dubcovsky2007; @Otto2000].
 
-Genome-doubling is thought to be fundamental in the diversification of plant species; having been found to coincide with 15% of angiosperm speciation events, and 31% in ferns [@Wood2009]. 
-Furthermore, @Jiao2011 showed that whole-genome duplication could even be linked with major biological innovations that have lead to diversification of the plant phyla. 
-Their phylogenetic analysis brought to light two ancient groups of duplication events:
-the first grouping of duplications (around 319  millennia ago) influenced the diversification of regulatory genes that were integral to seed development and the more recent grouping (around 192 millennia ago) affected genes that enabled flower development. 
-The authors appropriately conclude that these events must have played a significant role in the rise of seed plants, as well as in the later diversification of angiosperms. 
-Seeds and flowers were both crucial innovations that allowed plants to transition from an aquatic life-cycle to a terrestrial one by removing their dependence on water for reproduction — an event, broadly considered as one of the most significant in the history of our planet.
+>Talk about invasive potential? 
 
-The full story, however, is not quite that clear-cut.
-According to @Mayrose2011, genome-doubling significantly increases speciation rates of diploids, but new polyploid lines do not further speciate by that same mechanism. 
-So, polyploid speciation rates are far smaller in comparison. 
-Furthermore, they found polyploid extinction rates to be far higher than those of diploids because polyploids are clumped around the tips of phylogenies.
-This Likelihood-based analysis of vascular plants provided clear, and quantitative, support for the traditionally popular view that polyploidy most often leads to evolutionary dead ends.
+Despite being broadly considered as one of the main driving forces in angiosperm evolution [@Barker2016; @Otto2007; @Soltis2014a], polyploids have been shown to contribute far less to diversification than their diploid counterparts [@Mayrose2011]. While genome-doubling significantly increases speciation rates of diploids, new polyploid lines do not appear to speciate further by that same mechanism and so speciate at a slower rate. Furthermore, polyploid extinction rates have been found to be far higher than those of diploids which further reduces their overall speciation rate relative to diploids [@Arrigo2012; @Mayrose2011]. While the validity of these findings has been the topic of some debate [@Mayrose2014; @Soltis2014], the results seem to support the long-standing evolutionary 'dead end' hypothesis which had previously lost popularity. 
 
->First proposed by? Stebbins 71?
+If this is the case afterall, why is the success of polyploids so rare given the body of evidence that touts their rapid adaptability? Furthermore, under what conditions does polyploidy become advantageous and actually succeed? The discussion surrounding the advantages and disadvantages of polyploidy is well reviewed in Comai2005, @Ramsey2014, and @Otto2007. However, even after a century of research, the factors that drive the success of polyploid establishment in the face of high extinction rates are still unclear. If polyploids tend to become extinct at the establishment phase due to reproductive disadvantages such as triploid sterility, or limited mate-choice [@Arrigo2012], then it follows that traits which increase reproductive assurance should lead to successfully evading extinction; perhaps why the polyploids we do see in nature exhibit traits like increased size, flower size, and number. As well as increasing potential fecundity, these traits should increase reproductive assurance by increasing the probability of geitonogamous self-pollination between flowers on the same individual [@DeJong1993; @Karron2004]. 
 
-So, what is it then that allows this extreme mutation to succeed and become fixated? 
-What scenarios and mechanisms combine to allow rare polyploid lines to succeed? 
-Are the majority of the polyploids we see in natural populations doomed to extinction? 
-Furthermore, can we predict which conditions will lead to their survival?
+However, even in the best studied systems there has--so far--been a lack of continuity between the genomic data and its ecological context, which has hindered our ability to fully understand the drivers in the evolution of this extreme mutation [@Soltis2016a]. In order to elucidate these factors and test the theory presented, much work is being done to find and describe wild neopolyploid populations [@Ferrero2015; @Schlaepfer2008; @Simon-Porcar2017]. Discovering these recent genome-doubling events in the wild means that the processes of adaptation that leads to evolutionary success or failure of polyploidy can be better examined, without the accumulation of genetic change clouding the picture. In addition, wild study populations will better inform us of the ecological factors which are integral to understanding evolutionary processes.
 
-Despite having been studied for over a century, the factors that drive the success of polyploid establishment in the face of high extinction rates are still unclear. 
-@Arrigo2012 conclude that polyploids tend to become extinct at the establishment phase due to reproductive disadvantages such as triploid sterility, or limited mate-choice; the latter occurring via diploid pollen-swamping, or delayed flowering. 
-On the other hand, polyploids are frequently linked with distinct traits such as "gigas effects", which describes their increased size and plant organs. 
-Additionally, benefits of polyploidy can include enhanced capabilities for buffering of deleterious mutation (due to increased heterozygosity), hybrid vigour (heterosis), and a reversal of selfing inhibition [@Woodhouse2009; @Ramsey2014]. 
-These traits are thought to overcome the reproductive disadvantages of polyploidy and, in those rare cases, make this mutation key to the invasive and adaptive potential of plants. 
+## Mate choice limitation {#intro-mate-choice-limitation}
 
-## The cost of being polyploid (limited mate-choice) {#intro-cost-of-polyploidy}
+Neopolyploids are thought to be mate-limited, either by diploid pollen-swamping (due to gamete incompatability) or triploid sterility. It has been widely suggested that triploids tend not to be fertile [@refs], however this has recently been brought into dispute [@ref]. However, if all the pollen that a neoployploid recieves is from an incompatable diploid donor, then it clearly fugures that fitness will be severely reduced due to an incapacity to produce viable seeds. Furthermore, pollen-swamping has been shown to significantly disrupt species distribution in mixed diploid-hexaploid angiosperm populations of *Mercurialis annua* where it gained diploids such a competative advantage that it lead to hexaploid displacement in multiple regions [@Buggs2006].
 
-
-
-### Diploid Pollen-Swamping {#intro-pollen-swamping}
-
-
-
-
-### Delayed flowering {#intro-delayed-flowering}
-
-> Delayed flowering (cost) is associated with gigas-effects of increased size (benefit). TRADE-OFF.
-
-
-
-## Mimulus study system {#intro-mimulus}
-
-Polyploidisation events have been well documented in *Mimulus guttatus* [@Vickery1995].
-
-@Peterson2016 details 3-stage *M. guttatus* life-cycle and transition matrices.
+>Needs more content. Totally a bit flat on the heart of the matter. Move some of the selfing stuff from the discussion here? Talk about the 
 
 ## Aims {#intro-aims}
 
-Here we aimed to quanitify the cost of pollen-swamping by testing how high the rate of whole-genome duplication would need to be in order to overcome the strength of negative selection. We asked: 
+Using an individual-based modelling approach we aim to lay the groundwork necessary for further investigations by examining the basic response of relative polyploid and diploid frequencies to changes in the rate of genome-duplication, under the assumption that mate-choice for neopolyploids is limited via pollen-swamping. 
+We aim to quanitify the theoretical cost of pollen-swamping by testing how high the rate of whole-genome duplication would need to be in order to overcome the strength of negative selection which it creates. We asked: 
 
-- Will increasing the rate of whole-genome duplication lead to the fixation of polyploidy? 
-- And, if so, at what threshold point does this occur? 
+- Will the proportion of polyploids exceed the rate of whole-genome duplication? And, if so at what rate does this occur?
+- Will increasing the duplication rate lead to the fixation of polyploidy? 
 
-In addition, we aimed to discover how varying the starting population size affected these results:
+In addition, we aim to discover if established and pioneering populations react in the same way to these increased duplication rates. 
 
-- Does an established population react in the same way to increased duplication rates as a pioneering population entering an empty landscape? 
+## The study system {#intro-study-system}
+
+The model that follows was designed to simulate the life cycle of the yellow monkey flower *Erythranthe gutatta* (family: Phrymaceae, synonym: *Mimulus guttatus*) as laid out by @Peterson2016 and detailed in figure \ref{fig:intro-life-cycle}. *E. guttata* was chosen due to ancient and recent genome-doubling that has resulted in both autopolyploids and allopolyploids being well documented in the species complex of this popular study organism [@Beardsley2004; @Buggs2012; @Simon-Porcar2017]. The experimental design will begin with a chort of diploid individuals that give rise to autotetraploid offspring; a scenario which loosley reflects the neo-autopolyploidisation recently discovered to be responsible for a mixed diploid-tetraploid population of *E. guttata* in the Shetland Isles [@Simon-Porcar201]. All individuals will be hermaphrodites (in possesion of perfect flowers that provide both male and female function), as is most common for *E. guttata* [@Wise2011] and, indeed, all angiosperms. Seed dormancy will be disabled to remove any lag in the effects of changing the rate of genome duplication; this also fits with the lack of dormancy described for *E. guttata* [@Willis1993].
+
+```{r life-cycle, out.width="70%", dpi=300, fig.align="center", fig.cap="\\label{fig:intro-life-cycle}Life cycle of \\textit{Mimulus guttatus} taken from \\cite{@Peterson2016}. Seedlings and rosettes are sexually reproductive flowering stages. Rosettes are asexually produced clones."}
+knitr::include_graphics("_images/m-guttatus-lifecycle-peterson2016.png")
+```

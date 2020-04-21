@@ -16,7 +16,7 @@ output:
     keep_tex: no
     fig_caption: yes
     fig_width: 5
-    fig_height: 5
+    fig_height: 3
 documentclass: crumpet
 classoption:
 - Review
@@ -26,6 +26,7 @@ longtable: yes
 ---
 
 ```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = F)
 library(kableExtra)
 library(tidyverse) 
 # devtools::install_github("rosemckeon/honours-project", auth_token = "60bcd5244537f523313ffae0b061b4ba00873f5d")
