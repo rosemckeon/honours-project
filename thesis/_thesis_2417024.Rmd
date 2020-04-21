@@ -32,7 +32,7 @@ library(tidyverse)
 # devtools::install_github("rosemckeon/honours-project", auth_token = "60bcd5244537f523313ffae0b061b4ba00873f5d")
 library(sploidy)
 knitr::write_bib(c(.packages()), 'packages.bib')
-system("bibtool -s -d book.bib packages.bib -o thesis.bib", F)
+system("bibtool -s -d Polyploidy.bib packages.bib -o thesis.bib", F)
 ```
 
 ```{r intro, child="intro.Rmd"}

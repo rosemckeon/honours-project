@@ -2,6 +2,8 @@
 
 We have shown here how the extreme cost of pollen-swamping selects against the evoluton of polyploidy. Polyploidy did not rise to fixation in a single simulation because of the dramatic effect these mating rules had on their ability to produce viable seeds. We have also shown how increasing the rate of whole-genome duplication caused reproductive interference across the entire landscape, swamping diploids and polyploids alike with incomaptible pollen. The resulting reduction in fecundity doomed both diploids and polyploids to extinction. In effect, because of the model assumptions, increasing the rate of whole-genome duplcation increased the diversity of mating types in the system. When no pollen specificity mechanisms existed to sort the mating pool so that these types could find each other effectively, the whole population was doomed to failure once enough different types were in the system. Therefore, it follows that this mate-choice limiting mutation must have a part to play in the evolution of beneficial traits that assist in compatibility assortment, such as; flower timing, pollinator specificity, and selfing. Could these mechanisms of mating assortment allow the population to escape extinction? 
 
+>Are there reasons to think that pollen swamping will lead to dead ends under some conditions, but diversification (or at least not dead ends) under others?
+
 Here we explore how mechansims for compatability assorting traits would work with the current model. We consider how these biological observations could be boiled down into a computational form and we follow that, in each case, by discussing how these new conditions may be expected to change the pattern of results. 
 
 ## Delayed flowering {#discussion-escape-delayed-flowering}
