@@ -1,17 +1,17 @@
 # Methods {#methods}
 
-An Individual-based model was created, from scratch, in R [@R-base], as an open source R package *{sploidy}*, and is available along with scripts and data on Github [@R-sploidy].
+An Individual-based model was created, from scratch, in R [@R-base], as an open-source R package *{sploidy}*, and is available along with scripts and data on Github [@R-sploidy].
 
 ## Assumptions {#methods-model-assumptions}
 
-To test our hypotheses the model needed to make particular assumptions about the reproductive interactions between individuals, as well as how particular parameters (like whole genome duplication rate) were applied mechanistically. To see if the rate of duplication could overcome the negative effects of pollen-swamping, mate choice had to be limited in a way that represented failed fertilisation attempts. This was achieved using a simple matching rule based on parental ploidy level. In full, the model assumptions were as follows:
+To test our hypotheses, the model needed to make particular assumptions about the reproductive interactions between individuals, as well as how particular parameters (like genome-duplication rate) were applied mechanistically. To see if the rate of duplication could overcome the negative effects of pollen-swamping, mate choice had to be limited in a way that represented failed fertilisation attempts. This was achieved using a simple matching rule based on parental ploidy level. In full, the model assumptions were as follows:
 
 - All individuals began as diploid.
 - Polyploids arose at a set rate of genome-duplication during all sexually reproductive transitions.
-- Diploids and polyploids could both out-cross, but never with each other. In addition, polyploids could not outcross with other polyploids of differing ploidy level, ie:- a tetraploid was not compatible with an octoploid. 
+- Diploids and polyploids could both outcross, but never with each other. In addition, polyploids could not outcross with other polyploids of differing ploidy level, i.e.:- a tetraploid was not compatible with an octoploid. 
 - All individuals could self-fertilise.
 - Offspring produced had the same ploidy level as their parents; two diploids produced a diploid, and so on.
-- When genome-duplication occured, the ploidy level of an individual was doubled; in this case two diploid parents would produce a tetraploid.
+- When genome-duplication occurred, the ploidy level of an individual was doubled; in this case, two diploid parents would produce a tetraploid.
 - All plants were hermaphrodite; mothers and fathers were chosen via random sampling from the same pool of individuals.
 - Pollen range spanned the entire landscape.
 - Seed dispersal spanned the entire landscape.
@@ -20,13 +20,13 @@ Transition probabilities passed to the model defined how many individuals made i
 
 ## Simulation strategy {#methods-model-sims}
 
-Rounds of simulations were run using the model function *sploidy* in order to home-in on the parameter ranges to include in the experiment design. These initial simulations were run for 1000 generations on a 100x100 landscape grid (to allow the default carrying capacity to maintain the adult population size at around one hundred thousand). The starting population contained sixty diploid individuals (twenty of each life stage), to simulate a pioneering species entering an empty space and the **ploidy_rate** parameter was varied between zero and 0.5. Seed dormancy was disabled by setting **seed_longevity** to zero. As was clonal reproduction, via the transition matrix provided to the **trans** parameter. Transition parameters--the transition matrix (**trans**), germination rate (**G**), and seed surival rate (**D**)--were taken from known demographic data described in more detail below. 
+Rounds of simulations were run using the model function *sploidy* in order to home-in on the parameter ranges to include in the experiment design. These initial simulations were run for 1000 generations on a 100x100 landscape grid (to allow the default carrying capacity to maintain the adult population size at around one hundred thousand). The starting population contained sixty diploid individuals (twenty of each life stage), to simulate a pioneering species entering an empty space and the **ploidy_rate** parameter was varied between zero and 0.5. Seed dormancy was disabled by setting **seed_longevity** to zero as was clonal reproduction, via the transition matrix provided to the **trans** parameter. Transition parameters--the transition matrix (**trans**), germination rate (**G**), and seed survival rate (**D**)--were taken from known demographic data described in more detail below. 
 
-### Transition data {#methods-model-sims-trans}
+## Transition data {#methods-model-sims-trans}
 
 Data for an *M. guttatus* population that had the most stable properties were used; minimal growth that could be kept in check with carrying capacity and low elasticity. @Peterson2016 described the formula for computing transition data as laid out in figure \ref{fig:methods-trans-formula} and provided the values for a low-elevation perennial *M. guttatus* population as shown in table \ref{tab:methods-trans-values}. The seed survival value (D) they presented was taken from @Elderd2006. These data produced the transition matrix (figure \ref{tab:methods-trans-matrix}) provided to the model along with the values of G (0.652) and D (0.534) shown in figure \ref{tab:methods-trans-values}. 
 
-```{r trans-formula, out.width="70%", dpi=300, fig.align="center", fig.cap="\\label{fig:methods-trans-formula}How the transition matrix (table \\ref{tab:methods-trans-matrix}) was calculated from the data provided in table \\ref{tab:methods-trans-values}, according to this formula taken from \\cite{@Peterson2016}."}
+```{r trans-formula, out.width="70%", dpi=300, fig.align="center", fig.cap="\\label{fig:methods-trans-formula}How the transition matrix (table \\ref{tab:methods-trans-matrix}) was calculated from the data provided in table \\ref{tab:methods-trans-values}, according to this formula taken from \\cite{Peterson2016}."}
 knitr::include_graphics("_images/m-guttatus-transformula-peterson2016.png")
 ```
 
@@ -37,7 +37,7 @@ readRDS("_data/mimulus.rds") %>%
   dplyr::mutate(A = signif(A, 3) %>% as.character()) %>%
   knitr::kable(
     "latex",
-    caption = "\\label{tab:methods-trans-values} Components of Low-elevation perennial *Mimulus guttatus* life-cycle transition. Seed survival (D) is a general value taken from \\cite{@Elder2006}. All other components taken from \\cite{@Peterson2016} who recorded values specific to that *M. guttatus* population in the year 2013 (N = 77). G = germination rate, O = ovule number per flower, F = flower production, S = winter survival, R = rosette production, A = proportional recruitment success of ovules relative to rosettes.",
+    caption = "\\label{tab:methods-trans-values} Components of Low-elevation perennial \\textit{Erythranthe guttata} (previously: \\textit{Mimulus guttatus}) life-cycle transition. Seed survival (D) is a general value taken from \\cite{Elderd2006}. All other components taken from \\cite{Peterson2016} who recorded values specific to that \\textit{E. guttata} population in the year 2013 (N = 77). G = germination rate, O = ovule number per flower, F = flower production, S = winter survival, R = rosette production, A = proportional recruitment success of ovules relative to rosettes.",
     booktabs = T,
     digits = 3,
     escape = F
@@ -74,7 +74,7 @@ trans %>%
   )
 ```
 
-### Varying the rate of genome-duplication
+## Varying the rate of genome-duplication
 
 In order to quantify how the rate of genome-duplication affected fixation of polyploid genotypes, a randomly sampled range of polyploidisation rates were chosen from an exponential distribution of 100000 random uniform numbers ranging between 0.001 and 0.010. Using an exponential distribution gave higher resolution around the lower parameter rates which we expected to be most interesting. 
 
