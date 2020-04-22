@@ -4,7 +4,7 @@ An Individual-based model was created, from scratch, in R [@R-base], as an open-
 
 ## Assumptions {#methods-model-assumptions}
 
-To test our hypotheses, the model needed to make particular assumptions about the reproductive interactions between individuals, as well as how particular parameters (like genome-duplication rate) were applied mechanistically. To see if the rate of duplication could overcome the negative effects of pollen-swamping, mate choice had to be limited in a way that represented failed fertilisation attempts. This was achieved using a simple matching rule based on parental ploidy level. In full, the model assumptions were as follows:
+To test our hypotheses, the model needed to make particular assumptions about the reproductive interactions between individuals, as well as how particular parameters (like genome-duplication rate) were applied mechanistically. To see if the rate of genome-doubling could allow polyploid frequency within the population to overcome the negative selection created by pollen-swamping, mate choice had to be limited in a way that represented failed fertilisation attempts due to mismatched pollen types. This was achieved using a simple matching rule based on parental ploidy level. In full, the model assumptions were as follows:
 
 - All individuals began as diploid.
 - Polyploids arose at a set rate of genome-duplication during all sexually reproductive transitions.
@@ -18,13 +18,21 @@ To test our hypotheses, the model needed to make particular assumptions about th
 
 Transition probabilities passed to the model defined how many individuals made it between life stages at any given generation. The *rbinom* function in base R was used throughout--where transitions reduced cohort size--to choose individuals that transitioned successfully. This allowed for a natural amount of stochasticity around the transition probabilities. Where transition values increased cohort size, the function *sample_n* from the package *{Dplyr}* [@R-dplyr] was used, instead, with replacement. 
 
+>Unnecessary paragraph above? Hard to make this clearer.
+
 ## Simulation strategy {#methods-model-sims}
 
-Rounds of simulations were run using the model function *sploidy* in order to home-in on the parameter ranges to include in the experiment design. These initial simulations were run for 1000 generations on a 100x100 landscape grid (to allow the default carrying capacity to maintain the adult population size at around one hundred thousand). The starting population contained sixty diploid individuals (twenty of each life stage), to simulate a pioneering species entering an empty space and the **ploidy_rate** parameter was varied between zero and 0.5. Seed dormancy was disabled by setting **seed_longevity** to zero as was clonal reproduction, via the transition matrix provided to the **trans** parameter. Transition parameters--the transition matrix (**trans**), germination rate (**G**), and seed survival rate (**D**)--were taken from known demographic data described in more detail below. 
+Rounds of simulations were run using the model function *sploidy* in order to home-in on the parameter ranges to include in the experiment design. These initial simulations were run for 1000 generations on a 100x100 landscape grid (to allow the default carrying capacity to maintain the adult population size at around one hundred thousand). The starting population contained sixty diploid individuals (twenty of each life stage), to simulate a pioneering species entering an empty space and the **ploidy_rate** parameter was varied (details below). Seed dormancy was disabled by setting **seed_longevity** to zero as was clonal reproduction, via the transition matrix provided to the **trans** parameter. Transition parameters--the transition matrix (**trans**), germination rate (**G**), and seed survival rate (**D**)--were taken from known demographic data described in more detail below. 
 
 ## Transition data {#methods-model-sims-trans}
 
 Data for an *M. guttatus* population that had the most stable properties were used; minimal growth that could be kept in check with carrying capacity and low elasticity. @Peterson2016 described the formula for computing transition data as laid out in figure \ref{fig:methods-trans-formula} and provided the values for a low-elevation perennial *M. guttatus* population as shown in table \ref{tab:methods-trans-values}. The seed survival value (D) they presented was taken from @Elderd2006. These data produced the transition matrix (figure \ref{tab:methods-trans-matrix}) provided to the model along with the values of G (0.652) and D (0.534) shown in figure \ref{tab:methods-trans-values}. 
+
+## Varying the rate of genome-duplication
+
+In order to quantify how the rate of genome-duplication affected fixation of polyploid genotypes, a randomly sampled range of polyploidisation rates were chosen from an exponential distribution of 100000 random numbers ranging between 0.001 and 0.010. Using an exponential distribution gave higher resolution around the lower parameter rates which we expected to be most interesting. The minimum rate was inflated from the estimated rate of duplication in nature (10^-5^) so that effects could be seen more clearly.
+
+Diagnostic plotting of these data revealed that increased rates needed to be examined. Further simulations were then run using randomly sampled rates from 100000 random uniform numbers between 0.010 and 0.500 in an attempt to determine how high the mutation rate needed to be in order for polyploids to break free from the inherent selection against them due to mate-choice limitation.
 
 ```{r trans-formula, out.width="70%", dpi=300, fig.align="center", fig.cap="\\label{fig:methods-trans-formula}How the transition matrix (table \\ref{tab:methods-trans-matrix}) was calculated from the data provided in table \\ref{tab:methods-trans-values}, according to this formula taken from \\cite{Peterson2016}."}
 knitr::include_graphics("_images/m-guttatus-transformula-peterson2016.png")
@@ -73,9 +81,3 @@ trans %>%
     font_size = 8
   )
 ```
-
-## Varying the rate of genome-duplication
-
-In order to quantify how the rate of genome-duplication affected fixation of polyploid genotypes, a randomly sampled range of polyploidisation rates were chosen from an exponential distribution of 100000 random uniform numbers ranging between 0.001 and 0.010. Using an exponential distribution gave higher resolution around the lower parameter rates which we expected to be most interesting. 
-
-Diagnostic plotting of these data revealed that increased rates needed to be examined. Further simulations were then run using randomly sampled rates from 100000 random uniform numbers between 0.010 and 0.500 in an attempt to determine how high the mutation rate needed to be in order for polyploids to break free from the inherent selection against them due to mate-choice limitation.
