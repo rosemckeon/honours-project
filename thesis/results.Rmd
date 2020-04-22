@@ -1,29 +1,36 @@
 # Results {#results}
 
-The pattern of population growth over time when no whole-genome duplication occurred; whatever the starting population size, the population quickly stabilised (in under fifty generations) around the carrying capacity (mean frequency = 1.00, sd = 0.00163) with seed counts at just under three-quarters of the adult population size (mean frequency = 0.729, sd = 0.00210). 
+The pattern of population growth over time when no genome-doubling occurred was consistent and predictable. The main metric examined here was the freqeuncy of individuals at a particular life-stage. From herein, frequency describes the number of individuals observed (either belonging to a particular life-stage, or to a particlar ploidy type) relative to the carrying capacity of the entire population (number of individuals/carrying capacity). When no genome-doubling occured (figure \ref{fig:results-control}), whatever the starting population size, the frequency of adult individuals (seedlings) quickly stabilised (in under fifty generations) around the carrying capacity (mean frequency = 1.00, sd = 0.00163) with seed counts at just under three-quarters of the adult population size (mean frequency = 0.729, sd = 0.00210). When genome-doubling was included in the simulations, this stability gradually became disrupted as the doubling rate was increased. At first polyploid frequency began to rise and stabilise around greater frequencies, increasing the variation in seed output as fertilistion success became gradually less predictable. The effect of seed output meant that there came a point when increasing the genome-doubling rate could not raise the stable frequncy of polyploids any higher. Instead, above this threshold (0.171), the stability of the whole population suffered so that both diploids and polyploids declined until the population reached extinction (see figures \ref{fig:results-threshold} and \ref{fig:results-interference}).
 
->Irrelevant?
+>If I'm going to talk about variation in seed output does this need a plot? Otherwise remove all the bits about seeds?
 
-## Did the proportion of polyploids exceed the rate of whole-genome duplication?**
+## Did the proportion of polyploids exceed the rate of genome-doubling?
 
-At duplication rates between 0.001 and 0.01, we saw--and demonstrate in figure \ref{fig:results-cost}--that polyploid frequencies spread evenly around around the rate of duplication (mean relative frequency at generation 1000 = 1.00, sd = 0.0617, CI = 0.881 to 1.12, N = 375). Out of these 375 simulations, almost half (46.9%) of the polyploid population frequencies fell just below the duplication rate and the other half (53.1%) made it slightly over. However, once the rate of duplication increased past 0.01, the polyploids that appeared began to consistently escape the negative selection caused by pollen-swamping. Between duplication rates of 0.01 and 0.171, only one polyploid population in 194 (0.5%) ended the simulation with a frequency below it's duplication rate; the overall trend was one of increased population growth for polyploids (mean relative frequency = 1.23, sd = 0.122, CI = 0.988 to 1.46, N = 194). The maximum relative frequency of polyploids observed was 1.39, seen in 2 simulations with duplication rates of 0.167 and 0.170.
+At genome-doubling rates between 0.001 and 0.01, we saw--and demonstrate in figure \ref{fig:results-cost}--that polyploid frequencies spread evenly around around the rate of duplication (mean relative frequency at generation 1000 = 1.00, sd = 0.0617, CI = 0.881 to 1.12, N = 375). Out of these 375 simulations, almost half (46.9%) of the polyploid population frequencies fell just below the genome-doubling rate and the other half (53.1%) made it slightly over. However, once the rate of duplication increased past 0.01, the polyploids that appeared began to consistently escape the negative selection caused by pollen-swamping. Between genome-doubling rates of 0.01 and 0.171, only one polyploid population in 194 (0.5%) ended the simulation with a frequency below it's genome-doubling rate; the overall trend was one of increased population growth for polyploids (mean relative frequency = 1.23, sd = 0.122, CI = 0.988 to 1.46, N = 194). The maximum relative frequency of polyploids observed was 1.39, seen in 2 simulations with genome-doubling rates of 0.167 and 0.170.
+
+
+>Explain more why figure \ref{fig:results-cost} is a thing. Luc thinks the reasoning for these axes is wooly.
 
 >Should I fit a model for the relative frequencies?
 
-Out of 411 simulations that had a duplication rate over 0.171, only 15 (3.65%) had survivors at 1000 generations. Figure \ref{fig:results-threshold} shows the difference in population growth patterns. Below the threshold, all 569 simulations survived to 1000 generations, and the majority (98.8%) reached stability; seven simulations with a duplication rate that rounded to 0.171 were less predictable and showed patterns of booms and busts. Figure \ref{fig:results-interference} shows the frequency of diploids and polyploids reached for all populations that survived to 1000 generations with whole-genome duplication enabled at random rates between 0.001 and 0.25. As the rate of whole-genome duplication was increased, maximum polyploid frequencies rose while diploid frequencies fell until a threshold rate was reached; once the duplication rate exceeded 0.171 neither diploids or polyploids survived well. 
+Out of 411 simulations that had a genome-doubling rate over 0.171, only 15 (3.65%) had survivors at 1000 generations. Figure \ref{fig:results-threshold} shows the difference in population growth patterns. Below the threshold, all 569 simulations survived to 1000 generations, and the majority (98.8%) reached stability; seven simulations with a genome-doubling rate that rounded to 0.171 were less predictable and showed patterns of booms and busts. Figure \ref{fig:results-interference} shows the frequency of diploids and polyploids reached for all populations that survived to 1000 generations with genome-doubling enabled at random rates between 0.001 and 0.25. As the rate of genome-doubling was increased, maximum polyploid frequencies rose while diploid frequencies fell until a threshold rate was reached; once the genome-doubling rate exceeded 0.171 neither diploids or polyploids survived well. 
 
+>Explain more why figure \ref{fig:results-threshold} is even here.
 >Should I fit a model for extinction?
+>Translate this back to braod concepts.
 
-## Did increasing the duplication rate lead to the fixation of polyploidy?
+## Did increasing the genome-doubling rate lead to the fixation of polyploidy?
 
-As seen in figures \ref{fig:results-interference} and \ref{fig:results-threshold}, out of 994 simulations with whole-genome duplication enabled, polyploidy never made it to fixation. In fact, polyploid populations never represented more than a quarter of the landscape; the maximum polyploid frequency of surviving simulations at generation 1000 was 0.236. Increasing the rate of whole-genome duplication, alone, was not sufficient for polyploids to dominate diploids on the landscape, let alone outcompete them and take over. 
+As seen in figures \ref{fig:results-interference} and \ref{fig:results-threshold}, out of 994 simulations with genome-doubling enabled, polyploidy never made it to fixation. In fact, polyploid populations never represented more than a quarter of the landscape; the maximum polyploid frequency of surviving simulations at generation 1000 was 0.236. Increasing the rate of genome-doubling, alone, was not sufficient for polyploids to dominate diploids on the landscape, let alone outcompete them and take over. 
 
-## Did established, and pioneering populations react in the same way to increased duplication rates?
+>Translate this back to braod concepts.
 
-No matter whether simulations began with small or large numbers of diploids, the overall patterns observed were the same; polyploid growth and stability below a rate of 0.171 or decline and ultimate extinction at rates over that threshold. The main difference starting population size made, was to the length of time it took for the diploids and polyploids to reach their stable frequency range, or to reach extinction (see figure \ref{fig:results-threshold}). For extremely low starting population sizes, some extinction was observed at duplication rates below 0.171. Extremely high starting population sizes did not appear to buffer against this effect, though in some cases they did delay it. Figure \ref{fig:results-extinctions} shows the sudden mass of extinction events that occurred as the rate of duplication was increased; outliers had particularly low or high starting population sizes.
+## Did established, and pioneering populations react in the same way to increased genome-doubling rates?
+
+No matter whether simulations began with small or large numbers of diploids, the overall patterns observed were the same; polyploid growth and stability below a rate of 0.171 or decline and ultimate extinction at rates over that threshold. The main difference starting population size made, was to the length of time it took for the diploids and polyploids to reach their stable frequency range, or to reach extinction (see figure \ref{fig:results-threshold}). For extremely low starting population sizes, some extinction was observed at genome-doubling rates below 0.171. Extremely high starting population sizes did not appear to buffer against this effect, though in some cases they did delay it. Figure \ref{fig:results-extinctions} shows the sudden mass of extinction events that occurred as the rate of duplication was increased; outliers had particularly low or high starting population sizes.
 
 >I think I need to pull some actual numbers out of the data here.
-
+>Translate this back to braod concepts.
 
 ```{r results-setup, echo=FALSE, message=FALSE, warning=FALSE}
 source("results.R")
@@ -31,29 +38,21 @@ ploidylvl_colours = c("#000000", "#30a068")
 ploidy_gradient = c("#10442a", "#3bbf7d")
 ```
 
-```{r results-control, eval=FALSE, include=FALSE, fig.cap="\\label{fig:results-control}Population growth and fecundity when no whole-genome duplication occured. Each point represents the proportion of individuals in the system at the end of any given generation (N = 206 simulations). Panels are split by life stage and the red line shows the mean."}
+```{r results-control, dev="png", dpi=300, fig.height=2.5, fig.cap="\\label{fig:results-control}Population growth and fecundity when no genome-doubling occured. Each point represents the frequency of individuals within the population (count/carrying capacity) at the end of any given generation (N = 206 simulations)."}
 control %>%
+  filter(subset == "adults") %>%
   ggplot2::ggplot(aes(x = gen, y = count)) +
-    facet_wrap(~subset, ncol = 2) +
-    # geom_vline(xintercept = 50, colour = "black", size = 1) +
     geom_point(alpha = .2, size = .2) +
-    geom_line(
-      data = control %>%
-        group_by(gen, subset) %>% 
-        summarise(count = mean(count)), 
-      colour = "red",
-      size = .5
-    ) +
     theme_classic() +
     theme(
-      legend.position = "top",
+      legend.position = "none",
       axis.title = element_text(size = 7, face = "bold"),
       plot.background = element_rect(fill = "#efefef"),
       strip.background = element_rect(colour = "white"),
       strip.text = element_text(size = 7, face = "bold")
     ) +
     xlab("Time (generations)") +
-    ylab("Population frequency") +
+    ylab("Frequency of adults in population") +
     scale_x_continuous(
       breaks = seq(0, 1000, 500), 
       limits = c(0, 1000)
@@ -62,10 +61,71 @@ control %>%
       breaks = seq(0, 1, .5), 
       limits = c(0, 1.01)
     )
-rm(control)
 ```
 
-```{r results-cost, dev="png", dpi=300, fig.cap="\\label{fig:results-cost}Escaping the cost of pollen-swamping. Points represent simulations where the rate of duplication was between 0.001 and 0.171 (N = 569). Each point (green) shows the the frequency of polyploids at the end of the simulation (generation 1000) relative to the rate of whole-genome-duplication set (frequency/rate). The solid black line represents the mean relative frequency for duplicatin rates rounded to 2 decimal places, and the dotted black lines represent the 95% confidence envelope around the mean."}
+```{r results-threshold, dev="png", dpi=300, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6.5, fig.cap="\\label{fig:results-threshold}textbd{Reproductive interference:} Points represent the frequency of individuals within the population (count/carrying capacity) at the end of any given generation, coloured by ploidy type; diploid (black) and polyploid (green). Panels show results of simulations where genome-doubling rates were between 0.001 and 0.171 (top: below threshold, N = 583) and where rates were between 0.172 and 0.25 (bottom: over threshold, N = 411)."}
+range %>%
+  ggplot2::ggplot(aes(x = gen, y = count, colour = subset)) +
+    facet_wrap(~panel, ncol = 1) +
+    scale_colour_manual(values = ploidylvl_colours) +
+    geom_point(alpha = .2, size = .2) +
+    theme_classic() +
+    theme(
+      legend.position = "none",
+      axis.title = element_text(size = 7, face = "bold"),
+      plot.background = element_rect(fill = "#efefef"),
+      strip.background = element_rect(colour = "white"),
+      strip.text = element_text(size = 7, face = "bold")
+    ) +
+    xlab("Time (generations)") +
+    ylab("Frequency of adults in population") +
+    scale_x_continuous(
+      breaks = seq(0, 1000, 500), 
+      limits = c(0, 1000)
+    ) +
+    scale_y_continuous(
+      breaks = seq(0, 1, .5),
+      limits = c(0, 1.01)
+    )
+```
+
+```{r results-interference, dev="png", dpi=300, fig.cap="\\label{fig:results-interference}The relationship between the rate of genome-doubling and freqency of diploid (black) vs polyploid (green) individuals. Each point represents the final population proportion reached for every simulation that reached 1000 generations with survivors (N = 788 simulations). Vertical red line marks a genome-doubling rate of 0.171."}
+counts %>%
+  select(-seeds, -adults, -diploid_seeds, -polyploid_seeds, -total) %>% 
+  tidyr::gather(
+    "subset", "count", 
+    diploid_adults:polyploid_adults
+  ) %>%
+  filter(
+    gen == 1000,
+    between(ploidy_rate, 0, 0.25)  
+  ) %>%
+  ggplot(aes(x = ploidy_rate, y = count, colour = subset)) +
+  scale_colour_manual(values = ploidylvl_colours) +
+  geom_vline(xintercept = 0.171, color = "red", size = .2) +
+  geom_point(alpha = .2) +
+  theme_classic() +
+    theme(
+      legend.position = "none",
+      axis.title = element_text(size = 7, face = "bold"),
+      plot.background = element_rect(fill = "#efefef"),
+      strip.background = element_rect(colour = "white"),
+      strip.text = element_text(size = 7, face = "bold")
+    ) +
+    xlab("Rate of genome-doubling") +
+    ylab("Frequency of adults in population") +
+    scale_x_continuous(
+      breaks = seq(0, .2, .1)
+      #limits = c(0, .25)
+    ) +
+    scale_y_continuous(
+      breaks = seq(0, 1, .5),
+      limits = c(0, 1.01)
+    )
+```
+
+
+```{r results-cost, dev="png", dpi=300, fig.cap="\\label{fig:results-cost}textbd{Escaping the cost of pollen-swamping:} Points represent simulations where the rate of genome-doubling was between 0.001 and 0.171 (N = 569). Each point (green) shows the the frequency of polyploids at the end of the simulation (generation 1000) relative to the rate of genome-doubling set (frequency/rate). The solid black line represents the mean relative frequency for genome-doubling rates rounded to 2 decimal places, and the dotted black lines represent the 95% confidence envelope around the mean."}
 cost %>%
   dplyr::filter(between(ploidy_rate, 0.001, 0.171)) %>%
   ggplot(aes(x = ploidy_rate, y = diff)) +
@@ -95,77 +155,15 @@ cost %>%
       strip.background = element_rect(colour = "white"),
       strip.text = element_text(size = 7, face = "bold")
     ) +
-    xlab("Rate of whole-genome duplication") +
-    ylab("Frequency relative to duplication rate") +
+    xlab("Rate of genome-doubling") +
+    ylab("Frequency of polyploids / rate of genome-doubling") +
     scale_x_continuous(
       breaks = seq(0.01, 0.17, .04),
       limits = c(0, .175)
     ) 
 ```
 
-```{r results-threshold, dev="png", dpi=300, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6.5, fig.cap="\\label{fig:results-threshold}Threshold point of reproductive interference occurs over a whole-genome duplication rate of 0.171. Panels show whole-genome duplication rates of simulations where duplication rates were between 0.001 and 0.171 (below threshold N = 583) and where rates were between 0.172 and 0.25 (over threshold N = 411). Points represent the adult population proportion over time, coloured by ploidy type; diploid (black) and polyploid (green)."}
-range %>%
-  ggplot2::ggplot(aes(x = gen, y = count, colour = subset)) +
-    facet_wrap(~panel, ncol = 1) +
-    scale_colour_manual(values = ploidylvl_colours) +
-    geom_point(alpha = .2, size = .2) +
-    theme_classic() +
-    theme(
-      legend.position = "none",
-      axis.title = element_text(size = 7, face = "bold"),
-      plot.background = element_rect(fill = "#efefef"),
-      strip.background = element_rect(colour = "white"),
-      strip.text = element_text(size = 7, face = "bold")
-    ) +
-    xlab("Time (generations)") +
-    ylab("Population frequency") +
-    scale_x_continuous(
-      breaks = seq(0, 1000, 500), 
-      limits = c(0, 1000)
-    ) +
-    scale_y_continuous(
-      breaks = seq(0, 1, .5),
-      limits = c(0, 1.01)
-    )
-```
-
-```{r results-interference, dev="png", dpi=300, fig.cap="\\label{fig:results-interference}The relationship between the rate of whole-genome duplication and freqency of diploid (black) vs polyploid (green) individuals. Each point represents the final population proportion reached for every simulation that reached 1000 generations with survivors (N = 788 simulations). Vertical red line marks a duplication rate of 0.171."}
-counts %>%
-  select(-seeds, -adults, -diploid_seeds, -polyploid_seeds, -total) %>% 
-  tidyr::gather(
-    "subset", "count", 
-    diploid_adults:polyploid_adults
-  ) %>%
-  filter(
-    gen == 1000,
-    between(ploidy_rate, 0, 0.25)  
-  ) %>%
-  ggplot(aes(x = ploidy_rate, y = count, colour = subset)) +
-  scale_colour_manual(values = ploidylvl_colours) +
-  geom_vline(xintercept = 0.171, color = "red", size = .2) +
-  geom_point(alpha = .2) +
-  theme_classic() +
-    theme(
-      legend.position = "none",
-      axis.title = element_text(size = 7, face = "bold"),
-      plot.background = element_rect(fill = "#efefef"),
-      strip.background = element_rect(colour = "white"),
-      strip.text = element_text(size = 7, face = "bold")
-    ) +
-    xlab("Rate of whole-genome duplication") +
-    ylab("Population frequency") +
-    scale_x_continuous(
-      breaks = seq(0, .2, .1)
-      #limits = c(0, .25)
-    ) +
-    scale_y_continuous(
-      breaks = seq(0, 1, .5),
-      limits = c(0, 1.01)
-    )
-
-```
-
-```{r results-extinctions, dev="png", dpi=300, fig.height=2.5, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:results-extinctions}Extinction events as a functon of whole-genome duplication rate. Each point represents a simulation that went extinct before one thousand generations had passed (N = 369 simulations). Vertical red line marks a duplication rate of 0.171."}
+```{r results-extinctions, dev="png", dpi=300, fig.height=2.5, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:results-extinctions}Extinction events as a functon of genome-doubling rate. Each point represents a simulation that went extinct before one thousand generations had passed (N = 369 simulations). Vertical red line marks a genome-doubling rate of 0.171."}
 counts %>%
   select(-seeds, -adults, -diploid_seeds, -polyploid_seeds, -polyploid_adults, -diploid_adults) %>%
   dplyr::filter(
@@ -180,7 +178,7 @@ counts %>%
       axis.title = element_text(size = 7, face = "bold"),
       plot.background = element_rect(fill = "#efefef")
     ) +
-    xlab("Rate of whole-genome duplication") +
+    xlab("Rate of genome-doubling") +
     ylab("Generation at extinction") +
   scale_y_continuous(
     breaks = seq(0, 800, 400)

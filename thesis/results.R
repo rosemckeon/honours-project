@@ -59,6 +59,14 @@ N <- tibble(
 
 rm(rates)
 
+control <- counts %>%
+  select(-diploid_seeds, -polyploid_seeds, -diploid_adults, -polyploid_adults, -total) %>%
+  dplyr::filter(ploidy_rate == 0) %>%
+  tidyr::gather(
+    "subset", "count",
+    seeds:adults
+  )
+
 cost <- counts %>%
   select(-seeds, -adults, -diploid_seeds, -polyploid_seeds, -diploid_adults, -total) %>%
   dplyr::filter(
