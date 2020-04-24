@@ -14,23 +14,22 @@ as.seeds <- function(seeds = NULL, parents = NULL, generation = NULL){
     is.numeric(generation),
     generation%%1==0
   )
-  seeds <- seeds %>%
-    dplyr::mutate(
-      life_stage = 1,
-      ploidy_mum = ploidy,
-      ploidy_dad = sample(parents$ploidy, nrow(seeds), replace = T),
-      ploidy = (ploidy_mum/2) + (ploidy_dad/2), # very basic
-      gen_created = generation
-    ) 
-  # remove those where ploidy levels of parents don't match
-  seeds <- seeds[which(seeds$ploidy_mum == seeds$ploidy_dad), ]
-  if(sum(nrow(seeds)) > 0){
-    return(
-      seeds %>% dplyr::mutate(
+  # make sure triploids and other odd numbers don't mate
+  parents <- parents[which((parents$ploidy/2)%%1==0), ]
+  # if there are still parents continue
+  if(sum(nrow(parents)) > 0){
+    seeds <- seeds %>%
+      dplyr::mutate(
+        life_stage = 1,
+        ploidy_mum = ploidy,
+        ploidy_dad = sample(parents$ploidy, nrow(seeds), replace = T),
+        fn = ploidy_mum/2,
+        mn = ploidy_dad/2,
+        ploidy = fn + mn,
+        gen_created = generation,
+        # and rename with a new ID
         ID = paste(generation, 1:nrow(seeds), sep = "_")
-      )
-    )
-  } else {
-    return(seeds)
+      ) 
   }
+  return(seeds)
 }

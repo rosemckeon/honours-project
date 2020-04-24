@@ -95,16 +95,16 @@ sploidy <- function(
     counts <- tibble::tibble(
       gen = numeric(),
       seeds = numeric(),
-      diploid_seeds = numeric(),
-      polyploid_seeds = numeric(),
       seedlings = numeric(),
       rosettes = numeric(),
       adults = numeric(),
       diploid_adults = numeric(),
       polyploid_adults = numeric(),
+      sterile_polyploid_adults = numeric(),
       total = numeric(),
       ploidy_rate = numeric(),
-      G_modifier = numeric()
+      G_modifier = numeric(),
+      starting_N = character()
     )
     # initialise tmp count file
     counts_tmp <- store_tmp_data(counts, "_counts")
@@ -319,7 +319,7 @@ sploidy <- function(
           if(sum(nrow(new_seedlings)) > 0){
             # complete the transition
             new_seedlings <- new_seedlings %>% as.seeds(last_parents, generation - 1) 
-            # make sure we didn't loos all the seeds to ploidy mismatching
+            # make sure we didn't loos all the seeds to triploid sterility
             if(sum(nrow(new_seedlings)) > 0){
               new_seedlings <- new_seedlings %>%
                 dplyr::mutate(life_stage = 2) %>%
@@ -452,28 +452,25 @@ sploidy <- function(
       this_count <- tibble::tibble(
           gen = generation,
           seeds = sum(nrow(seeds)),
-          diploid_seeds = NA,
-          polyploid_seeds = NA,
           seedlings = sum(nrow(seedlings)),
           rosettes = sum(nrow(rosettes)),
           adults = sum(nrow(adults)),
           diploid_adults = NA,
           polyploid_adults = NA,
+          sterile_polyploid_adults = NA,
           total = sum(seeds, adults), # uses the tibble vars now
           ploidy_rate = ploidy_rate,
-          G_modifier = G_modifier
+          G_modifier = G_modifier,
+          starting_N = pop_size %>% as.character() # can be converted back later
         )
-      # make sure we count diploid vs polyploid seeds
-      if(sum(nrow(seeds)) > 0){
-        this_count$diploid_seeds <- seeds %>%
-          dplyr::filter(ploidy == 2) %>% nrow() %>% sum()
-        this_count$polyploid_seeds <- seeds %>%
-          dplyr::filter(ploidy > 2) %>% nrow() %>% sum()
-      }
       # make sure we count diploid vs polyploid adults
       if(sum(nrow(adults)) > 0){
-        this_count$diploid_adults <- adults %>% dplyr::filter(ploidy == 2) %>% nrow() %>% sum()
-        this_count$polyploid_adults <- adults %>% dplyr::filter(ploidy > 2) %>% nrow() %>% sum()
+        this_count$diploid_adults <- adults %>% 
+          dplyr::filter(ploidy == 2) %>% nrow() %>% sum()
+        this_count$polyploid_adults <- adults %>% 
+          dplyr::filter(ploidy > 2) %>% nrow() %>% sum()
+        this_count$sterile_polyploid_adults <- adults[-which((adults$ploidy/2)%%1==0), ] %>%
+          nrow() %>% sum()
       }
       # combine these counts with all previous generations
       counts <- dplyr::bind_rows(counts, this_count)
