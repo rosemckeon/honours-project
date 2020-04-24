@@ -32,7 +32,7 @@ duplicate_genomes <- function(pop = NULL, ploidy_rate = 0.01){
           mn, which(m_unreduced), pop[which(m_unreduced), ]$mn * 2
         )
       ) 
-      message("  Unreduced male gametes: ", which(f_unreduced == T) %>% length())
+      message("  Unreduced male gametes: ", which(m_unreduced == T) %>% length())
     }
     # work out new base ploidy level of seeds
     pop <- pop %>% dplyr::mutate(ploidy = fn + mn)
