@@ -6,7 +6,7 @@ devtools::install_github("rosemckeon/honours-project", auth_token = "60bcd524453
 library(sploidy)
 
 # create a range of ploidy rates 
-ploidy_rates <- seq(0, 1, length.out = 100000)
+ploidy_rates <- seq(0, 0.01, length.out = 100000)
 # create a range of starting population sizes
 N <- 1:100000
 
@@ -24,7 +24,7 @@ for(rate in sample(ploidy_rates, 50, F)){
     grid_size = 100,
     simulations = 1,
     generations = 1000,
-    filepath = "data/results-final",
+    filepath = "data/results",
     ploidy_rate = rate,
     trans = mimulus %>%
       dplyr::pull(matrix) %>%
@@ -34,9 +34,12 @@ for(rate in sample(ploidy_rates, 50, F)){
       dplyr::pull(G),
     G_modifier = 1,
     seed_longevity = 0
+    #output_gen_data = T
   )
 }
 
 # make sure console message print to console if a simulation has been interupted by an error
 #sink(type = "message")
 rm(list=ls())
+
+#counts %>% gather(subset, count, diploid_adults:sterile_polyploid_adults) %>% ggplot(aes(x = gen, y = count, colour = subset)) + geom_point()

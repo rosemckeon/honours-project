@@ -14,10 +14,7 @@ as.seeds <- function(seeds = NULL, parents = NULL, generation = NULL){
     is.numeric(generation),
     generation%%1==0
   )
-  # make sure triploids and other odd numbers don't mate
-  parents <- parents[which((parents$ploidy/2)%%1==0), ]
-  # if there are still parents continue
-  if(sum(nrow(parents)) > 0){
+  #if(sum(nrow(parents)) > 0){
     seeds <- seeds %>%
       dplyr::mutate(
         life_stage = 1,
@@ -30,6 +27,8 @@ as.seeds <- function(seeds = NULL, parents = NULL, generation = NULL){
         # and rename with a new ID
         ID = paste(generation, 1:nrow(seeds), sep = "_")
       ) 
-  }
-  return(seeds)
+    return(seeds)
+  #} else {
+  #  return(NULL) # no valid parents so no seeds
+  #}
 }

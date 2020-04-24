@@ -75,7 +75,7 @@ sploidy <- function(
     # default carrying capacity amounts to 10 individuals per cell
     K <- grid_size * grid_size * 10
   }
-  message("Parameters are all appropriate.")
+  message("Parameters are all appropriate. and I'm running the local function...")
   message("Simulation set ", file.path(filepath, name), " can begin...")
   error_log <- file.path(tempdir(), "_sploidy-log.txt")
   # store the session info
@@ -104,7 +104,7 @@ sploidy <- function(
       total = numeric(),
       ploidy_rate = numeric(),
       G_modifier = numeric(),
-      starting_N = character()
+      starting_N = numeric()
     )
     # initialise tmp count file
     counts_tmp <- store_tmp_data(counts, "_counts")
@@ -171,6 +171,7 @@ sploidy <- function(
         # and load the data into objects
         last_seeds <- readRDS(last_seeds_tmp)
         last_seedlings <- readRDS(last_seedlings_tmp)
+        viable_last_seedlings <- last_seedlings[which((last_seedlings$ploidy/2)%%1==0), ]
         last_rosettes <- readRDS(last_rosettes_tmp)
         # remove tmp files and objects no longer needed
         unlink(c(last_seeds_tmp, last_seedlings_tmp, last_rosettes_tmp))
@@ -254,33 +255,50 @@ sploidy <- function(
           # combine sexually reproducing stages to make a pool of pollen donors
           last_parents <- dplyr::bind_rows(last_seedlings, last_rosettes)
           message("  Sexually reproducing plants last generation: ", nrow(last_parents))
-          # Transition 1,2 (Seedling to Seed) -------------
-          if(sum(nrow(last_seedlings)) > 0){
-            new_seeds <- last_seedlings %>% survive(trans[1,2])
+          # remove sterile ploidy level plants from pollen donors
+          pollen_donors <- last_parents[which((last_parents$ploidy/2)%%1==0), ]
+          message("  Viable pollen donors last generation: ", nrow(pollen_donors))
+          if(sum(nrow(pollen_donors)) > 0){
+            # Transition 1,2 (Seedling to Seed) -------------
+            seedling_seeds <- NULL
+            if(sum(nrow(last_seedlings)) > 0){
+              # make sure no sterile mums (keep only even ploidy rows)
+              seedling_seeds <- last_seedlings[which((last_seedlings$ploidy/2)%%1==0), ]
+              # then do trans prob on survival
+              if(sum(nrow(seedling_seeds)) > 0 ){
+                seedling_seeds <- seedling_seeds %>% survive(trans[1,2])
+              }
+            }
+            # Transition 1,2 (Rosette to Seed) -------------
+            rosette_seeds <- NULL
+            if(sum(nrow(last_rosettes)) > 0){
+              # make sure no sterile mums
+              rosette_seeds <- last_rosettes[which((last_rosettes$ploidy/2)%%1==0), ]
+              # then combine with trans prob for these new seeds too
+              if(sum(nrow(rosette_seeds)) > 0){
+                rosette_seeds <- rosette_seeds %>% survive(trans[1,3])
+              }
+            }
+            new_seeds <- dplyr::bind_rows(seedling_seeds, rosette_seeds)
+            rm(seedling_seeds, rosette_seeds)
+            # if we have new seeds
+            if(sum(nrow(new_seeds)) > 0){
+              new_seeds <- new_seeds %>%
+                disturploidy::move(grid_size, FALSE, grid_size - 1) %>%
+                as.seeds(pollen_donors, generation) %>%
+                duplicate_genomes(ploidy_rate)
+            }
+            message("  Viable new seeds: ", sum(nrow(new_seeds)))
+            # combine with seedbank and relable as belonging to this gen
+            seeds <- dplyr::bind_rows(seeds, new_seeds) %>%
+              dplyr::mutate(gen = generation)
+            rm(new_seeds)
+          } else {
+            message("  No sexual reproduction without pollen!")
           }
-          # Transition 1,2 (Rosette to Seed) -------------
-          if(sum(nrow(rosettes)) > 0){
-            new_seeds <- dplyr::bind_rows(
-              new_seeds,
-              rosettes %>% survive(trans[1,3])
-            )
-          }
-          # if we have new seeds
-          if(sum(nrow(new_seeds)) > 0){
-            new_seeds <- new_seeds %>%
-              disturploidy::move(grid_size, FALSE, grid_size - 1) %>%
-              as.seeds(last_parents, generation) %>%
-              duplicate_genomes(ploidy_rate)
-          }
-          message("  Viable new seeds: ", sum(nrow(new_seeds)))
-          # combine with seedbank and relable as belonging to this gen
-          seeds <- dplyr::bind_rows(seeds, new_seeds) %>%
-            dplyr::mutate(gen = generation)
-          rm(new_seeds)
-
           message("  Total seeds: ", sum(nrow(seeds)))
         } else {
-          message("  No seeds created as no seedlings or rosettes last generation to mate.")
+          message("  No sexual reproduction without last gen seedlings or rosettes!")
         }
         # store data and log
         store_tmp_data(seeds, paste0("seeds_", file_gen))
@@ -305,20 +323,20 @@ sploidy <- function(
         # There's no survival here, just sexual reproduction and germination
         message("Transitioning to seedlings from seedlings...")
         new_seedlings <- NULL
-        if(sum(nrow(last_seedlings)) > 0){
+        if(sum(nrow(viable_last_seedlings)) > 0){
           if(trans[2,2] > 1){
             # growth
-            new_seedlings <- last_seedlings %>%
+            new_seedlings <- viable_last_seedlings %>%
               # loosing some stochasity around the number of seedlings produced here
-              dplyr::sample_n(nrow(last_seedlings) * trans[2,2], replace = T)
+              dplyr::sample_n(nrow(viable_last_seedlings) * trans[2,2], replace = T)
           } else {
             # decline
-            new_seedlings <- last_seedlings %>%
+            new_seedlings <- viable_last_seedlings %>%
               survive(trans[2,2])
           }
           if(sum(nrow(new_seedlings)) > 0){
             # complete the transition
-            new_seedlings <- new_seedlings %>% as.seeds(last_parents, generation - 1) 
+            new_seedlings <- new_seedlings %>% as.seeds(pollen_donors, generation - 1) 
             # make sure we didn't loos all the seeds to triploid sterility
             if(sum(nrow(new_seedlings)) > 0){
               new_seedlings <- new_seedlings %>%
@@ -329,6 +347,9 @@ sploidy <- function(
             # and combine
             seedlings <- dplyr::bind_rows(seedlings, new_seedlings)
           }
+          rm(viable_last_seedlings, pollen_donors)
+        } else {
+          message("  All last gen seedlings were sterile.")
         }
         message("  New seedlings created: ", sum(nrow(new_seedlings)))
         new_seedlings  <- NULL
@@ -339,6 +360,7 @@ sploidy <- function(
         # Transition 2,3 (Rosette to Seedling) -------------
         # Transition value = F*O*A*G
         # There's no survival here, just sexual reproduction and germination
+        #***THIS BIT NEEDS STERILE PARENTS REMOVING - SEE 2,2 TRANSITION ABOVE***
         message("Transitioning to seedlings from rosettes...")
         if(sum(nrow(last_rosettes)) > 0){
           if(trans[2,3] > 1){
@@ -436,11 +458,11 @@ sploidy <- function(
       # make sure Carrying Capacity is honoured to stop exponential growth
       not_seeds <- dplyr::bind_rows(seedlings, rosettes)
       if(sum(nrow(not_seeds)) > K){
-        message("Population exceeds K by ", K - sum(nrow(not_seeds)))
+        message("Population exceeds K by ", abs(K - sum(nrow(not_seeds))))
         not_seeds <- not_seeds %>% survive(K / sum(nrow(not_seeds)))
         message("Population reduced to ", sum(nrow(not_seeds)))
         seedlings <- not_seeds %>%
-          dplyr::filter(life_stage ==2)
+          dplyr::filter(life_stage == 2)
         rosettes <- not_seeds %>%
           dplyr::filter(life_stage == 3)
       }
@@ -461,7 +483,7 @@ sploidy <- function(
           total = sum(seeds, adults), # uses the tibble vars now
           ploidy_rate = ploidy_rate,
           G_modifier = G_modifier,
-          starting_N = pop_size %>% as.character() # can be converted back later
+          starting_N = pop_size[2] 
         )
       # make sure we count diploid vs polyploid adults
       if(sum(nrow(adults)) > 0){
