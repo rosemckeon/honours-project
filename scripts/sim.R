@@ -6,7 +6,7 @@ devtools::install_github("rosemckeon/honours-project", auth_token = "60bcd524453
 library(sploidy)
 
 # create a range of ploidy rates 
-ploidy_rates <- seq(0, .5, length.out = 100000)
+ploidy_rates <- seq(0.01, .5, length.out = 100000)
 # create a range of starting population sizes
 N <- 1:100000
 
