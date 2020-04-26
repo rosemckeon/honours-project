@@ -31,14 +31,9 @@ Pollen-swamping, therefore, refers to the fitness deficit created by the overloa
 
 ## The heart of the matter
 
+Given the body of evidence that touts their rapid adaptability, why are so many neoployploid lines doomed to extinction? Furthermore, under what conditions does polyploidy become advantageous and actually succeed so that these lineages become established and persist? A population is considered to have become established when the probability of extinction becomes unlikely. Therefore, the establishment phase is a critical period where any new plant population is at higher risk. As such, understanding the cost-benfit mechanisms for any neopolyploid is vital to predicting its chance of survival. The discussion surrounding the advantages and disadvantages of polyploidy is well-reviewed in @Comai2005, @Ramsey2014, and @Otto2007. However, even after a century of research, the factors that drive the success of polyploid establishment in the face of high extinction rates are still unclear. 
+
 Theoretically, if the rate of nonreduction were increased so more 2n gametes were in the mating pool that creates F1 offspring (refer again to figure \ref{fig:intro-polyploid-formation}), then the strength of pollen-swamping should be reduced; more 2n gametes will mean more 2n + 2n fertilisation attempts and, therefore, more 4x offspring to balance out the sterile F1 triploids produced. Could modelling a system where the rate of nonreduction is artificially increased, show us how strong the negative selection created by pollen-swamping really is? How high would the frequency of parental 2n gametes need to be in order for polyploids to gain a reproductive advantage over diploids in the system?
-
-
-
->Needs more content. Move some of the selfing stuff from the discussion here? Or introduce the discussion subheadings, so the traits which might give reproductive assurance are all covered early on?
-
-Given the body of evidence that touts their rapid adaptability, why are so many neoployploid lines doomed to extinction? Furthermore, under what conditions does polyploidy become advantageous and actually succeed so that these lineages become established and persist? A population is considered to have become established when the probability of extinction becomes unlikely. Therefore, the establishment phase is a critical period where any new plant population is at higher risk. As such, understanding the cost-benfit mechanisms for any neopolyploid is vital to predicting its chance of survival. The discussion surrounding the advantages and disadvantages of polyploidy is well-reviewed in @Comai2005, @Ramsey2014, and @Otto2007. However, even after a century of research, the factors that drive the success of polyploid establishment in the face of high extinction rates are still unclear. If polyploids tend to become extinct at the establishment phase due to reproductive disadvantages caused by pollen-swamping and triploid sterility [@Arrigo2012], then it follows that traits which increase reproductive assurance should lead to mitigation of extinction risk. Perhaps this is why the polyploids we see established in nature exhibit traits like increased size, flower size, and number. As well as increasing potential fecundity, these traits should further assure reproduction by increasing the probability of self-pollination between flowers on the same individual (geitonogamy); a common cause of selfing which becomes more common as plant size and flower number increase [@DeJong1993; @Karron2004]. Polyploids that can self-fertilise should avoid some of the swamping from incompatible haploid pollen, and so suffer a reduced fitness cost in comparison to polyploids that cannot reproduce via selfing.
-
 
 ## Theoretical advances {#intro-theory}
 
@@ -46,26 +41,31 @@ Given the body of evidence that touts their rapid adaptability, why are so many 
 
 ## Aims {#intro-aims}
 
->Change the person. Take out the 'we's
+Using an individual-based modelling approach, I will investigate the response of relative polyploid and diploid frequencies to changes in the rate of genome-doubling via nonreduction. The model will attempt to elucidate whether increasing the frequecy of unreduced gametes in an angiosperm system will give the polyploids which evolve an advantage great enough to overcome the cost of pollen-swamping and triploid sterility. As such, the model will run under the assumption that all odd ploidied individuals (triploid, pentaploid, and so on) are sterile. Neopolyploid fitness will, therefore, be negatively impacted due to the interplay between the abundance of haploid pollen and this 'triploid' sterility. I aim to quantify the theoretical cost of pollen-swamping by testing how high the rate of nonreduction would need to be in order to overcome the strength of negative selection which it creates. I ask: 
 
-Using an individual-based modelling approach, I will investigate the basic response of relative polyploid and diploid frequencies to changes in the rate of genome-doubling via nonreduction. The model will run under the assumption that neopolyploids fitness is negatively impacted via the interaction between pollen-swamping and triploid sterility. I aim to quantify the theoretical cost of pollen-swamping by testing how high the rate of genome-doubling would need to be in order to overcome the strength of negative selection which it creates. We asked: 
+**What frequency of sterile polyploids will arise in relation to the rate of nonreduction?**
 
->Explain why these numbers relate to one another, why am I testing this?
+For F1 offspring, while the frequency of unreduced gametes is far less than that of haploid gametes, the probability of producing sterile offspring should be equal to, or just below, the rate of nonreduction; because every unreduced gamete is most likely to be paired with a haploid one. However, as generations continue and viable polyploids appear, the number of unreduced gametes (2n and above) also increases. Will this increase or decrease the frequency of sterile polyploids present in the system? 
 
-- Will the proportion of polyploids exceed the rate of genome-doubling? And, if so at what rate does this occur?
-- Will increasing the duplication rate lead to the fixation of polyploidy? 
+**Can the frequency of viable polyploid adults in the total population exceed half the rate of nonreduction?**
 
->Also explain why an established population might react differently.
+For every unreduced gamete created, the probability of producing a viable polyploid in the next generation increases. These numbers, then, are intrinsicly linked. The maximum frequency of viable F1 polyploid offspring is half of the rate of nonreduction and can only occurr if all unreduced male gametes are matched with unreduced female gametes. This, then, is the bar; if the frequency of viable polyploids in the system can exceed half the rate of nonreduction, the unreduced gametes in the system have begun to escape the negative selection of pollen swamping.
 
-In addition, we aim to discover if established and pioneering populations react in the same way to these increased duplication rates. 
+**Will increasing the rate of nonreduction lead to the fixation of polyploidy?**
+
+If the unreduced gametes can begin to escape the effects of pollen-swamping, it follows that the evolving polyploid population should have a chance, then, to outcompete their diploid progenitors. 
+
+**Do established and pioneering populations respond in the same way to increased rates of nonreduction?**
+
+Pioneering populations of diploids with only small numbers of individuals may be more susceptible to extinction than more established populations.
+
+>Why!?
 
 ## The study system {#intro-study-system}
 
-The model that follows was designed to simulate the life cycle of the yellow monkeyflower *Erythranthe gutatta* (previously: *Mimulus guttatus*) as laid out by @Peterson2016 and detailed in figure \ref{fig:intro-life-cycle}. *E. guttata* was chosen due to ancient and recent genome-doubling that has resulted in both autopolyploids and allopolyploids being well documented in the species complex of this popular study organism [@Beardsley2004; @Buggs2012; @Simon-Porcar2017]. The experimental design will begin with a cohort of diploid individuals that give rise to autotetraploid offspring; a scenario which loosely reflects the neo-autopolyploidisation recently discovered to be responsible for a mixed diploid-tetraploid population of *E. guttata* in the Shetland Isles [@Simon-Porcar2017]. All individuals will be hermaphrodites (in possession of perfect flowers that provide both male and female function), as is most common for *E. guttata* [@Wise2011] and, indeed, all angiosperms. Seed dormancy will be disabled to remove any lag in the effects of changing the rate of genome duplication; this also fits with the lack of dormancy described for *E. guttata* [@Willis1993].
+The model that follows was designed to simulate the life cycle of the yellow monkeyflower *Erythranthe gutatta* (previously: *Mimulus guttatus*) as laid out by @Peterson2016 and detailed in figure \ref{fig:intro-life-cycle}. *E. guttata* is a widespread, polymorphic herb that is found in a diverse range of habitats [@Wu2008]. Because ancient and recent genome-doubling is well documented in the species complex of this popular study organism [@Beardsley2004; @Buggs2012; @Simon-Porcar2017], *E guttata* was a sensible choice for parametising the model that follows. Yellow mokeyflowers can be annual or perennial and figure \ref{intro-life-cycle} distinguishes between these modes by using grey arrows for the transitions that only perrenials make, to form cloned rosettes (ros) via stolons. Our aims do not require us to distinguish between these life history strategies. In fact, we are specifically interested in how the patterns of polyploid evolution change in realtion to mechanisms of sexual reproduction. Therefore, only the seed (sd) and seedling (sdl) life stages from the life-cycle graph (figure \ref{intro-life-cycle}) will be included. @Peterson have termed the reproductive life stage of the annuals as seedlings, but this seems confusing, so from here in they will be refferred to as 'adults'.
 
->Describe the life-cyle a bit more in the main text so that use of seedling later makes sense.
-
-```{r polyploid-formation, out.width="100%", dpi=300, fig.align="center", fig.cap="\\label{fig:intro-polyploid-formation}textbd{Polyploid formation via gametic nonreduction and pollen-swamping:} Base ploidy level of individual plants (cirlces) is denoted 2x, 3x and so on. Ploidy level of gametes (diamonds) is denoted with 2n and so on. Blue arrows show genome-doubling occuring via nonreduction of gametes. Red arrows show the route by which haploid pollen swamps the gametes of polyploids to produce inviable offspring. Fat lines indicate a higher frequency of occurance."}
+```{r polyploid-formation, out.width="100%", dpi=300, fig.align="center", fig.cap="\\label{fig:intro-polyploid-formation}textbd{Polyploid formation via gametic nonreduction and pollen-swamping:} Base ploidy level (number of sets of chromosomes) of individual plants (cirlces) is denoted 2x (diploid), 3x (tetraploid) and so on. Ploidy level of gametes (diamonds) is denoted with 1n (haploid), 2n (diploid) and so on. Blue arrows show genome-doubling occuring via nonreduction of gametes. Red arrows show the route by which haploid pollen swamps the gametes of polyploids to produce inviable offspring. Fat lines and borders indicate a higher frequency of occurance."}
 knitr::include_graphics("_images/polyploid_formation.pdf")
 ```
 
