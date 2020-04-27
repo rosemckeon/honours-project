@@ -59,21 +59,7 @@ extinctions <- simulations[-which(simulations$ID %in% success), ] %>%
 #   ggplot(aes(x = gen, y = count, colour = subset)) + 
 #   geom_point(alpha = .2, size = .2)
 
-simulations %>%
-  dplyr::filter(ID %in% stability$ID) %>%
-  tidyr::unnest(cols = c(data)) %>%
-  dplyr::filter(gen == 1000) %>%
-  dplyr::mutate(viable_polyploid_adults = polyploid_adults - sterile_polyploid_adults) %>%
-  dplyr::select(-total) %>%
-  tidyr::gather(subset, count, diploid_adults:viable_polyploid_adults) %>%
-  ggplot(aes(x = ploidy_rate, y = count, colour = subset)) +
-  geom_point(alpha = .7) +
-  scale_y_continuous(breaks = seq(0, 1, .5)) +
-  scale_colour_manual(values = ploidy_colours[c(5,2,4,1)]) +
-  labs(colour = "") +
-  xlab("Rate of nonreduction") +
-  ylab("Relative frequency of polyploid to diploid adults") +
-  theme_classic() + theme_ploidy
+
 
 # the rest ------
 cost <- simulations %>% 
