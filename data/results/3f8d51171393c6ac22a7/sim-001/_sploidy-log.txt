@@ -1,0 +1,1375 @@
+# SIMULATION 1: Ploidy rate = 0.393345533455335, G_modifier = 1
+## Generation: 0 ----------
+Populating 100 by 100 landscape with:
+  65515 diploid seeds.
+  65515 diploid seedlings.
+## Generation: 1 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 35062/65515
+  Returning survivors and deaths as list.
+  Surviving diploid seeds that don't germinate: 12153/35062
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 65515
+  Viable pollen donors last generation: 65515
+  Unreduced female gametes: 15870
+  Unreduced male gametes: 15908
+  Viable new seeds: 40354
+  Total seeds: 52507
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 22909/52507
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 29818
+  Unreduced male gametes: 29812
+  New seedlings created: 75497
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 98406
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 2 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 21541/40354
+  Returning survivors and deaths as list.
+  Surviving diploid seeds that don't germinate: 7565/7798
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 7493/13743
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 98406
+  Viable pollen donors last generation: 62498
+  Unreduced female gametes: 15009
+  Unreduced male gametes: 15281
+  Viable new seeds: 38370
+  Total seeds: 53428
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 28024/53428
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 28355
+  Unreduced male gametes: 28229
+  New seedlings created: 72020
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 100044
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+Population exceeds K by 44
+Population reduced to 100006
+## Generation: 3 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 20651/38370
+  Returning survivors and deaths as list.
+  Surviving diploid seeds that don't germinate: 7136/5085
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 7149/15566
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 100006
+  Viable pollen donors last generation: 50536
+  Unreduced female gametes: 12026
+  Unreduced male gametes: 11933
+  Viable new seeds: 30907
+  Total seeds: 45192
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 27017/45192
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 23001
+  Unreduced male gametes: 22928
+  New seedlings created: 58235
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 85252
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 4 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 16397/30907
+  Returning survivors and deaths as list.
+  Surviving diploid seeds that don't germinate: 5661/1748
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 5722/14649
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 85252
+  Viable pollen donors last generation: 44120
+  Unreduced female gametes: 10646
+  Unreduced male gametes: 10673
+  Viable new seeds: 27101
+  Total seeds: 38484
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 21411/38484
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 19887
+  Unreduced male gametes: 20085
+  New seedlings created: 50842
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 72253
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 5 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 14513/27101
+  Returning survivors and deaths as list.
+  Surviving diploid seeds that don't germinate: 5100/483
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 5105/14030
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 72253
+  Viable pollen donors last generation: 40089
+  Unreduced female gametes: 9686
+  Unreduced male gametes: 9679
+  Viable new seeds: 24609
+  Total seeds: 34814
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 18821/34814
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 18316
+  Unreduced male gametes: 18029
+  New seedlings created: 46197
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 65018
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 6 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 13214/24609
+  Returning survivors and deaths as list.
+  Surviving diploid seeds that don't germinate: 4609/44
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 4584/13170
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 65018
+  Viable pollen donors last generation: 38348
+  Unreduced female gametes: 9248
+  Unreduced male gametes: 9342
+  Viable new seeds: 23588
+  Total seeds: 32781
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 17235/32781
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 17379
+  Unreduced male gametes: 17436
+  New seedlings created: 44190
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 61425
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 7 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 12598/23588
+  Returning survivors and deaths as list.
+  Surviving diploid seeds that don't germinate: 4403/1
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 4449/12597
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 61425
+  Viable pollen donors last generation: 35669
+  Unreduced female gametes: 8645
+  Unreduced male gametes: 8716
+  Viable new seeds: 21949
+  Total seeds: 30801
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 16344/30801
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 16259
+  Unreduced male gametes: 16050
+  New seedlings created: 41103
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 57447
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 8 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 11887/21949
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 3988/11887
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 57447
+  Viable pollen donors last generation: 33225
+  Unreduced female gametes: 7882
+  Unreduced male gametes: 7967
+  Viable new seeds: 20224
+  Total seeds: 24212
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 7899/24212
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 15081
+  Unreduced male gametes: 15157
+  New seedlings created: 38287
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 46186
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 9 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 10924/20224
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 3720/10924
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 46186
+  Viable pollen donors last generation: 26442
+  Unreduced female gametes: 6370
+  Unreduced male gametes: 6343
+  Viable new seeds: 16304
+  Total seeds: 20024
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 7204/20024
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 11959
+  Unreduced male gametes: 11985
+  New seedlings created: 30470
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 37674
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 10 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 8683/16304
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 2987/8683
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 37674
+  Viable pollen donors last generation: 21830
+  Unreduced female gametes: 5283
+  Unreduced male gametes: 5317
+  Viable new seeds: 13515
+  Total seeds: 16502
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 5696/16502
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 10104
+  Unreduced male gametes: 9848
+  New seedlings created: 25156
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 30852
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 11 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 7267/13515
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 2624/7267
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 30852
+  Viable pollen donors last generation: 17745
+  Unreduced female gametes: 4284
+  Unreduced male gametes: 4412
+  Viable new seeds: 11045
+  Total seeds: 13669
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 4643/13669
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 7985
+  Unreduced male gametes: 8033
+  New seedlings created: 20448
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 25091
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 12 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 5855/11045
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 2108/5855
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 25091
+  Viable pollen donors last generation: 14467
+  Unreduced female gametes: 3511
+  Unreduced male gametes: 3571
+  Viable new seeds: 8992
+  Total seeds: 11100
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 3747/11100
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 6580
+  Unreduced male gametes: 6591
+  New seedlings created: 16671
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 20418
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 13 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 4804/8992
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 1655/4804
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 20418
+  Viable pollen donors last generation: 11819
+  Unreduced female gametes: 2905
+  Unreduced male gametes: 2794
+  Viable new seeds: 7311
+  Total seeds: 8966
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 3149/8966
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 5347
+  Unreduced male gametes: 5392
+  New seedlings created: 13619
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 16768
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 14 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 3943/7311
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 1311/3943
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 16768
+  Viable pollen donors last generation: 9615
+  Unreduced female gametes: 2400
+  Unreduced male gametes: 2283
+  Viable new seeds: 5932
+  Total seeds: 7243
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 2632/7243
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 4322
+  Unreduced male gametes: 4418
+  New seedlings created: 11080
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 13712
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 15 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 3108/5932
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 1121/3108
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 13712
+  Viable pollen donors last generation: 7936
+  Unreduced female gametes: 1941
+  Unreduced male gametes: 1918
+  Viable new seeds: 4905
+  Total seeds: 6026
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 1987/6026
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 3584
+  Unreduced male gametes: 3598
+  New seedlings created: 9145
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 11132
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 16 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 2599/4905
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 890/2599
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 11132
+  Viable pollen donors last generation: 6493
+  Unreduced female gametes: 1641
+  Unreduced male gametes: 1599
+  Viable new seeds: 4049
+  Total seeds: 4939
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 1709/4939
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 3005
+  Unreduced male gametes: 2925
+  New seedlings created: 7482
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 9191
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 17 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 2127/4049
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 713/2127
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 9191
+  Viable pollen donors last generation: 5307
+  Unreduced female gametes: 1256
+  Unreduced male gametes: 1265
+  Viable new seeds: 3206
+  Total seeds: 3919
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 1414/3919
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 2352
+  Unreduced male gametes: 2395
+  New seedlings created: 6115
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 7529
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 18 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 1699/3206
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 609/1699
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 7529
+  Viable pollen donors last generation: 4385
+  Unreduced female gametes: 1071
+  Unreduced male gametes: 1030
+  Viable new seeds: 2679
+  Total seeds: 3288
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 1090/3288
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 1948
+  Unreduced male gametes: 1985
+  New seedlings created: 5053
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 6143
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 19 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 1451/2679
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 504/1451
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 6143
+  Viable pollen donors last generation: 3471
+  Unreduced female gametes: 828
+  Unreduced male gametes: 844
+  Viable new seeds: 2120
+  Total seeds: 2624
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 947/2624
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 1612
+  Unreduced male gametes: 1563
+  New seedlings created: 3999
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 4946
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 20 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 1170/2120
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 395/1170
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 4946
+  Viable pollen donors last generation: 2887
+  Unreduced female gametes: 708
+  Unreduced male gametes: 687
+  Viable new seeds: 1798
+  Total seeds: 2193
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 775/2193
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 1307
+  Unreduced male gametes: 1304
+  New seedlings created: 3326
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 4101
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 21 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 975/1798
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 356/975
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 4101
+  Viable pollen donors last generation: 2326
+  Unreduced female gametes: 577
+  Unreduced male gametes: 602
+  Viable new seeds: 1440
+  Total seeds: 1796
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 619/1796
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 1051
+  Unreduced male gametes: 1062
+  New seedlings created: 2680
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 3299
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 22 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 747/1440
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 273/747
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 3299
+  Viable pollen donors last generation: 1893
+  Unreduced female gametes: 448
+  Unreduced male gametes: 484
+  Viable new seeds: 1159
+  Total seeds: 1432
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 474/1432
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 864
+  Unreduced male gametes: 872
+  New seedlings created: 2181
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 2655
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 23 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 631/1159
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 217/631
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 2655
+  Viable pollen donors last generation: 1560
+  Unreduced female gametes: 385
+  Unreduced male gametes: 379
+  Viable new seeds: 926
+  Total seeds: 1143
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 414/1143
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 716
+  Unreduced male gametes: 709
+  New seedlings created: 1797
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 2211
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 24 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 493/926
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 203/493
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 2211
+  Viable pollen donors last generation: 1317
+  Unreduced female gametes: 312
+  Unreduced male gametes: 308
+  Viable new seeds: 815
+  Total seeds: 1018
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 290/1018
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 576
+  Unreduced male gametes: 601
+  New seedlings created: 1517
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 1807
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 25 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 426/815
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 148/426
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 1807
+  Viable pollen donors last generation: 1027
+  Unreduced female gametes: 237
+  Unreduced male gametes: 256
+  Viable new seeds: 636
+  Total seeds: 784
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 278/784
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 481
+  Unreduced male gametes: 465
+  New seedlings created: 1183
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 1461
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 26 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 367/636
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 131/367
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 1461
+  Viable pollen donors last generation: 849
+  Unreduced female gametes: 222
+  Unreduced male gametes: 226
+  Viable new seeds: 538
+  Total seeds: 669
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 236/669
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 362
+  Unreduced male gametes: 397
+  New seedlings created: 978
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 1214
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 27 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 295/538
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 102/295
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 1214
+  Viable pollen donors last generation: 664
+  Unreduced female gametes: 180
+  Unreduced male gametes: 166
+  Viable new seeds: 409
+  Total seeds: 511
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 193/511
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 287
+  Unreduced male gametes: 306
+  New seedlings created: 765
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 958
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 28 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 221/409
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 74/221
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 958
+  Viable pollen donors last generation: 543
+  Unreduced female gametes: 121
+  Unreduced male gametes: 146
+  Viable new seeds: 350
+  Total seeds: 424
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 147/424
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 252
+  Unreduced male gametes: 247
+  New seedlings created: 625
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 772
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 29 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 202/350
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 69/202
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 772
+  Viable pollen donors last generation: 464
+  Unreduced female gametes: 111
+  Unreduced male gametes: 120
+  Viable new seeds: 287
+  Total seeds: 356
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 133/356
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 216
+  Unreduced male gametes: 212
+  New seedlings created: 534
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 667
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 30 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 145/287
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 43/145
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 667
+  Viable pollen donors last generation: 359
+  Unreduced female gametes: 87
+  Unreduced male gametes: 102
+  Viable new seeds: 225
+  Total seeds: 268
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 102/268
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 160
+  Unreduced male gametes: 165
+  New seedlings created: 413
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 515
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 31 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 112/225
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 40/112
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 515
+  Viable pollen donors last generation: 279
+  Unreduced female gametes: 56
+  Unreduced male gametes: 65
+  Viable new seeds: 155
+  Total seeds: 195
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 72/195
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 154
+  Unreduced male gametes: 140
+  New seedlings created: 321
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 393
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 32 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 73/155
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 22/73
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 393
+  Viable pollen donors last generation: 227
+  Unreduced female gametes: 47
+  Unreduced male gametes: 59
+  Viable new seeds: 149
+  Total seeds: 171
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 51/171
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 106
+  Unreduced male gametes: 89
+  New seedlings created: 261
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 312
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 33 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 78/149
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 23/78
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 312
+  Viable pollen donors last generation: 187
+  Unreduced female gametes: 49
+  Unreduced male gametes: 42
+  Viable new seeds: 110
+  Total seeds: 133
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 55/133
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 85
+  Unreduced male gametes: 99
+  New seedlings created: 215
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 270
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 34 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 53/110
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 18/53
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 270
+  Viable pollen donors last generation: 158
+  Unreduced female gametes: 34
+  Unreduced male gametes: 31
+  Viable new seeds: 98
+  Total seeds: 116
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 35/116
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 71
+  Unreduced male gametes: 67
+  New seedlings created: 182
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 217
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 35 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 54/98
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 30/54
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 217
+  Viable pollen donors last generation: 128
+  Unreduced female gametes: 32
+  Unreduced male gametes: 36
+  Viable new seeds: 85
+  Total seeds: 115
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 24/115
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 60
+  Unreduced male gametes: 64
+  New seedlings created: 147
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 171
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 36 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 37/85
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 23/37
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 171
+  Viable pollen donors last generation: 101
+  Unreduced female gametes: 20
+  Unreduced male gametes: 22
+  Viable new seeds: 53
+  Total seeds: 76
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 14/76
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 47
+  Unreduced male gametes: 45
+  New seedlings created: 116
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 130
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 37 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 27/53
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 7/27
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 130
+  Viable pollen donors last generation: 76
+  Unreduced female gametes: 27
+  Unreduced male gametes: 20
+  Viable new seeds: 47
+  Total seeds: 54
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 20/54
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 37
+  Unreduced male gametes: 35
+  New seedlings created: 87
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 107
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 38 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 32/47
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 15/32
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 107
+  Viable pollen donors last generation: 69
+  Unreduced female gametes: 19
+  Unreduced male gametes: 22
+  Viable new seeds: 43
+  Total seeds: 58
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 17/58
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 30
+  Unreduced male gametes: 28
+  New seedlings created: 79
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 96
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 39 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 20/43
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 8/20
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 96
+  Viable pollen donors last generation: 57
+  Unreduced female gametes: 9
+  Unreduced male gametes: 14
+  Viable new seeds: 28
+  Total seeds: 36
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 12/36
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 35
+  Unreduced male gametes: 20
+  New seedlings created: 65
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 77
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 40 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 15/28
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 6/15
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 77
+  Viable pollen donors last generation: 51
+  Unreduced female gametes: 12
+  Unreduced male gametes: 10
+  Viable new seeds: 23
+  Total seeds: 29
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 9/29
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 21
+  Unreduced male gametes: 22
+  New seedlings created: 58
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 67
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 41 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 7/23
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 4/7
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 67
+  Viable pollen donors last generation: 35
+  Unreduced female gametes: 8
+  Unreduced male gametes: 11
+  Viable new seeds: 22
+  Total seeds: 26
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 3/26
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 12
+  Unreduced male gametes: 16
+  New seedlings created: 40
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 43
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 42 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 13/22
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 6/13
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 43
+  Viable pollen donors last generation: 20
+  Unreduced female gametes: 7
+  Unreduced male gametes: 4
+  Viable new seeds: 14
+  Total seeds: 20
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 7/20
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 4
+  Unreduced male gametes: 10
+  New seedlings created: 23
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 30
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 43 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 3/14
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 1/3
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 30
+  Viable pollen donors last generation: 17
+  Unreduced female gametes: 4
+  Unreduced male gametes: 5
+  Viable new seeds: 8
+  Total seeds: 9
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 2/9
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 5
+  Unreduced male gametes: 6
+  New seedlings created: 19
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 21
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 44 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 3/8
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 2/3
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 21
+  Viable pollen donors last generation: 10
+  Unreduced female gametes: 1
+  Viable new seeds: 6
+  Total seeds: 8
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 1/8
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 2
+  Unreduced male gametes: 5
+  New seedlings created: 11
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 12
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 45 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 2/6
+  Surviving polyploid seeds that don't germinate: 0/2
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 12
+  Viable pollen donors last generation: 5
+  Unreduced female gametes: 1
+  Unreduced male gametes: 2
+  Viable new seeds: 4
+  Total seeds: 4
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 2/4
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 2
+  Unreduced male gametes: 3
+  New seedlings created: 5
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 7
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 46 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 2/4
+  Surviving polyploid seeds that don't germinate: 0/2
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 7
+  Viable pollen donors last generation: 5
+  Unreduced female gametes: 2
+  Unreduced male gametes: 1
+  Viable new seeds: 3
+  Total seeds: 3
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 2/3
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 4
+  Unreduced male gametes: 2
+  New seedlings created: 5
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 7
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 47 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 2/3
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 1/2
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 7
+  Viable pollen donors last generation: 4
+  Viable new seeds: 2
+  Total seeds: 3
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 1/3
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 1
+  Unreduced male gametes: 1
+  New seedlings created: 4
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 5
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 48 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 1/2
+  Surviving polyploid seeds that don't germinate: 0/1
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 5
+  Viable pollen donors last generation: 1
+  Viable new seeds: 0
+  Total seeds: 0
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 1/0
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 1
+  New seedlings created: 1
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 2
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 49 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 2
+  Viable pollen donors last generation: 1
+  Unreduced male gametes: 1
+  Viable new seeds: 1
+  Total seeds: 1
+Transitioning to seedlings from seeds...
+  Surviving seeds that germinate: 1/1
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 1
+  New seedlings created: 1
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 2
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 50 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 1/1
+  Returning survivors and deaths as list.
+  Surviving polyploid seeds that don't germinate: 1/1
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 2
+  Viable pollen donors last generation: 1
+  Unreduced female gametes: 1
+  Viable new seeds: 1
+  Total seeds: 2
+Transitioning to seedlings from seeds...
+Transitioning to seedlings from seedlings...
+  Unreduced female gametes: 1
+  New seedlings created: 1
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 1
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+## Generation: 51 ----------
+Loading data from last generation...
+Transitioning to seeds from seeds...
+  Seeds that survive: 0/1
+Transitioning to seeds from sexual life stages...
+  Sexually reproducing plants last generation: 1
+  Viable pollen donors last generation: 0
+  No sexual reproduction without pollen!
+  Total seeds: 0
+Transitioning to seedlings from seeds...
+Transitioning to seedlings from seedlings...
+  All last gen seedlings were sterile.
+  New seedlings created: 0
+Transitioning to seedlings from rosettes...
+  New seedlings created: 0
+  Total seedlings: 0
+Transitioning to rosettes from seedlings...
+  Rosettes that survive or are created: 0
+Transitioning to rosettes from rosettes...
+  Rosettes that survive or are created: 0
+  Total rosettes: 0
+EXTINCTION.
+Simulation duration: -13.9399271011353
