@@ -1,38 +1,39 @@
 # Methods {#methods}
 
-An Individual-based model was created, from scratch, in R [@R-base], as an open-source R package *{sploidy}*, and is available along with scripts and data on Github [@R-sploidy].
+An Individual-based model was created, from scratch, in *R v3.6.1* [@R-base], as an open-source R package *sploidy v.0.2.1* [@R-sploidy], and is available along with scripts and data on [Github](https://github.com/rosemckeon/honours-project). In order to test the hypotheses presented, reproductive isolation of polyploids had to occur in a way that represented the production of sterile offspring via pollen swamping.
 
-## Assumptions {#methods-model-assumptions}
+## Model flow
 
-To test our hypotheses, the model needed to make particular assumptions about the reproductive interactions between individuals, as well as how particular parameters (like genome-duplication rate) were applied mechanistically. To see if the rate of genome-doubling could allow polyploid frequency within the population to overcome the negative selection created by pollen-swamping, mate choice had to be limited in a way that represented failed fertilisation attempts due to mismatched pollen types. This was achieved using a simple matching rule based on parental ploidy level. In full, the model assumptions were as follows:
+From a starting population of seeds and adults, transition probabilities, seed survival probability, and germination rates were used to transition individuals through time, continuously from time *t* to time *t + 1* (see figure \ref{fig:methods-model-flow} for a diagram of the model flow). Surviving seeds in time *t* either germinated to become adults in time *t + 1* or they remained as seeds. Seed dormancy was limited by a longevity parameter that reduced the seed bank before survival probabilities were applied. Adults in time *t* became the mating pool for separate transitions involving reproduction, either to seed or straight to new adults in time *t + 1*. During reproduction (figure \ref{fig:methods-reproduction}), sterile adults were ignored, and mothers were sampled first from the adult population. Pollen donors were paired with mothers so that every mother received pollen; sampling was done with replacement, so some plants pollinated multiple mothers while others did not pollinate any. Once all fertilisation attempts were decided, gametic nonreduction occurred at a specified rate, separately to both female and male gametes. The ploidy level of paired gametes was then used to calculate the base ploidy level of the new seed. Those that germinated became adults in time *t + 1*, while those that did not remained as seeds. Once all the transitions were complete, carrying capacity limited any possible exponential growth by randomly selecting survivors from across the entire landscape, and the cycle repeated (figure \ref{fig:methods-model-flow}).
 
-- All individuals began as diploid.
-- Polyploids arose at a set rate of genome-duplication during all sexually reproductive transitions.
-- Diploids and polyploids could both outcross, but never with each other. In addition, polyploids could not outcross with other polyploids of differing ploidy level, i.e.:- a tetraploid was not compatible with an octoploid. 
-- All individuals could self-fertilise.
-- Offspring produced had the same ploidy level as their parents; two diploids produced a diploid, and so on.
-- When genome-duplication occurred, the ploidy level of an individual was doubled; in this case, two diploid parents would produce a tetraploid.
-- All plants were hermaphrodite; mothers and fathers were chosen via random sampling from the same pool of individuals.
-- Pollen range spanned the entire landscape.
-- Seed dispersal spanned the entire landscape.
+## Experiment design {#methods-experiment-design}
 
-Transition probabilities passed to the model defined how many individuals made it between life stages at any given generation. The *rbinom* function in base R was used throughout--where transitions reduced cohort size--to choose individuals that transitioned successfully. This allowed for a natural amount of stochasticity around the transition probabilities. Where transition values increased cohort size, the function *sample_n* from the package *{Dplyr}* [@R-dplyr] was used, instead, with replacement. 
-
->Unnecessary paragraph above? Hard to make this clearer.
-
-## Simulation strategy {#methods-model-sims}
-
-Rounds of simulations were run using the model function *sploidy* in order to home-in on the parameter ranges to include in the experiment design. These initial simulations were run for 1000 generations on a 100x100 landscape grid (to allow the default carrying capacity to maintain the adult population size at around one hundred thousand). The starting population contained sixty diploid individuals (twenty of each life stage), to simulate a pioneering species entering an empty space and the **ploidy_rate** parameter was varied (details below). Seed dormancy was disabled by setting **seed_longevity** to zero as was clonal reproduction, via the transition matrix provided to the **trans** parameter. Transition parameters--the transition matrix (**trans**), germination rate (**G**), and seed survival rate (**D**)--were taken from known demographic data described in more detail below. 
+The simulations began with a cohort of diploid individuals that underwent gametic nonreduction; a scenario which loosely reflected the neo-autopolyploidisation recently discovered to be responsible for a mixed diploid-tetraploid population of *E. guttata* in the Shetland Isles [@Simon-Porcar2017]. Transition probabilities remained the same for all simulations (see below), but the rate of nonreduction and the starting population size was varied. Control simulations, without nonreduction, used 100 random starting population sizes between 1 and the carrying capacity of the landscape (K = 100000). Experimental simulations, with nonreduction, used another 1000 random starting population sizes in the same range (1:100000), as well as 1000 random rates of nonreduction between 0 and 0.5. This upper limit was chosen because once more than half of the gametes in the system are unreduced, they will become the most abundant type. Pollen-swamping, therefore, should no longer be in effect—it was not interesting to see if polyploids could evolve when the odds were stacked in their favour with a nonreduction rate above 0.5.
 
 ## Transition data {#methods-model-sims-trans}
 
-Data for an *M. guttatus* population that had the most stable properties were used; minimal growth that could be kept in check with carrying capacity and low elasticity. @Peterson2016 described the formula for computing transition data as laid out in figure \ref{fig:methods-trans-formula} and provided the values for a low-elevation perennial *M. guttatus* population as shown in table \ref{tab:methods-trans-values}. The seed survival value (D) they presented was taken from @Elderd2006. These data produced the transition matrix (figure \ref{tab:methods-trans-matrix}) provided to the model along with the values of G (0.652) and D (0.534) shown in figure \ref{tab:methods-trans-values}. 
+Data for an *E. guttata* population that had stable properties and no clonal growth were used. The data (figure \ref{tab:methods-trans-values}) and formula (figure \ref{fig:methods-trans-formula}) used to calculate transitions (figure \ref{tab:methods-trans-matrix}) was taken from @Peterson2016. The population chosen was a low-elevation perennial from a year when no rosettes were produced, so the life-stages match those modelled (seeds and adults). Data existed for the same population in another year when rosettes did occur, so by choosing this population, there was room to build upon the results presented here at a later date.
 
-## Varying the rate of genome-duplication
+## Assumptions {#methods-model-assumptions}
 
-In order to quantify how the rate of genome-duplication affected fixation of polyploid genotypes, a randomly sampled range of polyploidisation rates were chosen from an exponential distribution of 100000 random numbers ranging between 0.001 and 0.010. Using an exponential distribution gave higher resolution around the lower parameter rates which we expected to be most interesting. The minimum rate was inflated from the estimated rate of duplication in nature (10^-5^) so that effects could be seen more clearly.
+- All individuals began as diploid.
+- Polyploids arose by chance depending on the rate of nonreduction during all sexually reproductive transitions. The frequency of polyploids that appeared was an emergent property of the interactions between adult gametes which were first sampled randomly, before being paired, and then reduced or left unreduced (see figure \ref{fig:methods-reproduction}).
+- Even-numbered ploidy individuals were viable and could outcross or self-fertilise.
+- Odd-numbered ploidy individuals were sterile and did not contribute to transitions.
+- Pollen range spanned the entire landscape.
+- All plants were hermaphrodite (in possession of perfect flowers that provide both male and female function), as is most common for *E. guttata* [@Wise2011] and, indeed, all angiosperms; mothers and fathers were chosen via random sampling from the same pool of individuals.
+- Seed dispersal spanned the entire landscape.
+- Seed dormancy was disabled to remove any lag in the effects of changing the rate of nonreduction; this fits with the lack of dormancy described for *E. guttata* [@Willis1993].
+- Carrying capacity limited exponential population growth.
 
-Diagnostic plotting of these data revealed that increased rates needed to be examined. Further simulations were then run using randomly sampled rates from 100000 random uniform numbers between 0.010 and 0.500 in an attempt to determine how high the mutation rate needed to be in order for polyploids to break free from the inherent selection against them due to mate-choice limitation.
+```{r model-flow, out.width=100%, dpi=300, fig.align="center", fig.cap="\\label{fig:methods-model-flow}\\textbd{Model flow:} From a starting population of diploid seeds and adults (A), transitions involving survival, reproduction and germination probabilities occur (B) to create the individuals present in the next generation (C). This process loops continuously from time \\textbd{t} to time \\textbd{t + 1} to simulate the life cycle of \\textit{E. gutta}. Carrying capacity limits any possible exponential growth by randomly selecting survivors across the entire landscape at the end of every generation (D). In addition, where seed survival probabilities would lead to generation fo a seed bank, the size of this is limited with an enforced maximum longevity before seed survival is applied a the beginning of a new generation (E). Transitions (B) highlighted in red are where the mechanisms of genome-doubling and pollen-swamping occur (for more details see figure \\ref{fig:methods-reproduction})."}
+knitr::include_graphics("_images/model-flow.pdf")
+```
+
+```{r reproduction, out.width=100%, dpi=300, fig.align="center", fig.cap="\\label{fig:methods-reproduction}\\textbd{Reproduction and germination:} For all transitions from adults in time \\textbd{t} (A) to seeds or adults in time \\textbd{t + 1} (D), individuals must go through reproduction (B) and germination (C). Mechanisms of reproduction which induce the effects of pollen-swamping (E) and triploid sterility (F) are highlighted in red, while the process that controls genome-doubling (G) is shown in blue."}
+knitr::include_graphics("_images/reproduction.pdf")
+```
+
 
 ```{r trans-formula, out.width="70%", dpi=300, fig.align="center", fig.cap="\\label{fig:methods-trans-formula}How the transition matrix (table \\ref{tab:methods-trans-matrix}) was calculated from the data provided in table \\ref{tab:methods-trans-values}, according to this formula taken from \\cite{Peterson2016}."}
 knitr::include_graphics("_images/m-guttatus-transformula-peterson2016.png")
@@ -45,7 +46,7 @@ readRDS("_data/mimulus.rds") %>%
   dplyr::mutate(A = signif(A, 3) %>% as.character()) %>%
   knitr::kable(
     "latex",
-    caption = "\\label{tab:methods-trans-values} Components of Low-elevation perennial \\textit{Erythranthe guttata} (previously: \\textit{Mimulus guttatus}) life-cycle transition. Seed survival (D) is a general value taken from \\cite{Elderd2006}. All other components taken from \\cite{Peterson2016} who recorded values specific to that \\textit{E. guttata} population in the year 2013 (N = 77). G = germination rate, O = ovule number per flower, F = flower production, S = winter survival, R = rosette production, A = proportional recruitment success of ovules relative to rosettes.",
+    caption = "\\label{tab:methods-trans-values}\\textbd{Components of transition:} values used to calculate the transition matrix of a low-elevation perennial population of \\textit{Erythranthe guttata} (previously: \\textit{Mimulus guttatus}) for a year in which no rosettes were produced. Seed survival (D) is not population specific; taken from \\cite{Elderd2006}. All other components taken from \\cite{Peterson2016} who recorded values specific to that \\textit{E. guttata} population in the year 2013 (N = 77). G = germination rate, O = ovule number per flower, F = flower production, S = winter survival, R = rosette production, A = proportional recruitment success of ovules relative to rosettes.",
     booktabs = T,
     digits = 3,
     escape = F
@@ -63,7 +64,7 @@ trans <- readRDS("_data/mimulus.rds") %>%
   pull(matrix) %>%
   magrittr::extract2(1)
 # name the dimensions
-stages <- c("Seed", "Seedling", "Rosette")
+stages <- c("Seed", "Adult", "Rosette")
 dimnames(trans)[2] <- list(paste0(stages, " (t)"))
 dimnames(trans)[1] <- list(paste0(stages, " (t+1)"))
 # format the table for latex
