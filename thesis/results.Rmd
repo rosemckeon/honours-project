@@ -30,100 +30,122 @@ As seen in figures \ref{fig:results-interference} and \ref{fig:results-threshold
 No matter whether simulations began with small or large numbers of diploids, the overall patterns observed were the same; polyploid growth and stability below a rate of 0.171 or decline and ultimate extinction at rates over that threshold. The main difference starting population size made, was to the length of time it took for the diploids and polyploids to reach their stable frequency range, or to reach extinction (see figure \ref{fig:results-threshold}). For extremely low starting population sizes, some extinction was observed at genome-doubling rates below 0.171. Extremely high starting population sizes did not appear to buffer against this effect, though in some cases they did delay it. Figure \ref{fig:results-extinctions} shows the sudden mass of extinction events that occurred as the rate of duplication was increased; outliers had particularly low or high starting population sizes.
 
 >I think I need to pull some actual numbers out of the data here.
->Translate this back to braod concepts.
+>Translate this back to broad concepts.
 
 ```{r results-setup, echo=FALSE, message=FALSE, warning=FALSE}
+# 1 = green, 2 = blue , 3 = bright blue, 4 = red, 5 = black
+ploidy_colours = c("#30a068", "#39bbf7", "#3d85c6", "#cc0000", "#000000") 
+real_auto_rate = 0.0056
+real_allo_rate = 0.2752
+
+control <- readRDS("_data/control.rds")
+simulations <- readRDS("_data/simulations.rds")
 source("results.R")
-ploidylvl_colours = c("#000000", "#30a068")
-ploidy_gradient = c("#10442a", "#3bbf7d")
+
+theme_ploidy <- theme(
+  legend.position = "top",
+  legend.title = element_text(size = 7, face = "bold"),
+  legend.text = element_text(size = 7, face = "bold"),
+  axis.title = element_text(size = 7, face = "bold"),
+  plot.background = element_rect(fill = "#efefef"),
+  strip.background = element_rect(colour = "white"),
+  strip.text = element_text(size = 7, face = "bold")
+)
 ```
 
-```{r results-control, dev="png", dpi=300, fig.height=2.5, fig.cap="\\label{fig:results-control}Population growth and fecundity when no genome-doubling occured. Each point represents the frequency of individuals within the population (count/carrying capacity) at the end of any given generation (N = 206 simulations)."}
+```{r results-control, dev="png", dpi=300, fig.height=2.5, fig.cap="\\label{fig:results-control}Diploid opulation growth when no genome-doubling occured. Each point represents the frequency of seedlings within the population (count/carrying capacity) at the end of any given generation (N = 100 simulations)."}
 control %>%
-  filter(subset == "adults") %>%
-  ggplot2::ggplot(aes(x = gen, y = count)) +
-    geom_point(alpha = .2, size = .2) +
-    theme_classic() +
-    theme(
+  tidyr::unnest(cols = c(data)) %>%
+  ggplot2::ggplot(aes(x = gen, y = adults)) +
+    ggplot2::geom_point(alpha = .2, size = .2) +
+    ggplot2::theme_classic() +
+    ggplot2::theme(
       legend.position = "none",
       axis.title = element_text(size = 7, face = "bold"),
       plot.background = element_rect(fill = "#efefef"),
       strip.background = element_rect(colour = "white"),
       strip.text = element_text(size = 7, face = "bold")
     ) +
-    xlab("Time (generations)") +
-    ylab("Frequency of adults in population") +
-    scale_x_continuous(
+    ggplot2::xlab("Time (generations)") +
+    ggplot2::ylab("Frequency of adults in population") +
+    ggplot2::scale_x_continuous(
       breaks = seq(0, 1000, 500), 
       limits = c(0, 1000)
     ) +
-    scale_y_continuous(
+    ggplot2::scale_y_continuous(
       breaks = seq(0, 1, .5), 
       limits = c(0, 1.01)
     )
 ```
 
-```{r results-threshold, dev="png", dpi=300, echo=FALSE, message=FALSE, warning=FALSE, fig.height=6.5, fig.cap="\\label{fig:results-threshold}textbd{Reproductive interference:} Points represent the frequency of individuals within the population (count/carrying capacity) at the end of any given generation, coloured by ploidy type; diploid (black) and polyploid (green). Panels show results of simulations where genome-doubling rates were between 0.001 and 0.171 (top: below threshold, N = 583) and where rates were between 0.172 and 0.25 (bottom: over threshold, N = 411)."}
-range %>%
-  ggplot2::ggplot(aes(x = gen, y = count, colour = subset)) +
-    facet_wrap(~panel, ncol = 1) +
-    scale_colour_manual(values = ploidylvl_colours) +
-    geom_point(alpha = .2, size = .2) +
-    theme_classic() +
-    theme(
-      legend.position = "none",
-      axis.title = element_text(size = 7, face = "bold"),
-      plot.background = element_rect(fill = "#efefef"),
-      strip.background = element_rect(colour = "white"),
-      strip.text = element_text(size = 7, face = "bold")
-    ) +
-    xlab("Time (generations)") +
-    ylab("Frequency of adults in population") +
-    scale_x_continuous(
-      breaks = seq(0, 1000, 500), 
-      limits = c(0, 1000)
-    ) +
-    scale_y_continuous(
-      breaks = seq(0, 1, .5),
-      limits = c(0, 1.01)
-    )
+```{r results-hist, dev="png", dpi=300, fig.cap="\\label{fig:results-hist}textbd{Simulations subset by outcome:} Each bin in the stacked histogram shows the number of simulations (from 1000 instances) within that group of nonreduction rates that had a particular outcome. Simulations with stable coexistence (green) had a total adult population around the carrying capacity (100000) with both diploids and polyploids surviving throughout all 1000 generations. Simulations with total extinction (black) had neither diploid or adults surviving tp 1000 generations. Those with polyploids that were the only survivors are shown in blue. Stable polyploid populations (bright blue) had maximum frequencies of adults relative to the possible population size (over 0.99), while unstable polyploid populations (blue) had extremely low frequencies of adults persisting (0.00001)."}
+tibble::tibble(
+  ploidy_rate = c(
+    stability$ploidy_rate, 
+    stable_polyploid_winners %>% pull(ploidy_rate),
+    unstable_polyploid_winners %>% pull(ploidy_rate),
+    extinctions$ploidy_rate
+  ),
+  survival = c(
+    rep("coexistence (stable)", length(stability$ploidy_rate)), 
+    rep("polyploid fixation (stable)", length(stable_polyploid_winners$ploidy_rate)), 
+    rep("polyploid fixation (unstable)", length(unstable_polyploid_winners$ploidy_rate)), 
+    rep("total extinction", length(extinctions$ploidy_rate))
+  )
+) %>%
+  ggplot(aes(x = ploidy_rate, fill = survival)) + 
+    geom_histogram(colour = "white", bins = 50) +
+    scale_fill_manual(values = c(ploidy_colours, "#000000")) +
+    xlab("Rate of nonreduction") +
+    ylab("Number of simulations") +
+    labs(fill = "") +
+    theme_classic() + theme_ploidy
 ```
 
-```{r results-interference, dev="png", dpi=300, fig.cap="\\label{fig:results-interference}The relationship between the rate of genome-doubling and freqency of diploid (black) vs polyploid (green) individuals. Each point represents the final population proportion reached for every simulation that reached 1000 generations with survivors (N = 788 simulations). Vertical red line marks a genome-doubling rate of 0.171."}
-counts %>%
-  select(-seeds, -adults, -diploid_seeds, -polyploid_seeds, -total) %>% 
-  tidyr::gather(
-    "subset", "count", 
-    diploid_adults:polyploid_adults
-  ) %>%
-  filter(
-    gen == 1000,
-    between(ploidy_rate, 0, 0.25)  
-  ) %>%
+```{r, results-stability, dev="png", dpi=300, fig.cap="\\label{fig:results-stability}\\textbd{Coexistence:} Stable frequencies of ploidy types as a function of nonreduction rate. Points represent total polyploid (blue), sterile polyploid (red) and viable polyploid (green) frequency relative to diploids in the population at generation 1000. Each point represents one of 341 simulations out of 1000 which achieved stable coexistence (i.e:- having predictable frequencies around this range which had persisted over many generations). The solid black line shows where frequency equals rate of nonreduction, the dotted line marks a frequency equal to half the rate, and the dashed line marks a frequency equal to double the rate."}
+simulations %>%
+  dplyr::filter(ID %in% stability$ID) %>%
+  tidyr::unnest(cols = c(data)) %>%
+  dplyr::filter(gen == 1000) %>%
+  dplyr::mutate(viable_polyploid_adults = polyploid_adults - sterile_polyploid_adults) %>%
+  dplyr::select(-total) %>%
+  tidyr::gather(subset, count, polyploid_adults:viable_polyploid_adults) %>%
   ggplot(aes(x = ploidy_rate, y = count, colour = subset)) +
-  scale_colour_manual(values = ploidylvl_colours) +
-  geom_vline(xintercept = 0.171, color = "red", size = .2) +
-  geom_point(alpha = .2) +
-  theme_classic() +
-    theme(
-      legend.position = "none",
-      axis.title = element_text(size = 7, face = "bold"),
-      plot.background = element_rect(fill = "#efefef"),
-      strip.background = element_rect(colour = "white"),
-      strip.text = element_text(size = 7, face = "bold")
-    ) +
-    xlab("Rate of genome-doubling") +
-    ylab("Frequency of adults in population") +
-    scale_x_continuous(
-      breaks = seq(0, .2, .1)
-      #limits = c(0, .25)
-    ) +
-    scale_y_continuous(
-      breaks = seq(0, 1, .5),
-      limits = c(0, 1.01)
-    )
+  geom_point(alpha = .7) +
+  geom_line(
+    data = tibble(
+      ploidy_rate = seq(0, 0.1513566, length.out = 1000),
+      count = ploidy_rate
+    ),
+    colour = "black"
+  ) +
+  geom_line(
+    data = tibble(
+      ploidy_rate = seq(0, 0.1513566, length.out = 1000),
+      count = ploidy_rate / 2
+    ),
+    colour = "black",
+    linetype = "dotted"
+  ) +
+  geom_line(
+    data = tibble(
+      ploidy_rate = seq(0, 0.1513566, length.out = 1000),
+      count = ploidy_rate * 2
+    ),
+    colour = "black",
+    linetype = "dashed"
+  ) +
+  scale_y_continuous(breaks = seq(0, .4, .2, )) +
+  scale_colour_manual(
+    values = ploidy_colours[c(2,4,1)], 
+    labels = c("polyploid", "sterile polyploid", "viable polyploid"),
+    name = ""
+  ) +
+  xlab("Rate of nonreduction") +
+  ylab("Frequency of adults in population") +
+  theme_classic() + theme_ploidy +
+  theme(legend.position = c(0.1, .86), legend.margin = margin(0, 0, 0, 0, "cm"))
 ```
-
 
 ```{r results-cost, dev="png", dpi=300, fig.cap="\\label{fig:results-cost}textbd{Escaping the cost of pollen-swamping:} Points represent simulations where the rate of genome-doubling was between 0.001 and 0.171 (N = 569). Each point (green) shows the the frequency of polyploids at the end of the simulation (generation 1000) relative to the rate of genome-doubling set (frequency/rate). The solid black line represents the mean relative frequency for genome-doubling rates rounded to 2 decimal places, and the dotted black lines represent the 95% confidence envelope around the mean."}
 cost %>%
@@ -163,24 +185,26 @@ cost %>%
     ) 
 ```
 
-```{r results-extinctions, dev="png", dpi=300, fig.height=2.5, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:results-extinctions}Extinction events as a functon of genome-doubling rate. Each point represents a simulation that went extinct before one thousand generations had passed (N = 369 simulations). Vertical red line marks a genome-doubling rate of 0.171."}
-counts %>%
-  select(-seeds, -adults, -diploid_seeds, -polyploid_seeds, -polyploid_adults, -diploid_adults) %>%
-  dplyr::filter(
-    between(ploidy_rate, 0, 0.25),
-    total == 0
+```{r results-extinctions, dev="png", dpi=300, fig.height=2.5, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:results-extinctions}\\textbd{Extinction events as a function of the rate of gametic nonreduction:} each point represents one of the 455 simulations out of 1000 where both diploids and polyploids went extinct before one thousand generations had passed."}
+extinctions %>%
+  dplyr::ungroup() %>%
+  dplyr::mutate(
+    starting_N_group = "whatever",
+    starting_N_group = replace(
+      starting_N_group, which(extinctions$starting_N < 50000), "less than 50000"
+    ),
+    starting_N_group = replace(
+      starting_N_group, which(extinctions$starting_N >= 50000), "50000 and above"
+    ) 
   ) %>%
-  ggplot2::ggplot(aes(x = ploidy_rate, y = gen)) +
-    geom_vline(xintercept = 0.171, color = "red", size = .2) +
-    geom_point(alpha = .4) +
-    theme_classic() +
-    theme(
-      axis.title = element_text(size = 7, face = "bold"),
-      plot.background = element_rect(fill = "#efefef")
-    ) +
-    xlab("Rate of genome-doubling") +
+  ggplot2::ggplot(aes(x = ploidy_rate, y = gen_extinction_occurred, colour = starting_N_group)) +
+    geom_point(alpha = .7) +
+    scale_colour_manual(values = c(ploidy_colours[2], "#000000")) +
+    #geom_vline(xintercept = real_auto_rate, colour = "red") +
+    geom_vline(xintercept = 0.15, colour = "red", linetype = "dotted") +
+    xlab("Rate of nonreduction") +
     ylab("Generation at extinction") +
-  scale_y_continuous(
-    breaks = seq(0, 800, 400)
-  )
+    scale_x_continuous(limits = c(0, 0.5)) +
+    labs(colour = "Starting population size")
+    theme_classic() + theme_ploidy
 ```
