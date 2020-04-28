@@ -1,37 +1,5 @@
 # Results {#results}
 
-The pattern of population growth over time when no genome-doubling occurred was consistent and predictable. The main metric examined here was the freqeuncy of individuals at a particular life-stage. From herein, frequency describes the number of individuals observed (either belonging to a particular life-stage, or to a particlar ploidy type) relative to the carrying capacity of the entire population (number of individuals/carrying capacity). When no genome-doubling occured (figure \ref{fig:results-control}), whatever the starting population size, the frequency of adult individuals (seedlings) quickly stabilised (in under fifty generations) around the carrying capacity (mean frequency = 1.00, sd = 0.00163) with seed counts at just under three-quarters of the adult population size (mean frequency = 0.729, sd = 0.00210). When genome-doubling was included in the simulations, this stability gradually became disrupted as the doubling rate was increased. At first polyploid frequency began to rise and stabilise around greater frequencies, increasing the variation in seed output as fertilistion success became gradually less predictable. The effect of seed output meant that there came a point when increasing the genome-doubling rate could not raise the stable frequncy of polyploids any higher. Instead, above this threshold (0.171), the stability of the whole population suffered so that both diploids and polyploids declined until the population reached extinction (see figures \ref{fig:results-threshold} and \ref{fig:results-interference}).
-
->If I'm going to talk about variation in seed output does this need a plot? Otherwise remove all the bits about seeds?
-
-## Did the proportion of polyploids exceed the rate of genome-doubling?
-
-At genome-doubling rates between 0.001 and 0.01, we saw--and demonstrate in figure \ref{fig:results-cost}--that polyploid frequencies spread evenly around around the rate of duplication (mean relative frequency at generation 1000 = 1.00, sd = 0.0617, CI = 0.881 to 1.12, N = 375). Out of these 375 simulations, almost half (46.9%) of the polyploid population frequencies fell just below the genome-doubling rate and the other half (53.1%) made it slightly over. However, once the rate of duplication increased past 0.01, the polyploids that appeared began to consistently escape the negative selection caused by pollen-swamping. Between genome-doubling rates of 0.01 and 0.171, only one polyploid population in 194 (0.5%) ended the simulation with a frequency below it's genome-doubling rate; the overall trend was one of increased population growth for polyploids (mean relative frequency = 1.23, sd = 0.122, CI = 0.988 to 1.46, N = 194). The maximum relative frequency of polyploids observed was 1.39, seen in 2 simulations with genome-doubling rates of 0.167 and 0.170.
-
-
->Explain more why figure \ref{fig:results-cost} is a thing. Luc thinks the reasoning for these axes is wooly.
-
->Should I fit a model for the relative frequencies?
-
-Out of 411 simulations that had a genome-doubling rate over 0.171, only 15 (3.65%) had survivors at 1000 generations. Figure \ref{fig:results-threshold} shows the difference in population growth patterns. Below the threshold, all 569 simulations survived to 1000 generations, and the majority (98.8%) reached stability; seven simulations with a genome-doubling rate that rounded to 0.171 were less predictable and showed patterns of booms and busts. Figure \ref{fig:results-interference} shows the frequency of diploids and polyploids reached for all populations that survived to 1000 generations with genome-doubling enabled at random rates between 0.001 and 0.25. As the rate of genome-doubling was increased, maximum polyploid frequencies rose while diploid frequencies fell until a threshold rate was reached; once the genome-doubling rate exceeded 0.171 neither diploids or polyploids survived well. 
-
->Explain more why figure \ref{fig:results-threshold} is even here.
->Should I fit a model for extinction?
->Translate this back to braod concepts.
-
-## Did increasing the genome-doubling rate lead to the fixation of polyploidy?
-
-As seen in figures \ref{fig:results-interference} and \ref{fig:results-threshold}, out of 994 simulations with genome-doubling enabled, polyploidy never made it to fixation. In fact, polyploid populations never represented more than a quarter of the landscape; the maximum polyploid frequency of surviving simulations at generation 1000 was 0.236. Increasing the rate of genome-doubling, alone, was not sufficient for polyploids to dominate diploids on the landscape, let alone outcompete them and take over. 
-
->Translate this back to braod concepts.
-
-## Did established, and pioneering populations react in the same way to increased genome-doubling rates?
-
-No matter whether simulations began with small or large numbers of diploids, the overall patterns observed were the same; polyploid growth and stability below a rate of 0.171 or decline and ultimate extinction at rates over that threshold. The main difference starting population size made, was to the length of time it took for the diploids and polyploids to reach their stable frequency range, or to reach extinction (see figure \ref{fig:results-threshold}). For extremely low starting population sizes, some extinction was observed at genome-doubling rates below 0.171. Extremely high starting population sizes did not appear to buffer against this effect, though in some cases they did delay it. Figure \ref{fig:results-extinctions} shows the sudden mass of extinction events that occurred as the rate of duplication was increased; outliers had particularly low or high starting population sizes.
-
->I think I need to pull some actual numbers out of the data here.
->Translate this back to broad concepts.
-
 ```{r results-setup, echo=FALSE, message=FALSE, warning=FALSE}
 # 1 = green, 2 = blue , 3 = bright blue, 4 = red, 5 = black
 ploidy_colours = c("#30a068", "#39bbf7", "#3d85c6", "#cc0000", "#000000") 
@@ -53,158 +21,155 @@ theme_ploidy <- theme(
 )
 ```
 
-```{r results-control, dev="png", dpi=300, fig.height=2.5, fig.cap="\\label{fig:results-control}Diploid opulation growth when no genome-doubling occured. Each point represents the frequency of seedlings within the population (count/carrying capacity) at the end of any given generation (N = 100 simulations)."}
-control %>%
-  tidyr::unnest(cols = c(data)) %>%
-  ggplot2::ggplot(aes(x = gen, y = adults)) +
-    ggplot2::geom_point(alpha = .2, size = .2) +
-    ggplot2::theme_classic() +
-    ggplot2::theme(
-      legend.position = "none",
-      axis.title = element_text(size = 7, face = "bold"),
-      plot.background = element_rect(fill = "#efefef"),
-      strip.background = element_rect(colour = "white"),
-      strip.text = element_text(size = 7, face = "bold")
+
+The data output by the model was in the form of counts, with each row representing one generation of one simulation. Two datasets are analysed here, for; 1) 100 control simulations, and 2) 1000 experimental simulations. For each dataset, columns recorded the frequencies of individuals by the following subtypes: seeds, adults, diploids, polyploids, and sterile polyploids. Sterile polyploids were a subdivision of polyploids, and both diploids and polyploids were a subdivision of adults. Frequencies recorded were the number of individuals at the end of a generation, after all, transitions were completed, relative to the carrying capacity of the entire population (number of individuals/carrying capacity). In addition, the experimental variables (rate of nonreduction and starting population size) used for each simulation were recorded in every row, and all simulation instances were separated by identification code.
+
+## General patterns
+
+The pattern of population growth over time when no genome-doubling occurred was consistent and predictable (figure \ref{fig:results-control}). Stability was defined as having a total population frequency that reached 1 and persisted around that point for the entire simulation. Fixation was defined as either diploids or polyploids being the only ploidy type persisting on the landscape. Without nonreduction, whatever the starting population size, the frequency of adults quickly stabilised in under 15 generations (mean = 3.07, sd = 2.52, N = 100) and persisted in a stable manner for the entire 1000 generations (mean frequency between generation 15 and 1000 = 1.00, sd = 0.00163, N = 98500). When nonreduction was included in the experimental simulations, this stability gradually became disrupted as polyploids appeared in the system and began to spread. Broad patterns observed in the results could be split into four categories based on their outcome (figure \ref{fig:results-hist}): 
+
+1. Stable coexistence of a mixed diploid-polyploid population.
+2. Complete extinction of both diploids and polyploids.
+3. Unstable fixation of polyploidy. 
+4. Stable fixation of polyploidy. 
+
+Diploids never became fixated when nonreduction was enabled, as new polyploids arising from diploid progenitors would always keep appearing in the system. This process did not work the other way around; polyploids did not give rise to diploids.
+
+```{r results-control, dev="png", dpi=300, fig.height=2.5, fig.cap="\\label{fig:results-control}\\textbf{Speed of diploid stabilisation for 100 control simulations:} stability was defined as having a total population frequency that reached 1 and persisted around that point for the entire simulation. Each point represents one simulation. Starting population frequency is the number of adults at the beginning of the simulaiton, relative to the carrying capacity of the entire landscape (count/carrying capacity)."}
+outcomes %>%
+  filter(outcome == "control") %>%
+  ggplot2::ggplot(aes(x = starting_N/100000, y = gen_reached)) +
+    geom_hline(yintercept = 3.07, linetype = "dotted") +
+    geom_point(alpha = .5, size = 1) +
+    theme_classic() + theme_ploidy +
+    xlab("Starting population frequency") +
+    ylab("Generation stability reached") +
+    scale_x_continuous(breaks = seq(0, 1, .5)) +
+    scale_y_continuous(limits = c(0, 15), breaks = seq(0, 15, 5)) +
+    scale_colour_manual(
+      values = ploidy_colours[c(5,1,4,3,2)],
+      name = "Outcome",
+      guide = guide_legend(ncol = 2)
     ) +
-    ggplot2::xlab("Time (generations)") +
-    ggplot2::ylab("Frequency of adults in population") +
-    ggplot2::scale_x_continuous(
-      breaks = seq(0, 1000, 500), 
-      limits = c(0, 1000)
-    ) +
-    ggplot2::scale_y_continuous(
-      breaks = seq(0, 1, .5), 
-      limits = c(0, 1.01)
-    )
+    theme(legend.position = "none")
 ```
 
-```{r results-hist, dev="png", dpi=300, fig.cap="\\label{fig:results-hist}textbd{Simulations subset by outcome:} Each bin in the stacked histogram shows the number of simulations (from 1000 instances) within that group of nonreduction rates that had a particular outcome. Simulations with stable coexistence (green) had a total adult population around the carrying capacity (100000) with both diploids and polyploids surviving throughout all 1000 generations. Simulations with total extinction (black) had neither diploid or adults surviving tp 1000 generations. Those with polyploids that were the only survivors are shown in blue. Stable polyploid populations (bright blue) had maximum frequencies of adults relative to the possible population size (over 0.99), while unstable polyploid populations (blue) had extremely low frequencies of adults persisting (0.00001)."}
-tibble::tibble(
-  ploidy_rate = c(
-    stability$ploidy_rate, 
-    stable_polyploid_winners %>% pull(ploidy_rate),
-    unstable_polyploid_winners %>% pull(ploidy_rate),
-    extinctions$ploidy_rate
-  ),
-  survival = c(
-    rep("coexistence (stable)", length(stability$ploidy_rate)), 
-    rep("polyploid fixation (stable)", length(stable_polyploid_winners$ploidy_rate)), 
-    rep("polyploid fixation (unstable)", length(unstable_polyploid_winners$ploidy_rate)), 
-    rep("total extinction", length(extinctions$ploidy_rate))
-  )
-) %>%
-  ggplot(aes(x = ploidy_rate, fill = survival)) + 
+```{r results-hist, dev="png", dpi=300, fig.height=4, fig.cap="\\label{fig:results-hist}textbd{Simulations subset by outcome:} Each bin in the stacked histogram shows the number of simulations (from 1000 instances) within that group of nonreduction rates that had a particular outcome. Simulations with stable coexistence (green) had a total adult population around the carrying capacity (100000) with both diploids and polyploids surviving throughout all 1000 generations. Simulations with total extinction (black) had neither diploid or adults surviving tp 1000 generations. Those with polyploids that were the only survivors are shown in blue. Stable polyploid populations (bright blue) had maximum frequencies of adults relative to the possible population size (over 0.99), while unstable polyploid populations (blue) had extremely low frequencies of adults persisting (0.00001). The dotted red line marks the threshold rate of nonreduction (0.152) which divided outcome probability."}
+outcomes %>%
+  filter(outcome != "control") %>%
+  ggplot(aes(x = ploidy_rate)) + 
     geom_histogram(colour = "white", bins = 50) +
-    scale_fill_manual(values = c(ploidy_colours, "#000000")) +
+    geom_vline(xintercept = 0.152, colour = ploidy_colours[4], linetype = "dotted") +
+    scale_fill_manual(values = ploidy_colours[c(1,4,3,2)], name = "") +
     xlab("Rate of nonreduction") +
     ylab("Number of simulations") +
-    labs(fill = "") +
-    theme_classic() + theme_ploidy
+    theme_classic() + theme_ploidy +
+    facet_wrap(~outcome, ncol = 2)
 ```
 
-```{r, results-stability, dev="png", dpi=300, fig.cap="\\label{fig:results-stability}\\textbd{Coexistence:} Stable frequencies of ploidy types as a function of nonreduction rate. Points represent total polyploid (blue), sterile polyploid (red) and viable polyploid (green) frequency relative to diploids in the population at generation 1000. Each point represents one of 341 simulations out of 1000 which achieved stable coexistence (i.e:- having predictable frequencies around this range which had persisted over many generations). The solid black line shows where frequency equals rate of nonreduction, the dotted line marks a frequency equal to half the rate, and the dashed line marks a frequency equal to double the rate."}
-simulations %>%
-  dplyr::filter(ID %in% stability$ID) %>%
+
+## The frequency of sterile and viable polyploids
+
+Sterile polyploid populations became established at frequencies which were double or more the rate of nonreduction between rates of zero and 0.152. The frequency of established sterile polyploids was double the predicted frequency for F1 offspring, based on the idea that every 2n gamete produced would get paired with a 1n gamete. Viable polyploids arising in the system from F1 onwards, therefore, contributed to increased production of sterile polyploids. This pattern held until nonreduction rates exceeded 0.1. In these simulations, the frequency at which sterile polyploids became established began to climb steeply in an exponential fashion until the rate reached the threshold of 0.152 (figure \ref{fig:results-polyploids}). The same pattern of steeply increasing established frequencies between these rates was also seen in viable polyploids. 
+    
+Below nonreduction at rates of 0.152, sterile polyploids coexisted with diploids and viable polyploids; all became established at varying frequencies so that the total population frequency stabilised around 1. In figure \ref{fig:results-time} this is visualised over time with the broad areas of dark dots that persist consistently across the length of the x-axis, representing the simulations that achieved stable coexistence. Above nonreduction rates of 0.152, the only simulations in which polyploids were able to persist at any frequency were those where only viable polyploids remained. Increasing nonreduction rate caused booming sterile and viable polyploid populations to fill half the landscape. Sterile polyploid populations peaked first, quickly followed by viable polyploids just a few generations later. Peaks were reached more quickly and peaked at higher frequencies as the rate of nonreduction was increased. The booming rise of polyploidy disrupted the diploids in the system, causing the population instability that most frequently led to total extinction. 
+    
+The frequency of viable polyploids was predicted to have an upper limit of half the rate of nonreduction. In instances where all unreduced male gametes were paired with all unreduced female gametes, viable polyploid offspring would equal half the number of unreduced gametes available. Viable polyploid frequency only ever exceeded this prediction in 4 out of 1000 simulations, at very high rates of nonreduction over 0.464 (figure \ref{fig:results-polyploids}). In these rare cases, the outcome of the simulations was stable polyploid fixation.
+
+
+```{r, results-polyploids, dev="png", dpi=300, fig.height=4, fig.cap="\\label{fig:results-polyploids}\\textbf{Polyploid frequency depending on rate of nonreduction:} Points represent frequency of sterile polyploids (red) or viable polyploids (blue) persisting in the population at generation 1000. Each point represents one of the 545 simulations which avoided total extinction out of 1000 instances. The solid black line shows where frequency equals rate of nonreduction, the black dashed line below marks a frequency equal to half the rate, and the black dashed line above marks a frequency of double the rate. The dotted red line marks the threshold rate of nonreduction (0.152) where the probable outcome of simulations changed. The dotted blue line marks the rate above which stable fixation of polyploidy occurred in rare cases (0.464)."}
+simulations[which(simulations$ID %in% success), ] %>%
   tidyr::unnest(cols = c(data)) %>%
   dplyr::filter(gen == 1000) %>%
   dplyr::mutate(viable_polyploid_adults = polyploid_adults - sterile_polyploid_adults) %>%
   dplyr::select(-total) %>%
-  tidyr::gather(subset, count, polyploid_adults:viable_polyploid_adults) %>%
+  tidyr::gather(subset, count, c(diploid_adults, sterile_polyploid_adults:viable_polyploid_adults)) %>%
+  dplyr::filter(count != 0) %>%
   ggplot(aes(x = ploidy_rate, y = count, colour = subset)) +
-  geom_point(alpha = .7) +
-  geom_line(
-    data = tibble(
-      ploidy_rate = seq(0, 0.1513566, length.out = 1000),
-      count = ploidy_rate
-    ),
-    colour = "black"
-  ) +
-  geom_line(
-    data = tibble(
-      ploidy_rate = seq(0, 0.1513566, length.out = 1000),
-      count = ploidy_rate / 2
-    ),
-    colour = "black",
-    linetype = "dotted"
-  ) +
-  geom_line(
-    data = tibble(
-      ploidy_rate = seq(0, 0.1513566, length.out = 1000),
-      count = ploidy_rate * 2
-    ),
-    colour = "black",
-    linetype = "dashed"
-  ) +
-  scale_y_continuous(breaks = seq(0, .4, .2, )) +
+  geom_point(alpha = .5, size = 1) +
+  geom_vline(xintercept = 0.152, colour = ploidy_colours[4], linetype = "dotted") +
+  geom_vline(xintercept = 0.464, colour = ploidy_colours[3], linetype = "dotted") +
+  geom_line(aes(y = ploidy_rate), data = nonreduction, colour = "black") +
+  geom_line(aes(y = ploidy_rate/2), data = nonreduction, colour = "black", linetype = "dashed") +
+  geom_line(aes(y = ploidy_rate*2), data = nonreduction, colour = "black", linetype = "dashed") +
   scale_colour_manual(
-    values = ploidy_colours[c(2,4,1)], 
-    labels = c("polyploid", "sterile polyploid", "viable polyploid"),
+    values = ploidy_colours[c(5,4,2)], 
+    labels = c("diploid", "sterile polyploid", "viable polyploid"),
     name = ""
   ) +
   xlab("Rate of nonreduction") +
   ylab("Frequency of adults in population") +
-  theme_classic() + theme_ploidy +
-  theme(legend.position = c(0.1, .86), legend.margin = margin(0, 0, 0, 0, "cm"))
+  theme_classic() + theme_ploidy
 ```
 
-```{r results-cost, dev="png", dpi=300, fig.cap="\\label{fig:results-cost}textbd{Escaping the cost of pollen-swamping:} Points represent simulations where the rate of genome-doubling was between 0.001 and 0.171 (N = 569). Each point (green) shows the the frequency of polyploids at the end of the simulation (generation 1000) relative to the rate of genome-doubling set (frequency/rate). The solid black line represents the mean relative frequency for genome-doubling rates rounded to 2 decimal places, and the dotted black lines represent the 95% confidence envelope around the mean."}
-cost %>%
-  dplyr::filter(between(ploidy_rate, 0.001, 0.171)) %>%
-  ggplot(aes(x = ploidy_rate, y = diff)) +
-  geom_point(alpha = .4, colour = ploidylvl_colours[2]) +
-  geom_line(
-    aes(y = mean),
-    data = cost_summary,
-    colour = "black"
-  ) +
-  geom_line(
-    aes(y = lower),
-    data = cost_summary,
-    colour = "black",
-    linetype = "dotted"
-  ) +
-  geom_line(
-    aes(y = upper),
-    data = cost_summary,
-    colour = "black",
-    linetype = "dotted"
-  ) +
-  theme_classic() +
-    theme(
-      legend.position = "top",
-      axis.title = element_text(size = 7, face = "bold"),
-      plot.background = element_rect(fill = "#efefef"),
-      strip.background = element_rect(colour = "white"),
-      strip.text = element_text(size = 7, face = "bold")
-    ) +
-    xlab("Rate of genome-doubling") +
-    ylab("Frequency of polyploids / rate of genome-doubling") +
-    scale_x_continuous(
-      breaks = seq(0.01, 0.17, .04),
-      limits = c(0, .175)
-    ) 
-```
-
-```{r results-extinctions, dev="png", dpi=300, fig.height=2.5, echo=FALSE, message=FALSE, warning=FALSE, fig.cap="\\label{fig:results-extinctions}\\textbd{Extinction events as a function of the rate of gametic nonreduction:} each point represents one of the 455 simulations out of 1000 where both diploids and polyploids went extinct before one thousand generations had passed."}
-extinctions %>%
-  dplyr::ungroup() %>%
+```{r results-time, dev="png", dpi=300, fig.height=6, fig.cap="\\label{fig:results-time}\\textbf{Change in diploid-polyploid frequency over time:} frequency of adults in population is defined as number of adults at the end of a generation, relative to the carrying capacity of the entire landscape (count/carrying capacity). Each point represents the number of adults of a particular ploidy type from 1 of 1000 simulations. Points are coloured from black to green based on the rate of nonreduction; simulations that ran with higher rates are brighter green. The dotted black line highlights a freqency of half the population capacity (0.5).", warning=FALSE}
+subset_labels <- c("diploids", "sterile polyploids", "viable polyploids")
+names(subset_labels) <- c("diploid_adults", "sterile_polyploid_adults", "viable_polyploid_adults")
+            
+simulations %>%
+  tidyr::unnest(cols = c(data)) %>%
   dplyr::mutate(
-    starting_N_group = "whatever",
-    starting_N_group = replace(
-      starting_N_group, which(extinctions$starting_N < 50000), "less than 50000"
-    ),
-    starting_N_group = replace(
-      starting_N_group, which(extinctions$starting_N >= 50000), "50000 and above"
-    ) 
+    viable_polyploid_adults = polyploid_adults - sterile_polyploid_adults
   ) %>%
-  ggplot2::ggplot(aes(x = ploidy_rate, y = gen_extinction_occurred, colour = starting_N_group)) +
-    geom_point(alpha = .7) +
-    scale_colour_manual(values = c(ploidy_colours[2], "#000000")) +
-    #geom_vline(xintercept = real_auto_rate, colour = "red") +
-    geom_vline(xintercept = 0.15, colour = "red", linetype = "dotted") +
+  tidyr::gather(subset, count, c(diploid_adults, sterile_polyploid_adults, viable_polyploid_adults)) %>%
+  dplyr::filter(count != 0) %>%
+  ggplot(aes(x = gen, y = count, colour = ploidy_rate)) +
+  geom_hline(yintercept = .5, linetype = "dotted") +
+  geom_point(alpha = 1, size = .5) +
+  scale_colour_gradient(low = "black", high = ploidy_colours[1], name = "Rate of\nnonreduction") +
+  theme_classic() + theme_ploidy +
+  scale_x_continuous(limits = c(0, 150)) +
+  scale_y_continuous(breaks = seq(0, 1, 0.5)) +
+  xlab("Time (generations)") +
+  ylab("Frequency of adults in population") +
+  facet_wrap(~subset, ncol=1, labeller = labeller(subset = subset_labels))
+```
+
+
+## Fixation of polyploidy
+
+Fixation of polyploidy took one of two routes; 1) stable, or; 2) unstable. The pattern of demography change over time for these simulations was very similar: a period of polyploid growth, followed by instability and decline where viable polyploids declined to very low frequencies but managed to persist after diploids went extinct. When the outcome was unstable, frequencies of persisting polyploids remained very low, equating to just 1 or 2 individuals. When the outcome was stable, the low frequencies that followed the period of decline were able to recover. Recovery only happened at high rates of nonreduction over 0.464. Below that, enough sterile polyploids were produced to constrain population growth. Even over a nonreduction rate of 0.464 polyploid fixation was not the most likely outcome. Out of 57 simulations that ran at rates over 0.464, only 4 (7.0%) ended in stable polyploid fixation, 41 of them (71.9%) ended with total extinction, and 12 (21.1%) resulted in unstable fixation.
+
+## Response of pioneering versus established diploid populations 
+
+A minor density-dependent effect was seen in the speed with which simulations reached their fate; small starting populations took longer to stabilise or went extinct more quickly. Figures \ref{fig:results-outcomes-N} and \ref{fig:results-outcomes-rate} incorporate a time component; generation at which the outcome (coexistence, extinction, or fixation) was reached. If there were no effect of starting population size, the pattern of points in figure \ref{fig:results-outcomes-N} would be flat. However, when the outcome was coexistence or extinction, points deviated from the cloud on the far left. Figure \ref{fig:results-control} showed that starting population size affected the rate of stabilisation for purely diploid populations too. However, all control populations reached stability by generation 15, even when starting population size was small. Mixed diploid-polyploid populations took far longer to stabilise under the same conditions, but the pattern for established starting populations closely matched the control. Furthermore, established populations were no less likely result in extinction when the nonreduction rate range predicted this as the most probable fate (between 0.152 and 0.5); they only reached that outcome a few generations faster. The speed of unstable polyploid fixation was not affected by starting population size, and there was not enough data to draw conclusions about stable fixation.
+  
+While a small density-dependent effect was observed, figure \ref{fig:results-outcomes-rate} shows that the speed of outcome was more dependent on the rate of nonreduction; these trends were far more apparent. However, both parameters interacted to affect the generation at which the simulation outcome was reached. Slower stabilisation of coexisting populations occurred when stating population size was small, or when rates were approaching 0.152. Faster total extinction happened when starting population size was small, or when rates for nonreduction were between 0.2 and 0.35. Slower fixation of polyploidy at low frequencies occurred only according to rate and was not affected by starting population size; fixation was fastest at high rates approaching 0.5.
+
+
+```{r results-outcomes-N, dev="png", dpi=300, fig.height=5.5, fig.cap="\\label{fig:results-outcomes-N}\\textbf{Speed of outcome depending on starting population size:} Starting population frequency was the number of adults at the beginning of the simulation, relative to the carrying capacity of the entire landscape (count/carrying capacity). Each point represents one of 1000 simulations, dived into panels by the outcome abserved; stable coexistence (top left), total extinction (top right), unstable polyploid fixation (bottom left), and stable polyploid fixation (bottom right). Stability was defined as having a total population frequency that reached 1 and persisted around that point for the entire simulation. Total extinction meant that neither diploids or polyploid survived. Unstable polyploid fixation describes simulations where diploids went extinct but the remaining polyploids persisted at very low frequencies (around 0.00001)."}
+outcomes %>%
+  filter(outcome != "control") %>%
+  ggplot2::ggplot(aes(x = starting_N/100000, y = gen_reached)) +
+    ggplot2::geom_point(alpha = .5, size = 1) +
+    ggplot2::theme_classic() + theme_ploidy +
+    ggplot2::xlab("Starting population frequency") +
+    ggplot2::ylab("Generation outcome reached") +
+    ggplot2::scale_x_continuous(breaks = seq(0, 1, .5)) +
+    scale_colour_manual(
+      values = ploidy_colours[c(5,1,4,3,2)],
+      name = "Outcome",
+      guide = guide_legend(ncol = 2)
+    ) +
+    facet_wrap(~outcome, ncol=2) +
+    theme(legend.position = "none")
+```
+
+```{r results-outcomes-rate, dev="png", dpi=300, fig.height=5.5, echo=FALSE, message=FALSE, fig.cap="\\label{fig:results-outcomes-rate}\\textbf{Speed of outcome depending on rate of nonreduction:} each point represents one of 1000 simulations, dived into panels by the outcome abserved; stable coexistence (top left), total extinction (top right), unstable polyploid fixation (bottom left), and stable polyploid fixation (bottom right). Stability was defined as having a total population frequency that reached 1 and persisted around that point for the entire simulation. Total extinction meant that neither diploids or polyploid survived. Unstable polyploid fixation describes simulations where diploids went extinct but the remaining polyploids persisted at very low frequencies (around 0.00001). The dotted red line marks the threshold rate of nonreduction (0.152) which divided outcome probability."}
+outcomes %>%
+  filter(outcome != "control") %>%
+  ggplot2::ggplot(aes(x = ploidy_rate, y = gen_reached)) +
+    geom_point(alpha = .5, size = 1.5) +
+    geom_vline(xintercept = 0.152, colour = ploidy_colours[4], linetype = "dotted") +
     xlab("Rate of nonreduction") +
-    ylab("Generation at extinction") +
+    ylab("Generation outcome reached") +
     scale_x_continuous(limits = c(0, 0.5)) +
-    labs(colour = "Starting population size")
-    theme_classic() + theme_ploidy
+    theme_classic() + theme_ploidy +
+    scale_colour_manual(
+      values = ploidy_colours[c(5,1,4,3,2)],
+      name = "Outcome",
+      guide = guide_legend(ncol = 2)
+    ) +
+    facet_wrap(~outcome, ncol = 2)
+    
 ```
