@@ -12,7 +12,7 @@ The simulations began with a cohort of diploid individuals that underwent gameti
 
 ## Transition data {#methods-model-sims-trans}
 
-Data for an *E. guttata* population that had stable properties and no clonal growth were used. The data (figure \ref{tab:methods-trans-values}) and formula (figure \ref{fig:methods-trans-formula}) used to calculate transitions (figure \ref{tab:methods-trans-matrix}) was taken from @Peterson2016. The population chosen was a low-elevation perennial from a year when no rosettes were produced, so the life-stages match those modelled (seeds and adults). Data existed for the same population in another year when rosettes did occur, so by choosing this population, there was room to build upon the results presented here at a later date.
+Data for an *E. guttata* population that had stable properties and no clonal growth were used. The data (table \ref{tab:methods-trans-values}) and formula (figure \ref{fig:methods-trans-formula}) used to calculate transitions (table \ref{tab:methods-trans-matrix}) was taken from @Peterson2016. The population chosen was a low-elevation perennial from a year when no rosettes were produced, so the life-stages match those modelled (seeds and adults). Data existed for the same population in another year when rosettes did occur, so by choosing this population, there was room to build upon the results presented here at a later date.
 
 ## Assumptions {#methods-model-assumptions}
 
@@ -21,21 +21,21 @@ Data for an *E. guttata* population that had stable properties and no clonal gro
 - Even-numbered ploidy individuals were viable and could outcross or self-fertilise.
 - Odd-numbered ploidy individuals were sterile and did not contribute to transitions.
 - Pollen range spanned the entire landscape.
-- All plants were hermaphrodite (in possession of perfect flowers that provide both male and female function), as is most common for *E. guttata* [@Wise2011] and, indeed, all angiosperms; mothers and fathers were chosen via random sampling from the same pool of individuals.
+- All plants were hermaphrodite (in possession of perfect flowers that provided both male and female function), as is most common for *E. guttata* [@Wise2011] and, indeed, all angiosperms; mothers and fathers were chosen via random sampling from the same pool of individuals.
 - Seed dispersal spanned the entire landscape.
-- Seed dormancy was disabled to remove any lag in the effects of changing the rate of nonreduction; this fits with the lack of dormancy described for *E. guttata* [@Willis1993].
-- Carrying capacity limited exponential population growth.
+- Seed dormancy was disabled to remove any lag in the effects of changing the rate of nonreduction; this fit with the lack of dormancy described for *E. guttata* [@Willis1993].
+- Carrying capacity limited any exponential population growth that resulted in adult poulation sizes over 100000.
 
-```{r model-flow, out.width=100%, dpi=300, fig.align="center", fig.cap="\\label{fig:methods-model-flow}\\textbd{Model flow:} From a starting population of diploid seeds and adults (A), transitions involving survival, reproduction and germination probabilities occur (B) to create the individuals present in the next generation (C). This process loops continuously from time \\textbd{t} to time \\textbd{t + 1} to simulate the life cycle of \\textit{E. gutta}. Carrying capacity limits any possible exponential growth by randomly selecting survivors across the entire landscape at the end of every generation (D). In addition, where seed survival probabilities would lead to generation fo a seed bank, the size of this is limited with an enforced maximum longevity before seed survival is applied a the beginning of a new generation (E). Transitions (B) highlighted in red are where the mechanisms of genome-doubling and pollen-swamping occur (for more details see figure \\ref{fig:methods-reproduction})."}
+```{r model-flow, out.width="100%", dpi=300, fig.align="center", fig.cap="\\label{fig:methods-model-flow} \\textbf{Model flow:} From a starting population of diploid seeds and adults (A), transitions involving survival, reproduction and germination probabilities occur (B) to create the individuals present in the next generation (C). This process loops continuously from time \\textit{t} to time \\textit{t plus 1} to simulate the life cycle of \\textit{E. gutta}. Carrying capacity limits any possible exponential growth by randomly selecting survivors across the entire landscape at the end of every generation (D). In addition, where seed survival probabilities would lead to generation fo a seed bank, the size of this is limited with an enforced maximum longevity before seed survival is applied a the beginning of a new generation (E). Transitions (B) highlighted in red are where the mechanisms of genome-doubling and pollen-swamping occur (for more details see figure \\ref{fig:methods-reproduction})."}
 knitr::include_graphics("_images/model-flow.pdf")
 ```
 
-```{r reproduction, out.width=100%, dpi=300, fig.align="center", fig.cap="\\label{fig:methods-reproduction}\\textbd{Reproduction and germination:} For all transitions from adults in time \\textbd{t} (A) to seeds or adults in time \\textbd{t + 1} (D), individuals must go through reproduction (B) and germination (C). Mechanisms of reproduction which induce the effects of pollen-swamping (E) and triploid sterility (F) are highlighted in red, while the process that controls genome-doubling (G) is shown in blue."}
+```{r reproduction, out.width="100%", dpi=300, fig.align="center", fig.cap="\\label{fig:methods-reproduction}\\textbf{Reproduction and germination:} For all transitions from adults in time \\textbf{t} (A) to seeds or adults in time \\textbf{t + 1} (D), individuals must go through reproduction (B) and germination (C). Mechanisms of reproduction which induce the effects of pollen-swamping (E) and triploid sterility (F) are highlighted in red, while the process that controls genome-doubling (G) is shown in blue."}
 knitr::include_graphics("_images/reproduction.pdf")
 ```
 
 
-```{r trans-formula, out.width="70%", dpi=300, fig.align="center", fig.cap="\\label{fig:methods-trans-formula}How the transition matrix (table \\ref{tab:methods-trans-matrix}) was calculated from the data provided in table \\ref{tab:methods-trans-values}, according to this formula taken from \\cite{Peterson2016}."}
+```{r trans-formula, out.width="70%", dpi=300, fig.align="center", fig.cap="\\label{fig:methods-trans-formula}How the transition matrix (table \\ref{tab:methods-trans-matrix}, seedlings renamed as adults) was calculated from the data provided in table \\ref{tab:methods-trans-values}, according to this formula taken from \\cite{Peterson2016}."}
 knitr::include_graphics("_images/m-guttatus-transformula-peterson2016.png")
 ```
 
@@ -46,7 +46,7 @@ readRDS("_data/mimulus.rds") %>%
   dplyr::mutate(A = signif(A, 3) %>% as.character()) %>%
   knitr::kable(
     "latex",
-    caption = "\\label{tab:methods-trans-values}\\textbd{Components of transition:} values used to calculate the transition matrix of a low-elevation perennial population of \\textit{Erythranthe guttata} (previously: \\textit{Mimulus guttatus}) for a year in which no rosettes were produced. Seed survival (D) is not population specific; taken from \\cite{Elderd2006}. All other components taken from \\cite{Peterson2016} who recorded values specific to that \\textit{E. guttata} population in the year 2013 (N = 77). G = germination rate, O = ovule number per flower, F = flower production, S = winter survival, R = rosette production, A = proportional recruitment success of ovules relative to rosettes.",
+    caption = "\\label{tab:methods-trans-values}\\textbf{Components of transition:} values used to calculate the transition matrix of a low-elevation perennial population of \\textit{Erythranthe guttata} (previously: \\textit{Mimulus guttatus}) for a year in which no rosettes were produced. Seed survival (D) is not population specific; taken from \\cite{Elderd2006}. All other components taken from \\cite{Peterson2016} who recorded values specific to that \\textit{E. guttata} population in the year 2013 (N = 77). G = germination rate, O = ovule number per flower, F = flower production, S = winter survival, R = rosette production, A = proportional recruitment success of ovules relative to rosettes.",
     booktabs = T,
     digits = 3,
     escape = F
@@ -71,7 +71,7 @@ dimnames(trans)[1] <- list(paste0(stages, " (t+1)"))
 trans %>%
   knitr::kable(
     "latex",
-    caption = "\\label{tab:methods-trans-matrix}Transition matrix used for the model, based on the formula shown in \\ref{fig:methods-trans-formula} and the data from figure \\ref{tab:methods-trans-values}.",
+    caption = "\\label{tab:methods-trans-matrix}Transition matrix used for the model, based on the formula shown in figure \\ref{fig:methods-trans-formula} (adults were renamed from seedling) and the data from figure \\ref{tab:methods-trans-values}.",
     booktabs = T,
     row.names = T,
     digits = 3,

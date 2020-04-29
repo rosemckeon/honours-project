@@ -44,10 +44,10 @@ system("bibtool -s -d Polyploidy.bib packages.bib -o thesis.bib", F)
 ```{r results, child="results.Rmd"}
 ```
 
-```{r discussion, child="discussion.Rmd"}
+```{r discussion, eval=FALSE, child="discussion.Rmd"}
 ```
 
-```{r conclusion, child="conclusion.Rmd"}
+```{r conclusion, eval=FALSE, child="conclusion.Rmd"}
 ```
 
 # References {#references}
