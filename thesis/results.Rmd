@@ -55,15 +55,16 @@ outcomes %>%
     theme(legend.position = "none")
 ```
 
-```{r results-hist, dev="png", dpi=300, fig.height=3, fig.cap="\\label{fig:results-hist}textbd{Simulations subset by outcome:} Each bin shows the number of simulations (from 1000 instances) within that group of nonreduction rates that had a particular outcome. Simulations ending with stable coexistence (top left) had a total adult population around the carrying capacity (100000) with both diploids and polyploids surviving throughout all 1000 generations. Simulations with total extinction (top right) had neither diploid or adults surviving to 1000 generations. Those where the relative abundance of polyploids persisting through to 1000 generations was 1, were considered fixated. Simulations ending in unstable polyploid fixation (bottom left) had polyploid populations of only 1 or 2 individuals (0.00001-0.00002% of the carrying capacity). Simulations ending with stable polyploid fixation (bottom right) had a total adult population around the carrying capacity (100000) which survived through to 1000 generations. The dotted red line marks the threshold rate of nonreduction (0.152) which divided outcome probability."}
+```{r results-hist, dev="png", dpi=300, fig.height=3, fig.cap="\\label{fig:results-hist}textbd{Outcome probability dependent on nonreduction rate:} Each bin shows the probaility of simulations within that group of nonreduction rates ending in a particular outcome. Simulations ending with stable coexistence (top left) had a total adult population around the carrying capacity (100000) with both diploids and polyploids surviving throughout all 1000 generations. Simulations with total extinction (top right) had neither diploid or adults surviving to 1000 generations. Those where the relative abundance of polyploids persisting through to 1000 generations was 1, were considered fixated. Simulations ending in unstable polyploid fixation (bottom left) had polyploid populations of only 1 or 2 individuals (0.00001-0.00002% of the carrying capacity). Simulations ending with stable polyploid fixation (bottom right) had a total adult population around the carrying capacity (100000) which survived through to 1000 generations. The dotted red line marks the threshold rate of nonreduction (0.152) which divided outcome probability."}
 outcomes %>%
   filter(outcome != "control") %>%
   ggplot(aes(x = ploidy_rate)) + 
     geom_histogram(colour = "white", bins = 50) +
     geom_vline(xintercept = 0.152, colour = ploidy_colours[4], linetype = "dotted") +
     scale_fill_manual(values = ploidy_colours[c(1,4,3,2)], name = "") +
+    scale_y_continuous(labels = c(0:3)/100) +
     xlab("Rate of nonreduction") +
-    ylab("Number of simulations") +
+    ylab("Outcome probability") +
     theme_classic() + theme_ploidy +
     facet_wrap(~outcome, ncol = 2)
 ```
@@ -222,15 +223,16 @@ Fixation of polyploidy took one of two routes; 1) stable, or; 2) unstable. The p
 
 None of the outcomes (coexistence, extinction, or fixation) were more probable for either pioneering or established starting populations. Figure \ref{fig:results-hist-2} shows that roughly even numbers of simulations fall on either side of this scale for all outcomes. A minor density-dependent effect was seen in the speed with which simulations reached their fate; small starting populations took longer to stabilise or went extinct more quickly. Figures \ref{fig:results-outcomes-N} and \ref{fig:results-outcomes-rate} incorporate a time component; generation at which the outcome (coexistence, extinction, or fixation) was reached. Together, they show that the speed of achieving coexistence was influenced more by starting population size than by nonreduction rate; pioneering populations took longer to stabilise as the populations were further away from K. The converse was true for unstable fixation which was influenced by nonreduction rate rather than starting population size; the speed of reaching fixation above rates of 0.152 increased with rate no matter whether starting populations were pioneering or established. Total extinction was affected by both; rate influenced the speed of extinction most, but established populations buffered against this somewhat and delayed the effect. 
 
-```{r results-hist-2, dev="png", dpi=300, fig.height=3, fig.cap="\\label{fig:results-hist-2}textbd{Chance of outcome depending on starting population size:} Each bin shows the number of simulations (from 1000 instances) within that group of starting population frequencies that had a particular outcome. Starting population frequency is the number of adults at the beginning of the simulaiton relative to carrying capacity (K), making the scale pioneering (close to zero) to established (close to 1). The dotted red line marks the halfway point between pioneering and established (0.5). Simulations ending with stable coexistence (top left) had a total adult population around the carrying capacity (100000) with both diploids and polyploids surviving throughout all 1000 generations. Simulations with total extinction (top right) had neither diploid or adults surviving to 1000 generations. Those where the relative abundance of polyploids persisting through to 1000 generations was 1, were considered fixated. Simulations ending in unstable polyploid fixation (bottom left) had polyploid populations of only 1 or 2 individuals (0.00001-0.00002% of the carrying capacity). Simulations ending with stable polyploid fixation (bottom right) had a total adult population around the carrying capacity (100000) which survived through to 1000 generations."}
+```{r results-hist-2, dev="png", dpi=300, fig.height=3, fig.cap="\\label{fig:results-hist-2}textbd{Outcome probability depending on starting population size:} Each bin shows the probability of simulations within that group of starting population frequencies ending in a particular outcome. Starting population frequency is the number of adults at the beginning of the simulaiton relative to carrying capacity (K), making the scale pioneering (close to zero) to established (close to 1). The dotted red line marks the halfway point between pioneering and established (0.5). Simulations ending with stable coexistence (top left) had a total adult population around the carrying capacity (100000) with both diploids and polyploids surviving throughout all 1000 generations. Simulations with total extinction (top right) had neither diploid or adults surviving to 1000 generations. Those where the relative abundance of polyploids persisting through to 1000 generations was 1, were considered fixated. Simulations ending in unstable polyploid fixation (bottom left) had polyploid populations of only 1 or 2 individuals (0.00001-0.00002% of the carrying capacity). Simulations ending with stable polyploid fixation (bottom right) had a total adult population around the carrying capacity (100000) which survived through to 1000 generations."}
 outcomes %>%
   filter(outcome != "control") %>%
   ggplot(aes(x = starting_N/100000)) + 
     geom_histogram(colour = "white", bins = 50) +
     geom_vline(xintercept = 0.5, colour = ploidy_colours[4], linetype = "dotted") +
     scale_fill_manual(values = ploidy_colours[c(1,4,3,2)], name = "") +
+    scale_y_continuous(breaks = c(0, 10, 20), labels = c(0:2)/100) +
     xlab("Rate of nonreduction") +
-    ylab("Number of simulations") +
+    ylab("Probability of outcome") +
     theme_classic() + theme_ploidy +
     facet_wrap(~outcome, ncol = 2)
 ```
