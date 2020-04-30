@@ -36,11 +36,45 @@ system("bibtool -s -d Polyploidy.bib packages.bib -o thesis.bib", F)
 ```
 
 
-Genome-doubling readily occurs in flowering plants (angiosperms) and is linked with speciation as well as major innovations (seeds and flowers).  Beneficial traits (increased flower size and number) are often expressed by the resulting polyploid species, making them useful crops as well as increasing their invasive potential. However, after a century of research, the forces that drive polyploid evolution are still unclear. The primary mechanism of formation by gametic nonreduction creates an inherent negative selection pressure by the interaction of triploid sterility and pollen-swamping. I ask whether the combined cost of these emergent properties can be quantified by using an individual-based modelling approach. Specifically, I investigate whether increasing the rate of nonreduction is sufficient to give evolving polyploids enough of an advantage that they can reach stable fixation. Modelling this system revealed that in order to ultimately outcompete their diploid progenitors (as well as the sterile offspring that interploidy matings create), the rate of nonreduction had to exceed the natural rate 27-fold. Extinction probability above this rate was 0.686, and fixation of polyploidy was extremely unstable. The rate of nonreduction required to achieve stable fixation was 83-fold greater than the natural rate. Extinction probability reached 0.719, and the probability of attaining stable fixation was 0.070. These findings support the idea that polyploidy most often leads to evolutionary 'dead-ends'. They also indicate that the strength of triploid sterility must be drastically reduced, or some other beneficial adaptation would be required in order for polyploidy to evolve and persist.
+```{r uni, fig.align='right', out.width="30%"}
+knitr::include_graphics("_images/uni-logo.png")
+```
+
+\begin{center}
+\thispagestyle{empty}
+\vspace{20mm}
+{\Large Chintamani Rose McKeon}
+
+{\Large When rare gametes meet.}
+
+\vfill
+
+Undergraduate dissertation submitted\\for the degree of Biology BSc Hons.
+\vspace{10mm}
+
+{\small Biological and Environmental Sciences\\University of Stirling\\April 2020}
+
+\end{center}
 
 \newpage
-\tableofcontents
+\thispagestyle{empty}
+
+```{r sig, fig.align='center', out.width="100%"}
+knitr::include_graphics("_images/signature.png")
+```
+
 \newpage
+\thispagestyle{empty}
+Genome-doubling readily occurs in flowering plants (angiosperms) and is linked with speciation as well as major innovations (seeds and flowers). Beneficial traits (increased flower size and number) are often expressed by the resulting polyploid species, making them useful crops as well as increasing their invasive potential. However, after a century of research, the forces that drive polyploid evolution are still unclear. The primary mechanism of formation by gametic nonreduction creates an inherent negative selection pressure by the interaction of triploid sterility and pollen-swamping. I ask whether the combined cost of these emergent properties can be quantified by using an individual-based modelling approach. Specifically, I investigate whether increasing the rate of nonreduction is sufficient to give evolving polyploids enough of an advantage that they can reach stable fixation. Modelling this system revealed that in order to ultimately outcompete their diploid progenitors (as well as the sterile offspring that interploidy matings create), the rate of nonreduction had to exceed the natural rate 27-fold. Extinction probability above this rate was 0.686, and fixation of polyploidy was extremely unstable. 
+\newpage
+\thispagestyle{empty}
+The rate of nonreduction required to achieve stable fixation was 83-fold greater than the natural rate. Extinction probability reached 0.719, and the probability of attaining stable fixation was 0.070. These findings support the idea that polyploidy most often leads to evolutionary 'dead-ends'. They also indicate that the strength of triploid sterility must be drastically reduced, or some other beneficial adaptation would be required in order for polyploidy to evolve and persist.
+
+\newpage
+\thispagestyle{empty}
+\tableofcontents
+\clearpage
+\pagenumbering{arabic} 
 
 ```{r intro, child="intro.Rmd"}
 ```
