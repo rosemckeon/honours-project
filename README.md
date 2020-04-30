@@ -15,6 +15,6 @@ Genome-doubling readily occurs in flowering plants (angiosperms) and is linked w
 In an R console:
 ```
 install.packages("devtools")
-devtools::install_github("rosemckeon/sploidy")
+devtools::install_github("rosemckeon/honours-project")
 ?sploidy
 ```
