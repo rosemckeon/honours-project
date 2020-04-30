@@ -1,6 +1,6 @@
 # When rare gametes meet
 
-This repositiory is my undergraduate honours project, and includes:
+This repository is my undergraduate honours project, and includes:
 
 - An individual-based model, written in R, that simulates the evolution of polyploidy in flowering plants. 
 - The [scripts](https://github.com/rosemckeon/honours-project/blob/master/scripts/) and [data](https://github.com/rosemckeon/honours-project/blob/master/data/) output by running the model, parametised to simulate the life-cycle of *Erythranthe guttata* (formerly: *Mimulus guttatus*).
