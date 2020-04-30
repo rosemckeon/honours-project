@@ -66,7 +66,7 @@
 \usepackage[scaled=.95]{helvet}
 \fi
 \if@doublespace
-\RequirePackage[onehalfspacing]{setspace}
+\RequirePackage[doublespacing]{setspace}
 \fi
 
 \RequirePackage{graphicx}
@@ -148,9 +148,10 @@
 papersize={156mm,234mm},%
 columnsep=12pt,%
 headsep=21pt,%
-centering]{geometry}
+centering,
+margin=2.54cm]{geometry}
 \raggedright
-\renewcommand{\normalsize}{\fontsize{12}{14pt}\selectfont}
+\renewcommand{\normalsize}{\fontsize{12}{12pt}\selectfont}
 \fi
 
 \parindent 1em

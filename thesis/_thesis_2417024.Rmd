@@ -1,12 +1,12 @@
 ---
-title: "The evolution of polyploidy and the extreme cost of pollen-swamping."
+title: "When rare gametes meet."
 date: "Last edited: `r format(Sys.time(), '%B %d %Y')`"
 author: 
 - name: Chintamani Rose McKeon (2417024)
   num: 
-runninghead: The cost of pollen-swamping
-abstract: "Amazing summary of project here..."
-keywords: polyploidy; evolution; angiosperm; mimulus; guttatus; pollen-swamping; mate-choice;
+runninghead: When rare gametes meet.
+abstract: "The evolution of polyploidy and the extreme cost of pollen swamping."
+#keywords: polyploidy; evolution; angiosperm; mimulus; guttatus; pollen-swamping; mate-choice;
 bibliography: thesis.bib
 bibliographystyle: BES.bst
 output: 
@@ -31,6 +31,8 @@ library(kableExtra)
 library(tidyverse) 
 # devtools::install_github("rosemckeon/honours-project", auth_token = "60bcd5244537f523313ffae0b061b4ba00873f5d")
 library(sploidy)
+library(ggpubr)
+library(scales)
 knitr::write_bib(c(.packages()), 'packages.bib')
 system("bibtool -s -d Polyploidy.bib packages.bib -o thesis.bib", F)
 ```
@@ -44,10 +46,10 @@ system("bibtool -s -d Polyploidy.bib packages.bib -o thesis.bib", F)
 ```{r results, child="results.Rmd"}
 ```
 
-```{r discussion, eval=FALSE, child="discussion.Rmd"}
+```{r discussion, child="discussion.Rmd"}
 ```
 
-```{r conclusion, eval=FALSE, child="conclusion.Rmd"}
+```{r conclusion, child="conclusion.Rmd"}
 ```
 
 # References {#references}

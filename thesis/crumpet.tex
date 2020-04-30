@@ -1,5 +1,6 @@
 \documentclass[$for(classoption)$$classoption$$sep$,$endfor$,$bibliographystyle$]{crumpet}
 
+
 \usepackage{moreverb, url, natbib, amsthm, multirow, tabularx}
 \usepackage[dvipsnames, table]{xcolor}
 \usepackage[colorlinks, bookmarksopen, bookmarksnumbered, citecolor=MidnightBlue, linkcolor=MidnightBlue, urlcolor=MidnightBlue]{hyperref}
@@ -10,7 +11,7 @@
 \usepackage[normalem]{ulem}
 
 \usepackage[left]{lineno}
-\linenumbers
+%\linenumbers
 \setcounter{secnumdepth}{2}
 
 $if(longtable)$
@@ -30,22 +31,21 @@ $endif$
 
 \begin{document}
 
-\title{$title$}
+%\title{$title$}
 
 \runninghead{$runninghead$}
 
+%\author{$for(author)$$author.name$\affilnum{$author.num$}$sep$, $endfor$}
 
-\author{$for(author)$$author.name$\affilnum{$author.num$}$sep$, $endfor$}
+%\affiliation{$for(address)$\affilnum{$address.num$}{$address.org$}$sep$\\$endfor$}
 
-\affiliation{$for(address)$\affilnum{$address.num$}{$address.org$}$sep$\\$endfor$}
+%$if(corrauth)$
+%\corrauth{$corrauth$}
+%$endif$
 
-$if(corrauth)$
-\corrauth{$corrauth$}
-$endif$
-
-$if(email)$
-\email{$email$}
-$endif$
+%$if(email)$
+%\email{$email$}
+%$endif$
 
 $if(abstract)$
 \begin{abstract}
@@ -53,14 +53,15 @@ $abstract$
 \end{abstract}
 $endif$
 
-$if(keywords)$
-\keywords{$keywords$}
-$endif$
+%$if(keywords)$
+%\keywords{$keywords$}
+%$endif$
+
+\tableofcontents
 
 
 
-
-\maketitle
+%\maketitle
 
 $body$
 

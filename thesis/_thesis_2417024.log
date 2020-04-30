@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2020.4.16)  27 APR 2020 03:02
+This is pdfTeX, Version 3.14159265-2.6-1.40.20 (TeX Live 2019) (preloaded format=pdflatex 2020.4.16)  29 APR 2020 18:35
 entering extended mode
  restricted \write18 enabled.
  %&-line parsing enabled.
@@ -201,6 +201,14 @@ Package: ifxetex 2010/09/12 v0.6 Provides ifxetex conditional
 \Gm@layouthoffset=\dimen136
 \Gm@layoutvoffset=\dimen137
 \Gm@dimlist=\toks22
+
+Package geometry Warning: Over-specification in `h'-direction.
+    `width' (352.81416pt) is ignored.
+
+
+Package geometry Warning: Over-specification in `v'-direction.
+    `height' (526.37598pt) is ignored.
+
 )
 \absbox=\box30
 \@bls=\dimen138
@@ -517,24 +525,28 @@ Package: longtable 2014/10/28 v4.11 Multi-page Table package (DPC)+ FMi change
 LaTeX Warning: Unused global option(s):
     [BES.bst].
 
-(./_thesis_2417024.aux)
+(./_thesis_2417024.aux
+
+LaTeX Warning: Label `fig:rate-abundance' multiply defined.
+
+)
 \openout1 = `_thesis_2417024.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 37.
-LaTeX Font Info:    ... okay on input line 37.
-LaTeX Font Info:    Try loading font information for OT1+ptm on input line 37.
+LaTeX Font Info:    Checking defaults for OML/cmm/m/it on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for U/cmr/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 38.
+LaTeX Font Info:    ... okay on input line 38.
+LaTeX Font Info:    Try loading font information for OT1+ptm on input line 38.
 (/home/rose/.texlive2019/texmf-dist/tex/latex/psnfss/ot1ptm.fd
 File: ot1ptm.fd 2001/06/04 font definitions for OT1/ptm.
 ) (/home/rose/.texlive2019/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
@@ -575,15 +587,15 @@ e
 * hratio: 1:1
 * vratio: 1:1
 * modes: twoside asymmetric 
-* h-part:(L,W,R)=(45.52441pt, 352.81416pt, 45.52441pt)
-* v-part:(T,H,B)=(69.70924pt, 526.37598pt, 69.70926pt)
+* h-part:(L,W,R)=(72.2698pt, 299.32338pt, 72.2698pt)
+* v-part:(T,H,B)=(72.2698pt, 521.25487pt, 72.2698pt)
 * \paperwidth=443.86299pt
 * \paperheight=665.79448pt
-* \textwidth=352.81416pt
-* \textheight=526.37598pt
-* \oddsidemargin=-26.74557pt
-* \evensidemargin=-26.74557pt
-* \topmargin=-35.56075pt
+* \textwidth=299.32338pt
+* \textheight=521.25487pt
+* \oddsidemargin=-0.00018pt
+* \evensidemargin=-0.00018pt
+* \topmargin=-33.00018pt
 * \headheight=12.0pt
 * \headsep=21.0pt
 * \topskip=10.0pt
@@ -612,7 +624,7 @@ Package caption Info: threeparttable package is loaded.
 Package caption Info: wrapfig package is loaded.
 Package caption Info: End \AtBeginDocument code.
 \AtBeginShipoutBox=\box51
-Package hyperref Info: Link coloring ON on input line 37.
+Package hyperref Info: Link coloring ON on input line 38.
 (/home/rose/.texlive2019/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 (/home/rose/.texlive2019/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
@@ -620,9 +632,9 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count161
 )
-LaTeX Info: Redefining \ref on input line 37.
-LaTeX Info: Redefining \pageref on input line 37.
-LaTeX Info: Redefining \nameref on input line 37.
+LaTeX Info: Redefining \ref on input line 38.
+LaTeX Info: Redefining \pageref on input line 38.
+LaTeX Info: Redefining \nameref on input line 38.
 (./_thesis_2417024.out) (./_thesis_2417024.out)
 \@outlinefile=\write4
 \openout4 = `_thesis_2417024.out'.
@@ -653,217 +665,490 @@ LaTeX Font Info:    Font shape `U/lasy/b/n' in size <8> not available
 (Font)              Font shape `U/lasy/m/n' tried instead on input line 52.
 LaTeX Font Info:    Font shape `U/lasy/b/n' in size <6> not available
 (Font)              Font shape `U/lasy/m/n' tried instead on input line 52.
-LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 17.09995pt on input line 61.
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <18> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 61.
-LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 17.09995pt on input line 61.
-LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 6.64998pt on input line 61.
-
-Underfull \hbox (badness 10000) in paragraph at lines 61--61
-
- []
-
-LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 4.74998pt on input line 61.
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <8> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 61.
-LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 7.59998pt on input line 61.
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <6> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 61.
-LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 5.69998pt on input line 61.
-
-Underfull \hbox (badness 10000) in paragraph at lines 61--61
-[]\OT1/phv/m/n/12 polyploidy; evo-lu-tion; angiosperm; mimu-lus; gut-ta-tus; po
-llen-
- []
-
-LaTeX Font Info:    Font shape `U/lasy/b/n' in size <5> not available
-(Font)              Font shape `U/lasy/m/n' tried instead on input line 61.
-LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 7.59998pt on input line 61.
+(./_thesis_2417024.toc
 LaTeX Font Info:    Font shape `OT1/ptm/bx/n' in size <12> not available
-(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 64.
-[1
-
-{/home/rose/.texlive2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}]
+(Font)              Font shape `OT1/ptm/b/n' tried instead on input line 1.
 LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <12> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 90.
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 23.
 LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
-(Font)              scaled to size 11.39996pt on input line 90.
+(Font)              scaled to size 11.39996pt on input line 23.
 
-Overfull \vbox (0.91379pt too high) has occurred while \output is active []
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[1{/home/rose/.texlive2019/texmf-var/fonts/map/pdftex/updmap/pdftex.map}
+
+])
+\tf@toc=\write5
+\openout5 = `_thesis_2417024.toc'.
+
+
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
 
 [2]
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-
-Overfull \vbox (0.91379pt too high) has occurred while \output is active []
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
 
 [3]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Overfull \vbox (0.91379pt too high) has occurred while \output is active []
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
 
 [4]
-Overfull \vbox (0.91379pt too high) has occurred while \output is active []
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
 
 [5]
+<_images/polyploid-formation.pdf, id=245, 823.075pt x 749.80125pt>
+File: _images/polyploid-formation.pdf Graphic file (type pdf)
+<use _images/polyploid-formation.pdf>
+Package pdftex.def Info: _images/polyploid-formation.pdf  used on input line 18
+6.
+(pdftex.def)             Requested size: 299.32338pt x 272.67409pt.
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 8.54997pt on input line 190.
+LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <9> not available
+(Font)              Font shape `OT1/phv/b/n' tried instead on input line 190.
+LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
+(Font)              scaled to size 8.54997pt on input line 190.
+
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[6]
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[7 <./_images/polyploid-formation.pdf>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Overfull \vbox (0.91379pt too high) has occurred while \output is active []
-
-[6]
-Overfull \vbox (0.91379pt too high) has occurred while \output is active []
-
-[7]
-Overfull \vbox (0.91379pt too high) has occurred while \output is active []
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
 
 [8]
-Overfull \vbox (0.91379pt too high) has occurred while \output is active []
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
 
 [9]
-<_images/polyploid-formation.pdf, id=235, 823.075pt x 749.80125pt>
-File: _images/polyploid-formation.pdf Graphic file (type pdf)
-<use _images/polyploid-formation.pdf>
-Package pdftex.def Info: _images/polyploid-formation.pdf  used on input line 35
-6.
-(pdftex.def)             Requested size: 352.81416pt x 321.40144pt.
-LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 8.54997pt on input line 360.
-LaTeX Font Info:    Font shape `OT1/phv/bx/n' in size <9> not available
-(Font)              Font shape `OT1/phv/b/n' tried instead on input line 360.
-LaTeX Font Info:    Font shape `OT1/phv/b/n' will be
-(Font)              scaled to size 8.54997pt on input line 360.
-<_images/m-guttatus-lifecycle-peterson2016.png, id=236, 575.65062pt x 540.51938
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[10]
+<_images/rate-abundance.pdf, id=365, 799.98875pt x 729.72626pt>
+File: _images/rate-abundance.pdf Graphic file (type pdf)
+<use _images/rate-abundance.pdf>
+Package pdftex.def Info: _images/rate-abundance.pdf  used on input line 308.
+(pdftex.def)             Requested size: 299.32338pt x 273.03427pt.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[11]
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[12 <./_images/rate-abundance.pdf>]
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[13]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[14]
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[15]
+<_images/m-guttatus-lifecycle-peterson2016.png, id=448, 575.65062pt x 540.51938
 pt>
 File: _images/m-guttatus-lifecycle-peterson2016.png Graphic file (type png)
 <use _images/m-guttatus-lifecycle-peterson2016.png>
 Package pdftex.def Info: _images/m-guttatus-lifecycle-peterson2016.png  used on
- input line 365.
-(pdftex.def)             Requested size: 246.96883pt x 231.8992pt.
+ input line 420.
+(pdftex.def)             Requested size: 179.59584pt x 168.63147pt.
 LaTeX Font Info:    Font shape `OT1/phv/m/it' in size <9> not available
-(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 369.
+(Font)              Font shape `OT1/phv/m/sl' tried instead on input line 424.
 LaTeX Font Info:    Font shape `OT1/phv/m/sl' will be
-(Font)              scaled to size 8.54997pt on input line 369.
+(Font)              scaled to size 8.54997pt on input line 424.
 
-Overfull \vbox (0.91379pt too high) has occurred while \output is active []
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
 
-[10]
-Overfull \vbox (0.91379pt too high) has occurred while \output is active []
+[16]
+<_images/model-flow.pdf, id=470, 722.7pt x 542.025pt>
+File: _images/model-flow.pdf Graphic file (type pdf)
+<use _images/model-flow.pdf>
+Package pdftex.def Info: _images/model-flow.pdf  used on input line 453.
+(pdftex.def)             Requested size: 299.32338pt x 224.48956pt.
+<_images/reproduction.pdf, id=472, 722.7pt x 542.025pt>
+File: _images/reproduction.pdf Graphic file (type pdf)
+<use _images/reproduction.pdf>
+Package pdftex.def Info: _images/reproduction.pdf  used on input line 462.
+(pdftex.def)             Requested size: 299.32338pt x 224.48956pt.
 
-[11 <./_images/polyploid-formation.pdf>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Overfull \vbox (0.91379pt too high) has occurred while \output is active []
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
 
-[12 <./_images/m-guttatus-lifecycle-peterson2016.png>]
-LaTeX Font Info:    Try loading font information for OMS+ptm on input line 447.
+[17 <./_images/m-guttatus-lifecycle-peterson2016.png>]
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[18 <./_images/model-flow.pdf>]
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[19 <./_images/reproduction.pdf>]
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[20]
+LaTeX Font Info:    Try loading font information for OMS+ptm on input line 521.
 
 (/home/rose/.texlive2019/texmf-dist/tex/latex/psnfss/omsptm.fd
 File: omsptm.fd 
 )
 LaTeX Font Info:    Font shape `OMS/ptm/m/n' in size <12> not available
-(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 447.
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 521.
 
-Underfull \vbox (badness 10000) has occurred while \output is active []
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
 
-
-Overfull \vbox (0.91379pt too high) has occurred while \output is active []
-
-[13]
-<_images/model-flow.pdf, id=352, 722.7pt x 542.025pt>
-File: _images/model-flow.pdf Graphic file (type pdf)
-<use _images/model-flow.pdf>
-Package pdftex.def Info: _images/model-flow.pdf  used on input line 482.
-(pdftex.def)             Requested size: 352.81416pt x 264.61037pt.
-<_images/reproduction.pdf, id=354, 722.7pt x 542.025pt>
-File: _images/reproduction.pdf Graphic file (type pdf)
-<use _images/reproduction.pdf>
-Package pdftex.def Info: _images/reproduction.pdf  used on input line 491.
-(pdftex.def)             Requested size: 352.81416pt x 264.61037pt.
-<_images/m-guttatus-transformula-peterson2016.png, id=355, 403.5075pt x 98.3675
+[21]
+<_images/m-guttatus-transformula-peterson2016.png, id=565, 403.5075pt x 98.3675
 pt>
 File: _images/m-guttatus-transformula-peterson2016.png Graphic file (type png)
 <use _images/m-guttatus-transformula-peterson2016.png>
 Package pdftex.def Info: _images/m-guttatus-transformula-peterson2016.png  used
- on input line 500.
-(pdftex.def)             Requested size: 246.96883pt x 60.2067pt.
+ on input line 558.
+(pdftex.def)             Requested size: 209.52545pt x 51.07782pt.
 LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
-(Font)              scaled to size 9.49997pt on input line 509.
-(./_thesis_2417024.bbl
-Overfull \vbox (0.91379pt too high) has occurred while \output is active []
+(Font)              scaled to size 9.49997pt on input line 567.
+LaTeX Font Info:    Font shape `OT1/phv/m/n' will be
+(Font)              scaled to size 7.59998pt on input line 569.
+LaTeX Font Info:    Font shape `U/lasy/b/n' in size <5> not available
+(Font)              Font shape `U/lasy/m/n' tried instead on input line 570.
 
-[14]
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
 
-LaTeX Warning: Text page 15 contains only floats.
+[22 <./_images/m-guttatus-transformula-peterson2016.png>]
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[23]
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[24]
+<_thesis_2417024_files/figure-latex/results-control-1.png, id=600, 361.35pt x 1
+44.54pt>
+File: _thesis_2417024_files/figure-latex/results-control-1.png Graphic file (ty
+pe png)
+<use _thesis_2417024_files/figure-latex/results-control-1.png>
+Package pdftex.def Info: _thesis_2417024_files/figure-latex/results-control-1.p
+ng  used on input line 660.
+(pdftex.def)             Requested size: 361.34912pt x 144.53963pt.
+
+Overfull \hbox (62.02574pt too wide) in paragraph at lines 660--667
+ [][] 
+ []
+
+<_thesis_2417024_files/figure-latex/results-hist-1.png, id=601, 361.35pt x 216.
+81pt>
+File: _thesis_2417024_files/figure-latex/results-hist-1.png Graphic file (type 
+png)
+<use _thesis_2417024_files/figure-latex/results-hist-1.png>
+Package pdftex.def Info: _thesis_2417024_files/figure-latex/results-hist-1.png 
+ used on input line 672.
+(pdftex.def)             Requested size: 361.34912pt x 216.80946pt.
+
+Overfull \hbox (62.02574pt too wide) in paragraph at lines 672--688
+ [][] 
+ []
 
 
-Overfull \vbox (0.91379pt too high) has occurred while \output is active []
-
-[15 <./_images/model-flow.pdf>]
-Overfull \vbox (0.91379pt too high) has occurred while \output is active []
-
-[16 <./_images/reproduction.pdf> <./_images/m-guttatus-transformula-peterson201
-6.png>]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Overfull \vbox (0.91379pt too high) has occurred while \output is active []
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
 
-[17]
+[25 <./_thesis_2417024_files/figure-latex/results-control-1.png>]
+<_thesis_2417024_files/figure-latex/results-time-1-1.png, id=615, 361.35pt x 43
+3.62pt>
+File: _thesis_2417024_files/figure-latex/results-time-1-1.png Graphic file (typ
+e png)
+<use _thesis_2417024_files/figure-latex/results-time-1-1.png>
+Package pdftex.def Info: _thesis_2417024_files/figure-latex/results-time-1-1.pn
+g  used on input line 710.
+(pdftex.def)             Requested size: 361.34912pt x 433.61894pt.
+
+Overfull \hbox (62.02574pt too wide) in paragraph at lines 710--716
+ [][] 
+ []
+
+
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Overfull \vbox (0.91379pt too high) has occurred while \output is active []
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
 
-[18]
+[26 <./_thesis_2417024_files/figure-latex/results-hist-1.png (PNG copy)>]
+<_thesis_2417024_files/figure-latex/results-time-2-1.png, id=620, 361.35pt x 43
+3.62pt>
+File: _thesis_2417024_files/figure-latex/results-time-2-1.png Graphic file (typ
+e png)
+<use _thesis_2417024_files/figure-latex/results-time-2-1.png>
+Package pdftex.def Info: _thesis_2417024_files/figure-latex/results-time-2-1.pn
+g  used on input line 721.
+(pdftex.def)             Requested size: 361.34912pt x 433.61894pt.
+
+Overfull \hbox (62.02574pt too wide) in paragraph at lines 721--727
+ [][] 
+ []
+
+<_thesis_2417024_files/figure-latex/results-time-3-1.png, id=621, 361.35pt x 43
+3.62pt>
+File: _thesis_2417024_files/figure-latex/results-time-3-1.png Graphic file (typ
+e png)
+<use _thesis_2417024_files/figure-latex/results-time-3-1.png>
+Package pdftex.def Info: _thesis_2417024_files/figure-latex/results-time-3-1.pn
+g  used on input line 732.
+(pdftex.def)             Requested size: 361.34912pt x 433.61894pt.
+
+Overfull \hbox (62.02574pt too wide) in paragraph at lines 732--739
+ [][] 
+ []
+
+<_thesis_2417024_files/figure-latex/results-time-4-1.png, id=622, 361.35pt x 43
+3.62pt>
+File: _thesis_2417024_files/figure-latex/results-time-4-1.png Graphic file (typ
+e png)
+<use _thesis_2417024_files/figure-latex/results-time-4-1.png>
+Package pdftex.def Info: _thesis_2417024_files/figure-latex/results-time-4-1.pn
+g  used on input line 744.
+(pdftex.def)             Requested size: 361.34912pt x 433.61894pt.
+
+Overfull \hbox (62.02574pt too wide) in paragraph at lines 744--751
+ [][] 
+ []
+
+
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[27]
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[28 <./_thesis_2417024_files/figure-latex/results-time-1-1.png (PNG copy)>]
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[29 <./_thesis_2417024_files/figure-latex/results-time-2-1.png (PNG copy)>]
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[30 <./_thesis_2417024_files/figure-latex/results-time-3-1.png (PNG copy)>]
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[31 <./_thesis_2417024_files/figure-latex/results-time-4-1.png (PNG copy)>]
+<_thesis_2417024_files/figure-latex/results-polyploids-1.png, id=650, 361.35pt 
+x 289.08pt>
+File: _thesis_2417024_files/figure-latex/results-polyploids-1.png Graphic file 
+(type png)
+<use _thesis_2417024_files/figure-latex/results-polyploids-1.png>
+Package pdftex.def Info: _thesis_2417024_files/figure-latex/results-polyploids-
+1.png  used on input line 790.
+(pdftex.def)             Requested size: 361.34912pt x 289.07928pt.
+
+Overfull \hbox (62.02574pt too wide) in paragraph at lines 790--802
+ [][] 
+ []
+
+
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[32]
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[33 <./_thesis_2417024_files/figure-latex/results-polyploids-1.png (PNG copy)>]
+<_thesis_2417024_files/figure-latex/results-hist-2-1.png, id=665, 361.35pt x 21
+6.81pt>
+File: _thesis_2417024_files/figure-latex/results-hist-2-1.png Graphic file (typ
+e png)
+<use _thesis_2417024_files/figure-latex/results-hist-2-1.png>
+Package pdftex.def Info: _thesis_2417024_files/figure-latex/results-hist-2-1.pn
+g  used on input line 848.
+(pdftex.def)             Requested size: 361.34912pt x 216.80946pt.
+
+Overfull \hbox (62.02574pt too wide) in paragraph at lines 848--867
+ [][] 
+ []
+
+LaTeX Font Info:    Try loading font information for OMS+phv on input line 867.
+
+(/home/rose/.texlive2019/texmf-dist/tex/latex/psnfss/omsphv.fd
+File: omsphv.fd 
+)
+LaTeX Font Info:    Font shape `OMS/phv/m/n' in size <9> not available
+(Font)              Font shape `OMS/cmsy/m/n' tried instead on input line 867.
+<_thesis_2417024_files/figure-latex/results-outcomes-N-1.png, id=666, 361.35pt 
+x 379.4175pt>
+File: _thesis_2417024_files/figure-latex/results-outcomes-N-1.png Graphic file 
+(type png)
+<use _thesis_2417024_files/figure-latex/results-outcomes-N-1.png>
+Package pdftex.def Info: _thesis_2417024_files/figure-latex/results-outcomes-N-
+1.png  used on input line 872.
+(pdftex.def)             Requested size: 361.34912pt x 379.41656pt.
+
+Overfull \hbox (62.02574pt too wide) in paragraph at lines 872--887
+ [][] 
+ []
+
+
+LaTeX Warning: Float too large for page by 4.66168pt on input line 888.
+
+<_thesis_2417024_files/figure-latex/results-outcomes-rate-1.png, id=667, 361.35
+pt x 379.4175pt>
+File: _thesis_2417024_files/figure-latex/results-outcomes-rate-1.png Graphic fi
+le (type png)
+<use _thesis_2417024_files/figure-latex/results-outcomes-rate-1.png>
+Package pdftex.def Info: _thesis_2417024_files/figure-latex/results-outcomes-ra
+te-1.png  used on input line 892.
+(pdftex.def)             Requested size: 361.34912pt x 379.41656pt.
+
+Overfull \hbox (62.02574pt too wide) in paragraph at lines 892--910
+ [][] 
+ []
+
+
+LaTeX Warning: Float too large for page by 36.16168pt on input line 911.
+
+
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[34]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 
-Overfull \vbox (0.91379pt too high) has occurred while \output is active []
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
 
-[19])
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 541.
+[35 <./_thesis_2417024_files/figure-latex/results-hist-2-1.png (PNG copy)>]
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
 
-Overfull \vbox (0.91379pt too high) has occurred while \output is active []
+[36 <./_thesis_2417024_files/figure-latex/results-outcomes-N-1.png (PNG copy)>]
 
-[20]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 541.
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[37 <./_thesis_2417024_files/figure-latex/results-outcomes-rate-1.png (PNG copy
+)>]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[38]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[39]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[40]
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[41]
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[42]
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[43]
+
+Package natbib Warning: Citation `Lynch2010' on page 44 undefined on input line
+ 1102.
+
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[44]
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[45] (./_thesis_2417024.bbl
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[46]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[47]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[48]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[49]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[50]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[51]
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[52])
+
+Package natbib Warning: There were undefined citations.
+
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 1144.
+
+Overfull \vbox (2.12024pt too high) has occurred while \output is active []
+
+[53]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 1144.
 (./_thesis_2417024.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 541.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 541.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 1144.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 1144.
+
 Package rerunfilecheck Info: File `_thesis_2417024.out' has not changed.
-(rerunfilecheck)             Checksum: 9A743FCECD5730E02EF4738760F476A4;834.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 541.
+(rerunfilecheck)             Checksum: C704125FE68D1E65D48954351A26D992;1758.
+
+LaTeX Warning: There were multiply-defined labels.
+
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 1144.
  ) 
 Here is how much of TeX's memory you used:
- 11026 strings out of 492609
- 162087 string characters out of 6129033
- 292568 words of memory out of 5000000
- 14603 multiletter control sequences out of 15000+600000
- 42585 words of font info for 89 fonts, out of 8000000 for 9000
+ 11248 strings out of 492609
+ 167496 string characters out of 6129033
+ 303076 words of memory out of 5000000
+ 14725 multiletter control sequences out of 15000+600000
+ 34995 words of font info for 79 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 43i,15n,46p,1080b,556s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 43i,15n,46p,1418b,558s stack positions out of 5000i,500n,10000p,200000b,80000s
 {/home/rose/.texlive2019/texmf-dist/fonts/enc/dvips/base/8r.enc}</home/rose/.
 texlive2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy10.pfb></home/rose/.t
-exlive2019/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></home/rose/.texlive2
-019/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></home/rose/.texlive2019/tex
-mf-dist/fonts/type1/urw/helvetic/uhvro8a.pfb></home/rose/.texlive2019/texmf-dis
-t/fonts/type1/urw/times/utmb8a.pfb></home/rose/.texlive2019/texmf-dist/fonts/ty
-pe1/urw/times/utmr8a.pfb></home/rose/.texlive2019/texmf-dist/fonts/type1/urw/ti
-mes/utmri8a.pfb>
-Output written on _thesis_2417024.pdf (20 pages, 712180 bytes).
+exlive2019/texmf-dist/fonts/type1/public/amsfonts/cm/cmsy9.pfb></home/rose/.tex
+live2019/texmf-dist/fonts/type1/urw/helvetic/uhvb8a.pfb></home/rose/.texlive201
+9/texmf-dist/fonts/type1/urw/helvetic/uhvr8a.pfb></home/rose/.texlive2019/texmf
+-dist/fonts/type1/urw/helvetic/uhvro8a.pfb></home/rose/.texlive2019/texmf-dist/
+fonts/type1/urw/times/utmb8a.pfb></home/rose/.texlive2019/texmf-dist/fonts/type
+1/urw/times/utmr8a.pfb></home/rose/.texlive2019/texmf-dist/fonts/type1/urw/time
+s/utmri8a.pfb>
+Output written on _thesis_2417024.pdf (53 pages, 2827157 bytes).
 PDF statistics:
- 497 PDF objects out of 1000 (max. 8388607)
- 418 compressed objects within 5 object streams
- 87 named destinations out of 1000 (max. 500000)
- 122 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 909 PDF objects out of 1000 (max. 8388607)
+ 769 compressed objects within 8 object streams
+ 171 named destinations out of 1000 (max. 500000)
+ 281 words of extra memory for PDF output out of 10000 (max. 10000000)
 
