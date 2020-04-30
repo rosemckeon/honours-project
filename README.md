@@ -2,7 +2,7 @@
 
 This repository is my undergraduate honours project, and includes:
 
-- An individual-based model, written in R, that simulates the evolution of polyploidy in flowering plants. 
+- An individual-based model, written as an R package *sploidy*, that simulates the evolution of polyploidy in flowering plants. 
 - The [scripts](https://github.com/rosemckeon/honours-project/blob/master/scripts/) and [data](https://github.com/rosemckeon/honours-project/blob/master/data/) output by running the model, parametised to simulate the life-cycle of *Erythranthe guttata* (formerly: *Mimulus guttatus*).
 - The [thesis itself](https://github.com/rosemckeon/honours-project/blob/master/thesis/_thesis_2417024.pdf) which explains the model, and all the [files](https://github.com/rosemckeon/honours-project/blob/master/thesis/) that went into creating that final document.
 
@@ -15,6 +15,7 @@ Genome-doubling readily occurs in flowering plants (angiosperms) and is linked w
 In an R console:
 ```
 install.packages("devtools")
-devtools::install_github("rosemckeon/sploidy")
+devtools::install_github("rosemckeon/honours-project")
+library(sploidy)
 ?sploidy
 ```
