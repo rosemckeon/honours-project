@@ -3,7 +3,7 @@ rm(list=ls())
 library(tidyverse)
 library(magrittr)
 library(disturploidy)
-devtools::install_github("rosemckeon/honours-project", auth_token = "60bcd5244537f523313ffae0b061b4ba00873f5d")
+devtools::install_github("rosemckeon/honours-project")
 library(sploidy)
 
 my_palette = c("#000000", "#30a068")
@@ -58,7 +58,7 @@ seedlings_0211 %>% summary()
 seedlings_0211[which(seedlings_0211$ploidy_mum > 2), ]
 
 # conclusion = polyploids can definitely mate.
-# do they do it at lower mutation rates? 
+# do they do it at lower mutation rates?
 # and with D and G set as we did in the real sims?
 # sploidy(
 #   pop_size = c(20, 20, 20),
@@ -103,4 +103,4 @@ seedlings_0200 %>% summary()
 # here are the adults that made it...
 seedlings_0200[which(seedlings_0200$ploidy_mum > 2), ]
 
-# conclusion = polyploids are definitely still mating at these levels, but just much less. 
+# conclusion = polyploids are definitely still mating at these levels, but just much less.

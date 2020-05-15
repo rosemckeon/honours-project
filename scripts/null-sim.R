@@ -2,7 +2,7 @@ rm(list=ls())
 library(tidyverse)
 library(magrittr)
 library(disturploidy)
-devtools::install_github("rosemckeon/honours-project", auth_token = "60bcd5244537f523313ffae0b061b4ba00873f5d")
+devtools::install_github("rosemckeon/honours-project")
 library(sploidy)
 
 # create a range of starting population sizes
