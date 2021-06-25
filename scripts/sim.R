@@ -2,10 +2,10 @@ rm(list=ls())
 library(tidyverse)
 library(magrittr)
 library(disturploidy)
-devtools::install_github("rosemckeon/honours-project", auth_token = "60bcd5244537f523313ffae0b061b4ba00873f5d")
+devtools::install_github("rosemckeon/honours-project")
 library(sploidy)
 
-# create a range of ploidy rates 
+# create a range of ploidy rates
 ploidy_rates <- seq(0.01, .5, length.out = 100000)
 # create a range of starting population sizes
 N <- 1:100000
@@ -18,7 +18,7 @@ mimulus <- readRDS("scripts/data/mimulus.RDS") %>%
 # roughly a 10 hr process
 for(rate in sample(ploidy_rates, 50, F)){
   #  get a starting pop size
-  n <- sample(N, 1) 
+  n <- sample(N, 1)
   sploidy(
     pop_size = c(n, n, 0),
     grid_size = 100,
